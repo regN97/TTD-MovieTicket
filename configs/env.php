@@ -17,6 +17,9 @@ define('PATH_VIEW_CLIENT_MAIN', PATH_ROOT . 'views/client/main.php');
 define('BASE_ASSETS_ADMIN', BASE_URL . 'assets/admin/');
 define('BASE_ASSETS_CLIENT', BASE_URL . 'assets/client/');
 define('BASE_ASSETS_UPLOADS', BASE_URL . 'assets/uploads/');
+define('BASE_ASSETS_CSS', BASE_URL . 'assets/css/');
+define('BASE_ASSETS_IMAGE', BASE_URL . 'assets/img/');
+define('BASE_ASSETS_JAVASCRIPT', BASE_URL . 'assets/js/');
 
 
 define('PATH_ASSETS_UPLOADS', PATH_ROOT . 'assets/uploads/');

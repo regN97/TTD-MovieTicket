@@ -1,0 +1,38 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.slide-show {
+  position: relative;
+}
+
+.slide-show img {
+  width: 100%;
+  height: 70vh;
+}
+
+.v-left {
+  position: absolute;
+  top: 45%;
+  left: 1%;
+}
+
+.v-right {
+  position: absolute;
+  right: 1%;
+  top: 45%;
+}
+
+.v-left,
+.v-right {
+  font-size: 5.5vh;
+  color: #fff;
+}
+
+.v-left:hover,
+.v-right:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
