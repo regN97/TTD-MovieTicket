@@ -1,5 +1,8 @@
 <?php
 
+define('', '');
+
+
 define('BASE_URL', 'http://localhost:8888/duan1_TTDMovieTicket/');
 define('BASE_URL_ADMIN', 'http://localhost:8888/duan1_TTDMovieTicket/?mode=admin');
 
