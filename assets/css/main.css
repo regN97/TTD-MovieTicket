@@ -169,3 +169,41 @@ nav {
   top: 8em;
   right: 1%;
 }
+
+.admin-header {
+  height: 60px;
+  background: var(--secondary-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.admin-right img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.admin-right img:hover {
+  border: 3px solid #ccc;
+}
+
+.admin-side-bar {
+  height: 40rem;
+  background-color: var(--secondary-color);
+}
+
+.admin-content {
+  display: flex;
+}
+
+.admin-ct-right {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.admin-nav li a {
+  width: 100%;
+}
