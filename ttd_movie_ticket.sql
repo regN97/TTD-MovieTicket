@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 08, 2024 at 05:27 PM
+-- Generation Time: Nov 11, 2024 at 08:50 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -24,54 +24,58 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Table structure for table `accounts`
 --
 
-CREATE TABLE `account` (
+CREATE TABLE `accounts` (
   `account_id` int NOT NULL,
   `role_id` int NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `tel` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL
+  `address` varchar(255) NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bill`
+-- Table structure for table `bills`
 --
 
-CREATE TABLE `bill` (
+CREATE TABLE `bills` (
   `bill_id` int NOT NULL,
   `ticket_id` int NOT NULL,
-  `price` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `status` varchar(50) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
+-- Table structure for table `comments`
 --
 
-CREATE TABLE `comment` (
+CREATE TABLE `comments` (
   `comment_id` int NOT NULL,
   `account_id` int NOT NULL,
   `movie_id` int NOT NULL,
   `content` varchar(255) NOT NULL,
-  `comment_at` datetime NOT NULL
+  `comment_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `genre`
+-- Table structure for table `genres`
 --
 
-CREATE TABLE `genre` (
+CREATE TABLE `genres` (
   `genre_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL
@@ -80,10 +84,10 @@ CREATE TABLE `genre` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movie`
+-- Table structure for table `movies`
 --
 
-CREATE TABLE `movie` (
+CREATE TABLE `movies` (
   `movie_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -119,16 +123,16 @@ CREATE TABLE `news` (
   `content` text NOT NULL,
   `description` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `role` (
+CREATE TABLE `roles` (
   `role_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
@@ -137,15 +141,15 @@ CREATE TABLE `role` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `schedule`
+-- Table structure for table `schedules`
 --
 
-CREATE TABLE `schedule` (
+CREATE TABLE `schedules` (
   `schedule_id` int NOT NULL,
   `screen_id` int NOT NULL,
   `movie_id` int NOT NULL,
-  `start_at` datetime DEFAULT NULL,
-  `end_at` datetime DEFAULT NULL
+  `start_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -160,7 +164,7 @@ CREATE TABLE `screen_room` (
   `name` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `total_seat` int NOT NULL
+  `total_seat` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -173,18 +177,18 @@ CREATE TABLE `seats` (
   `seat_id` int NOT NULL,
   `screenRoom_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `price` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `taken` tinyint(1) NOT NULL,
-  `size` int NOT NULL
+  `size` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `theater`
+-- Table structure for table `theaters`
 --
 
-CREATE TABLE `theater` (
+CREATE TABLE `theaters` (
   `theater_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -194,18 +198,18 @@ CREATE TABLE `theater` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ticket`
+-- Table structure for table `tickets`
 --
 
-CREATE TABLE `ticket` (
+CREATE TABLE `tickets` (
   `ticket_id` int NOT NULL,
   `account_id` int NOT NULL,
   `seat_id` int NOT NULL,
   `shcedule_id` int NOT NULL,
   `theater_id` int NOT NULL,
   `screenRoom_id` int NOT NULL,
-  `created_at` datetime NOT NULL,
-  `expiration_date` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expiration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -214,37 +218,37 @@ CREATE TABLE `ticket` (
 --
 
 --
--- Indexes for table `account`
+-- Indexes for table `accounts`
 --
-ALTER TABLE `account`
+ALTER TABLE `accounts`
   ADD PRIMARY KEY (`account_id`),
   ADD KEY `fk_account_role` (`role_id`);
 
 --
--- Indexes for table `bill`
+-- Indexes for table `bills`
 --
-ALTER TABLE `bill`
+ALTER TABLE `bills`
   ADD PRIMARY KEY (`bill_id`),
   ADD KEY `fk_bill_ticket` (`ticket_id`);
 
 --
--- Indexes for table `comment`
+-- Indexes for table `comments`
 --
-ALTER TABLE `comment`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`),
   ADD KEY `fk_comment_account` (`account_id`),
   ADD KEY `fk_comment_movie` (`movie_id`);
 
 --
--- Indexes for table `genre`
+-- Indexes for table `genres`
 --
-ALTER TABLE `genre`
+ALTER TABLE `genres`
   ADD PRIMARY KEY (`genre_id`);
 
 --
--- Indexes for table `movie`
+-- Indexes for table `movies`
 --
-ALTER TABLE `movie`
+ALTER TABLE `movies`
   ADD PRIMARY KEY (`movie_id`);
 
 --
@@ -262,15 +266,15 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`news_id`);
 
 --
--- Indexes for table `role`
+-- Indexes for table `roles`
 --
-ALTER TABLE `role`
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`role_id`);
 
 --
--- Indexes for table `schedule`
+-- Indexes for table `schedules`
 --
-ALTER TABLE `schedule`
+ALTER TABLE `schedules`
   ADD PRIMARY KEY (`schedule_id`),
   ADD KEY `fk_schedule_screen` (`screen_id`),
   ADD KEY `fk_schedule_movie` (`movie_id`);
@@ -290,15 +294,15 @@ ALTER TABLE `seats`
   ADD KEY `fk_seat_screen` (`screenRoom_id`);
 
 --
--- Indexes for table `theater`
+-- Indexes for table `theaters`
 --
-ALTER TABLE `theater`
+ALTER TABLE `theaters`
   ADD PRIMARY KEY (`theater_id`);
 
 --
--- Indexes for table `ticket`
+-- Indexes for table `tickets`
 --
-ALTER TABLE `ticket`
+ALTER TABLE `tickets`
   ADD PRIMARY KEY (`ticket_id`),
   ADD KEY `fk_ticket_account` (`account_id`),
   ADD KEY `fk_ticket_seat` (`seat_id`),
@@ -311,33 +315,33 @@ ALTER TABLE `ticket`
 --
 
 --
--- AUTO_INCREMENT for table `account`
+-- AUTO_INCREMENT for table `accounts`
 --
-ALTER TABLE `account`
+ALTER TABLE `accounts`
   MODIFY `account_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `bill`
+-- AUTO_INCREMENT for table `bills`
 --
-ALTER TABLE `bill`
+ALTER TABLE `bills`
   MODIFY `bill_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comment`
+-- AUTO_INCREMENT for table `comments`
 --
-ALTER TABLE `comment`
+ALTER TABLE `comments`
   MODIFY `comment_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `genre`
+-- AUTO_INCREMENT for table `genres`
 --
-ALTER TABLE `genre`
+ALTER TABLE `genres`
   MODIFY `genre_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `movie`
+-- AUTO_INCREMENT for table `movies`
 --
-ALTER TABLE `movie`
+ALTER TABLE `movies`
   MODIFY `movie_id` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -353,15 +357,15 @@ ALTER TABLE `news`
   MODIFY `news_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE `role`
+ALTER TABLE `roles`
   MODIFY `role_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `schedule`
+-- AUTO_INCREMENT for table `schedules`
 --
-ALTER TABLE `schedule`
+ALTER TABLE `schedules`
   MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -377,15 +381,15 @@ ALTER TABLE `seats`
   MODIFY `seat_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `theater`
+-- AUTO_INCREMENT for table `theaters`
 --
-ALTER TABLE `theater`
+ALTER TABLE `theaters`
   MODIFY `theater_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `ticket`
+-- AUTO_INCREMENT for table `tickets`
 --
-ALTER TABLE `ticket`
+ALTER TABLE `tickets`
   MODIFY `ticket_id` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -393,43 +397,43 @@ ALTER TABLE `ticket`
 --
 
 --
--- Constraints for table `account`
+-- Constraints for table `accounts`
 --
-ALTER TABLE `account`
-  ADD CONSTRAINT `fk_account_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `accounts`
+  ADD CONSTRAINT `fk_account_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `bill`
+-- Constraints for table `bills`
 --
-ALTER TABLE `bill`
-  ADD CONSTRAINT `fk_bill_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `bills`
+  ADD CONSTRAINT `fk_bill_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`ticket_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `comment`
+-- Constraints for table `comments`
 --
-ALTER TABLE `comment`
-  ADD CONSTRAINT `fk_comment_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_comment_movie` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `comments`
+  ADD CONSTRAINT `fk_comment_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_comment_movie` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `movie_genre`
 --
 ALTER TABLE `movie_genre`
-  ADD CONSTRAINT `fk_genre_id` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_movie_id` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_genre_id` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_movie_id` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `schedule`
+-- Constraints for table `schedules`
 --
-ALTER TABLE `schedule`
-  ADD CONSTRAINT `fk_schedule_movie` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+ALTER TABLE `schedules`
+  ADD CONSTRAINT `fk_schedule_movie` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_schedule_screen` FOREIGN KEY (`screen_id`) REFERENCES `screen_room` (`screemRoom_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `screen_room`
 --
 ALTER TABLE `screen_room`
-  ADD CONSTRAINT `fk_screen_theater` FOREIGN KEY (`theater_id`) REFERENCES `theater` (`theater_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_screen_theater` FOREIGN KEY (`theater_id`) REFERENCES `theaters` (`theater_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `seats`
@@ -438,14 +442,14 @@ ALTER TABLE `seats`
   ADD CONSTRAINT `fk_seat_screen` FOREIGN KEY (`screenRoom_id`) REFERENCES `screen_room` (`screemRoom_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `ticket`
+-- Constraints for table `tickets`
 --
-ALTER TABLE `ticket`
-  ADD CONSTRAINT `fk_ticket_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_ticket_schedule` FOREIGN KEY (`shcedule_id`) REFERENCES `schedule` (`schedule_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+ALTER TABLE `tickets`
+  ADD CONSTRAINT `fk_ticket_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_ticket_schedule` FOREIGN KEY (`shcedule_id`) REFERENCES `schedules` (`schedule_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_ticket_screen` FOREIGN KEY (`screenRoom_id`) REFERENCES `screen_room` (`screemRoom_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_ticket_seat` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`seat_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_ticket_theater` FOREIGN KEY (`theater_id`) REFERENCES `theater` (`theater_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_ticket_theater` FOREIGN KEY (`theater_id`) REFERENCES `theaters` (`theater_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
