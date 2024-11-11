@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+:root {
+  --background-color: #FEF3E2;
+  --main-color: #FA812F;
+  --secondary-color: #FAB12F;
+  --third-color: #FA4032;
+}
+
+body {
+  background: var(--background-color);
+}
+
 .slide-show {
   position: relative;
 }
@@ -35,4 +46,28 @@
 .v-right:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+.logoSaleNoti {
+  width: 85%;
+}
+
+.contact-logo {
+  width: 21%;
+}
+
+.contact-logo:hover {
+  width: 19%;
+}
+
+.footer-logo, .header-li {
+  text-decoration: none;
+}
+
+.header-li {
+  color: var(--third-color);
+}
+
+.header-li:hover {
+  font-size: 1.1rem;
 }
