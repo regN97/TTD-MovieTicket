@@ -24,6 +24,7 @@
                     <li><a href="#">Trang chủ</a></li>
                     <li><a href="#">Lịch chiếu</a></li>
                     <li><a href="#">Rạp</a></li>
+                    <li><a href="#">Tin tức</a></li>
                     <li><a href="#">Tài khoản</a></li>
                 </ul>
             </nav>
