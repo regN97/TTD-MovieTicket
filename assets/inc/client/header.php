@@ -14,14 +14,14 @@
 <body>
     <div class="header">
         <div class="navbar-brand">
-            <a href="#">
+            <a href="<?= BASE_URL ?>">
                 <h1 class="navbar-heading">TTD Movie Ticket</h1>
             </a>
         </div>
         <div class="navbar-container">
             <nav class="navbar">
                 <ul class="navbar-menu">
-                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="<?= BASE_URL ?>">Trang chủ</a></li>
                     <li><a href="#">Lịch chiếu</a></li>
                     <li><a href="#">Rạp</a></li>
                     <li><a href="#">Tin tức</a></li>

@@ -50,13 +50,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="my-2 btn btn-light">
+                    <a href="<?= BASE_URL_ADMIN . '&action=genres-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý thể loại
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="my-2 btn btn-light">
+                    <a href="<?= BASE_URL_ADMIN . '&action=theaters-index' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý rạp
                     </a>

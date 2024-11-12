@@ -26,7 +26,7 @@ if(isset($_SESSION['success'])){
     endif;            
 ?>
 
-<form action="<?= BASE_URL_ADMIN . '&action=theaters-update&id=' .$theater['theater_id'] ?>" method="post" enctype="multipart/form-data">
+<form action="<?= BASE_URL_ADMIN . '&action=theaters-update&id=' .$theater['id'] ?>" method="post" enctype="multipart/form-data">
 <div class="mb-3 mt-3">
         <label for="name" class="form-label">Tên rạp: </label>
         <input type="text" class="form-control" name="name" id="name" value="<?= $theater['name'] ?? null ?>">

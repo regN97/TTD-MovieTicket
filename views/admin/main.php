@@ -1,8 +1,7 @@
 <?php include "./assets/inc/admin/header.php" ?>
 
 <!-- Code bên trong admin-ct-right -->
-<div class="admin-ct-right">
-    <div class="container">
+<div class="admin-ct-right">   
         <h1 class="mt-3 mb-3"><?= $title ?? 'Admin Dashboard' ?></h1>
 
         <div class="row">
@@ -12,7 +11,6 @@
                 }
             ?>
         </div>
-    </div>
 </div>
 
 <?php include "./assets/inc/admin/sidebar.php" ?>

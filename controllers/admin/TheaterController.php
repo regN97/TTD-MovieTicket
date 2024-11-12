@@ -12,8 +12,8 @@ class TheaterController
     // Hiển thị danh sách
     public function index()
     {
-        $view = 'theaters/index';
-        $title = 'Danh sách Theaters';
+        $view = 'theaters/list';
+        $title = 'Danh sách Rạp';
         $data = $this->theater->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
@@ -25,13 +25,13 @@ class TheaterController
         try {
             $id = $_GET['id'];
 
-            if(!isset($id)){
+            if (!isset($id)) {
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $theater = $this->theater->find('*', 'theater_id = :id', ['id' => $id]);
+            $theater = $this->theater->find('*', 'id = :id', ['id' => $id]);
 
-            if(empty($theater)){
+            if (empty($theater)) {
                 throw new Exception("Theater có ID = $id không tồn tại!");
             }
 
@@ -43,7 +43,7 @@ class TheaterController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
             header('Location: ' . BASE_URL_ADMIN . '&action=theaters-index');
-            exit();  
+            exit();
         }
     }
 
@@ -60,7 +60,7 @@ class TheaterController
     public function store()
     {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception("Yêu cầu phương thức phải là POST!");
             }
 
@@ -69,25 +69,26 @@ class TheaterController
             $_SESSION['errors'] = [];
 
             // Validate dữ liệu
-            if(empty($data['name']) || strlen($data['name']) > 50){
-                $_SESSION['errors']['name'] = "Tên rạp không được bỏ trống và khônng được quá 50 ký tự!";
+            if (empty($data['name']) || strlen($data['name']) > 50) {
+                $_SESSION['errors']['name'] = "Tên rạp không được bỏ trống và không được quá 50 ký tự!";
             }
 
-            if(empty($data['address'])){
+            if (empty($data['address'])) {
                 $_SESSION['errors']['address'] = "Địa chỉ không được bỏ trống!";
             }
 
-            if(!empty($_SESSION['errors'])){
+            if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
-                throw new Exception("Dữ liệu lỗi!");
+                throw new Exception("Vui lòng kiểm tra lại!");
             }
 
             $rowCount = $this->theater->insert($data);
 
-            if($rowCount > 0){
+            if ($rowCount > 0) {
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = "Thao tác thành công!";
-            }else{
+                unset($_SESSION['data']);
+            } else {
                 throw new Exception("Thao tác không thành công!");
             }
         } catch (\Throwable $th) {
@@ -95,7 +96,7 @@ class TheaterController
             $_SESSION['msg'] = $th->getMessage();
         }
         header('Location: ' . BASE_URL_ADMIN . '&action=theaters-create');
-        exit();  
+        exit();
     }
 
     // Hiển thị form cập nhật theo ID
@@ -104,13 +105,13 @@ class TheaterController
         try {
             $id = $_GET['id'];
 
-            if(!isset($id)){
+            if (!isset($id)) {
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $theater = $this->theater->find('*', 'theater_id = :id', ['id' => $id]);
+            $theater = $this->theater->find('*', 'id = :id', ['id' => $id]);
 
-            if(empty($theater)){
+            if (empty($theater)) {
                 throw new Exception("Theater có ID = $id không tồn tại!");
             }
 
@@ -122,7 +123,7 @@ class TheaterController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
             header('Location: ' . BASE_URL_ADMIN . '&action=theaters-index');
-            exit();  
+            exit();
         }
     }
 
@@ -130,19 +131,19 @@ class TheaterController
     public function update()
     {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception("Yêu cầu phương thức phải là POST!");
             }
 
             $id = $_GET['id'];
 
-            if(!isset($id)){
+            if (!isset($id)) {
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $theater = $this->theater->find('*', 'theater_id = :id', ['id' => $id]);
+            $theater = $this->theater->find('*', 'id = :id', ['id' => $id]);
 
-            if(empty($theater)){
+            if (empty($theater)) {
                 throw new Exception("Theater có ID = $id không tồn tại!");
             }
 
@@ -151,40 +152,40 @@ class TheaterController
             $_SESSION['errors'] = [];
 
             // Validate dữ liệu
-            if(empty($data['name']) || strlen($data['name']) > 50){
+            if (empty($data['name']) || strlen($data['name']) > 50) {
                 $_SESSION['errors']['name'] = "Tên rạp không được bỏ trống và khônng được quá 50 ký tự!";
             }
 
-            if(empty($data['address'])){
+            if (empty($data['address'])) {
                 $_SESSION['errors']['address'] = "Địa chỉ không được bỏ trống!";
             }
 
-            if(!empty($_SESSION['errors'])){
+            if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Dữ liệu lỗi!");
             }
 
             $data['created_at'] = date('Y-m-d H:i:s');
 
-            $rowCount = $this->theater->update($data, 'theater_id = :id', ['id' => $id]);
+            $rowCount = $this->theater->update($data, 'id = :id', ['id' => $id]);
 
-            if($rowCount > 0){
+            if ($rowCount > 0) {
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = "Thao tác thành công!";
-            }else{
+            } else {
                 throw new Exception("Thao tác không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage() . ' - Line ' . $th->getLine();
 
-            if($th->getCode() == 99){
+            if ($th->getCode() == 99) {
                 header('Location: ' . BASE_URL_ADMIN . '&action=theaters-index');
-                exit();  
-            } 
+                exit();
+            }
         }
         header('Location: ' . BASE_URL_ADMIN . '&action=theaters-edit&id=' . $id);
-        exit();  
+        exit();
     }
 
     // Xoá dữ liệu theo ID
@@ -193,22 +194,22 @@ class TheaterController
         try {
             $id = $_GET['id'];
 
-            if(!isset($id)){
+            if (!isset($id)) {
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $theater = $this->theater->find('*', 'theater_id = :id', ['id' => $id]);
+            $theater = $this->theater->find('*', 'id = :id', ['id' => $id]);
 
-            if(empty($theater)){
+            if (empty($theater)) {
                 throw new Exception("Theater có ID = $id không tồn tại!");
             }
 
-            $rowCount = $this->theater->delete('theater_id = :id', ['id' => $id]);
+            $rowCount = $this->theater->delete('id = :id', ['id' => $id]);
 
-            if($rowCount > 0){
+            if ($rowCount > 0) {
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = "Thao tác thành công!";
-            }else{
+            } else {
                 throw new Exception("Thao tác không thành công!");
             }
         } catch (\Throwable $th) {
@@ -216,8 +217,6 @@ class TheaterController
             $_SESSION['msg'] = $th->getMessage();
         }
         header('Location: ' . BASE_URL_ADMIN . '&action=theaters-index');
-        exit();        
+        exit();
     }
-
 }
-?>
