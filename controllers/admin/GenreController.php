@@ -105,7 +105,7 @@ class GenreController
     }
 
     // Hiển thị trang update
-    public function toUpdate()
+    public function updatePage()
     {
         try {
             if (!isset($_GET['id'])) {
@@ -190,7 +190,7 @@ class GenreController
             }
         }
 
-        header('Location: ' . BASE_URL_ADMIN . '&action=genres-toUpdate&id=' . $id);
+        header('Location: ' . BASE_URL_ADMIN . '&action=genres-updatePage&id=' . $id);
         exit();
     }
 

@@ -33,7 +33,7 @@ if (isset($_SESSION['success'])) {
                 <td class="d-flex justify-content-center">
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-show&id=' . $genre['id'] ?>"
                         class="btn btn-info">Xem</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=genres-toUpdate&id=' . $genre['id'] ?>"
+                    <a href="<?= BASE_URL_ADMIN . '&action=genres-updatePage&id=' . $genre['id'] ?>"
                         class="btn btn-warning mx-2">Sửa</a>
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-delete&id=' . $genre['id'] ?>"
                         onclick="return confirm('Bạn có chắc muốn xóa?')"
