@@ -4,7 +4,7 @@
 <div class="admin-ct-right">   
         <h1 class="mt-3 mb-3"><?= $title ?? 'Admin Dashboard' ?></h1>
 
-        <div class="row">
+        <div>
             <?php
                 if(isset($view)){
                     require_once PATH_VIEW_ADMIN . $view . '.php';

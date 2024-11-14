@@ -1,4 +1,4 @@
-<a href="<?= BASE_URL_ADMIN . '&action=genres-create' ?>" class="btn btn-primary mb-3">Thêm mới</a>
+<a href="<?= BASE_URL_ADMIN . '&action=genres-create' ?>" class="w-25 btn btn-primary mb-3">Thêm mới</a>
 
 <?php
 if (isset($_SESSION['success'])) {
@@ -25,12 +25,16 @@ if (isset($_SESSION['success'])) {
             <tr>
                 <td><?= $genre['id'] ?></td>
                 <td><?= $genre['name'] ?></td>
-                <td><?= $genre['description'] ?></td>
-                <td>
+                <td><?php 
+                    $maxLength = 50;
+                    $shortenData = mb_substr($genre['description'], 0, $maxLength, 'UTF-8');
+                    echo $shortenData . ' ...';
+                ?></td>
+                <td class="d-flex justify-content-center">
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-show&id=' . $genre['id'] ?>"
                         class="btn btn-info">Xem</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=genres-update&id=' . $genre['id'] ?>"
-                        class="btn btn-warning mx-3">Sửa</a>
+                    <a href="<?= BASE_URL_ADMIN . '&action=genres-toUpdate&id=' . $genre['id'] ?>"
+                        class="btn btn-warning mx-2">Sửa</a>
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-delete&id=' . $genre['id'] ?>"
                         onclick="return confirm('Bạn có chắc muốn xóa?')"
                         class="btn btn-danger">Xóa</a>

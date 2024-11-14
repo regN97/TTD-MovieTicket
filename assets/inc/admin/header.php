@@ -34,8 +34,8 @@
             </div>
         </div>
     </header>
-    <div class="admin-content">
-        <div class="admin-side-bar d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <div class="d-flex">
+        <div class="admin-side-bar d-flex flex-column flex-shrink-0 p-3">
             <ul class="nav nav-pills flex-column mb-auto admin-nav">
                 <li>
                     <a href="#" class="my-2 btn btn-light">
@@ -56,9 +56,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?= BASE_URL_ADMIN . '&action=theaters-index' ?>" class="my-2 btn btn-light">
+                    <a href="<?= BASE_URL_ADMIN . '&action=artists-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
-                        Quản lý rạp
+                        Quản lý Artists
                     </a>
                 </li>
                 <li>

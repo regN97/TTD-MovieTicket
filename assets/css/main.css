@@ -193,15 +193,13 @@ nav {
 .admin-side-bar {
   height: 40rem;
   background-color: var(--secondary-color);
-}
-
-.admin-content {
-  display: flex;
+  width: 18%;
 }
 
 .admin-ct-right {
   margin-top: 50px;
   margin-left: 50px;
+  width: 70%;
 }
 
 .admin-nav li a {
