@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // Hàm spl_autoload_register đăng ký hàm autoload. Giúp tự động tải các lớp (Class) và giao diện (Interface) khi chúng được sử dụng mà không cần phải sử dụng require hoặc include thủ công
 spl_autoload_register(function ($class) {
     $fileName = "$class.php";

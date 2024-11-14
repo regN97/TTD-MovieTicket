@@ -56,6 +56,7 @@ class BaseModel {
 
         $columns = implode(', ', $keys);
 
+        
         $placehoders = ':' . implode(', :', $keys);
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placehoders)";
