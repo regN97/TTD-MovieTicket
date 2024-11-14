@@ -11,7 +11,7 @@
                 switch ($key) {
                     case 'image':
                         if(!empty($value)){
-                            $link = BASE_ASSETS_UPLOADS . $value ;
+                            $link = BASE_ASSETS_CLIENT_IMAGE . $value ;
                             echo "<img src='$link' width='100px'>";
                         }
                         
@@ -28,4 +28,4 @@
     <?php endforeach; ?>
 </table>
 
-<a href="<?= BASE_URL_ADMIN . '&action=news-index' ?>" class="btn btn-danger">Quay lại danh sách</a>
+<a href="<?= BASE_URL_ADMIN . '&action=news-list' ?>" class="btn btn-danger">Quay lại danh sách</a>

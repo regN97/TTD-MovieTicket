@@ -14,34 +14,36 @@ if(isset($_SESSION['success'])){
 
 <table class="table table-bordered">
     <tr>
-        <th>ID</th>
-        <th>Tiêu đề/th>
+        <th>STT</th>
+        <th>Tiêu đề</th>
         <th>Nội dung</th>
-        <th>Mô tả</th>
         <th>Hình ảnh</th>
         <th>Thời điểm tạo</th>
-        <th>Thao Tác</th>
+        <th>Người đăng</th>
+        <th>Thao tác</th>
     </tr>
-    <?php foreach ($data as $news): ?>
+    
+    <?php foreach ($data as $key => $news):?>
         <tr>
-        <td><?= $news['news_id'] ?></td>
+        <td><?= $key+1 ?></td>
         <td><?= $news['title'] ?></td>
         <td><?= $news['content'] ?></td>
-        <td><?= $news['description'] ?></td>
         <td>  
-            <?php if(!empty($news['image'])) : ?> 
-            <img src="<?= BASE_ASSETS_UPLOADS . $news['image']?>" width="100px">
+            <?php if(!empty($news['imageURL'])) : ?> 
+            <img src="<?= BASE_ASSETS_UPLOADS . $news['imageURL']?>" width="100px">
             <?php endif ;?>  
         </td>
         <td><?= $news['created_at'] ?></td>
+        <td><?= $news['user_id'] ?></td>
+
         <td>
-            <a href="<?= BASE_URL_ADMIN . '&action=news-show&id=' . $news['news_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-show&id=' . $news['id'] ?>"
                     class="btn btn-info">Xem</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=news-edit&id=' . $news['news_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-updatePage&id=' . $news['id'] ?>"
                 class="btn btn-warning ms-3 me-3">Sửa</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=news-delete&id=' . $news['news_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-delete&id=' . $news['id'] ?>"
                 onclick="return confirm('Bạn có chắc muốn xoá?')"
                 class="btn btn-danger">Xoá</a>
         </td>

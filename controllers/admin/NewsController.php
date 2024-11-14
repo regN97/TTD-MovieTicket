@@ -8,13 +8,15 @@ class NewsController
     }
 
     // Hiển thị danh sách tin tức 
-    public function index()
+    public function list()
     {
-        $view = 'news/index';
+        unset($_SESSION['data']);
+        $view = 'news/list';
         $title = 'Danh sách tin tức';
         $data = $this->news->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
+        
     }
 
      // Hiển thị chi tiết theo ID
@@ -27,7 +29,7 @@ class NewsController
              throw new Exception('Thiếu tham số "id"',99);
             }
             $id = $_GET['id'];
-            $news = $this ->news -> find('*','news_id= :id',['id' => $id]);
+            $news = $this ->news -> find('*','id= :id',['id' => $id]);
             if(empty($news))
             {
              throw new Exception("Tin tức có ID =$id Không tồn tại!");
@@ -39,7 +41,7 @@ class NewsController
          } catch (\Throwable $th) {
              $_SESSION['success'] = false;
              $_SESSION['msg'] = $th->getMessage();
-             header( 'Location:' . BASE_URL_ADMIN . '&action=news-index');
+             header( 'Location:' . BASE_URL_ADMIN . '&action=news-list');
              exit;
          }
          
@@ -67,8 +69,11 @@ class NewsController
             $data = $_POST + $_FILES;
             
             $_SESSION['errors'] = [];
+            
+            // debug($data);
 
             // Validate dữ liệu 
+            // debug($_SESSION['data']);
 
             if(empty($data['title']) || strlen($data['title']) > 100){
                 $_SESSION['errors']['title'] = "Tiêu Đề không được bỏ trống và khônng được quá 100 ký tự!";
@@ -76,20 +81,36 @@ class NewsController
             if(empty($data['content'])){
                 $_SESSION['errors']['content'] = "Nội dung không được bỏ trống!";
             }
-            if($data['image']['size']>0){
-                if($data['image']['size']>2*1024*1024){
-                    $_SESSION['errors']['image_type'] = 'Trường hình ảnh có dung lượng tối da là 2MB!';
+           
+            if(!empty($data['imageURL'])&&$data['imageURL']['size']>0){
+                if($data['imageURL']['size']>2*1024*1024){
+                    $_SESSION['errors']['imageURL_type'] = 'Trường hình ảnh có dung lượng tối da là 2MB!';
                 }
-                $fileType =$data['image']['type'] ;
+                $fileType =$data['imageURL']['type'] ;
                 $allowedTyped = ['image/jpg','image/jpeg','image/png','image/gif'];
                 if(!in_array($fileType,$allowedTyped)){
-                    $_SESSION['errors']['image_type'] = 'Xin lỗi, chỉ chấp nhận Các loại file JPG, JPEG, PNG, GiF!';
+                    $_SESSION['errors']['imageURL_type'] = 'Xin lỗi, chỉ chấp nhận Các loại file JPG, JPEG, PNG, GiF!';
 
                 }
+                
+            }
+            else {
+                    $_SESSION['errors']['imageURL'] = "Ảnh không được bỏ trống!";
+                
+            }
+            
+            if(empty($data['user_id'])){
+                $_SESSION['errors']['user_id'] = "Tên người đăng không được bỏ trống!";
             }
             if(!empty($_SESSION['errors'])){
                 $_SESSION['data'] = $data;
                 throw new Exception("Dữ liệu lỗi!");
+            }
+            if ($data['imageURL']['size']>0) {
+                $data['imageURL'] =upload_file('news',$data['imageURL']);
+            }
+            else {
+                $data['imageURL']=null;
             }
             $rowCount = $this->news->insert($data);
             if($rowCount > 0){
@@ -111,7 +132,7 @@ class NewsController
 
 }
     // Hiển thị form cập nhật theo ID
-    public function edit()
+    public function updatePage()
     {
         try {
             $id = $_GET['id'];
@@ -120,20 +141,20 @@ class NewsController
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $news = $this->news->find('*', 'newS_id = :id', ['id' => $id]);
+            $news = $this->news->find('*', 'id = :id', ['id' => $id]);
 
             if(empty($news)){
                 throw new Exception("News có ID = $id không tồn tại!");
             }
 
-            $view = 'news/edit';
+            $view = 'news/update';
             $title = "Cập nhật News có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
-            header('Location: ' . BASE_URL_ADMIN . '&action=news-index');
+            header('Location: ' . BASE_URL_ADMIN . '&action=news-list');
             exit();  
     }
 }
@@ -152,9 +173,9 @@ class NewsController
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $theater = $this->news->find('*', 'news_id = :id', ['id' => $id]);
+            $news = $this->news->find('*', 'id = :id', ['id' => $id]);
 
-            if(empty($theater)){
+            if(empty($news)){
                 throw new Exception("News có ID = $id không tồn tại!");
             }
 
@@ -169,25 +190,37 @@ class NewsController
             if(empty($data['content'])){
                 $_SESSION['errors']['content'] = "Nội dung không được bỏ trống!";
             }
-            if($data['image']['size']>0){
-                if($data['image']['size']>2*1024*1024){
-                    $_SESSION['errors']['image_type'] = 'Trường hình ảnh có dung lượng tối da là 2MB!';
+            if(empty($data['imageURL'])){
+                $_SESSION['errors']['imageURL_type'] = "Ảnh không được bỏ trống!";
+            }
+            if(!empty($data['imageURL'])&&$data['imageURL']['size']>0){
+                if($data['imageURL']['size']>2*1024*1024){
+                    $_SESSION['errors']['imageURL_type'] = 'Trường hình ảnh có dung lượng tối da là 2MB!';
                 }
-                $fileType =$data['image']['type'] ;
+                $fileType =$data['imageURL']['type'] ;
                 $allowedTyped = ['image/jpg','image/jpeg','image/png','image/gif'];
                 if(!in_array($fileType,$allowedTyped)){
-                    $_SESSION['errors']['image_type'] = 'Xin lỗi, chỉ chấp nhận Các loại file JPG, JPEG, PNG, GiF!';
+                    $_SESSION['errors']['imageURL_type'] = 'Xin lỗi, chỉ chấp nhận Các loại file JPG, JPEG, PNG, GiF!';
 
                 }
+                
+            }
+            if(empty($data['user_id'])){
+                $_SESSION['errors']['user_id'] = "Tên người đăng không được bỏ trống!";
             }
             if(!empty($_SESSION['errors'])){
                 $_SESSION['data'] = $data;
                 throw new Exception("Dữ liệu lỗi!");
             }
-
+            if ($data['imageURL']['size']>0) {
+                $data['imageURL'] =upload_file('news',$data['imageURL']);
+            }
+            else {
+                $data['imageURL']=null;
+            }
             $data['created_at'] = date('Y-m-d H:i:s');
 
-            $rowCount = $this->news->update($data, 'news_id = :id', ['id' => $id]);
+            $rowCount = $this->news->update($data, 'id = :id', ['id' => $id]);
 
             if($rowCount > 0){
                 $_SESSION['success'] = true;
@@ -200,11 +233,11 @@ class NewsController
             $_SESSION['msg'] = $th->getMessage() . ' - Line ' . $th->getLine();
 
             if($th->getCode() == 99){
-                header('Location: ' . BASE_URL_ADMIN . '&action=news-index');
+                header('Location: ' . BASE_URL_ADMIN . '&action=news-list');
                 exit();  
             } 
         }
-        header('Location: ' . BASE_URL_ADMIN . '&action=news-edit&id=' . $id);
+        header('Location: ' . BASE_URL_ADMIN . '&action=news-updatePage&id=' . $id);
         exit();  
     }
 
@@ -217,12 +250,12 @@ class NewsController
             throw new Exception('Thiếu tham số "id"',99);
            }
            $id = $_GET['id'];
-           $news = $this ->news -> find('*','news_id= :id',['id' => $id]);
+           $news = $this ->news -> find('*','id= :id',['id' => $id]);
            if(empty($news))
            {
             throw new Exception("Tin tức có ID =$id Không tồn tại!");
            }
-           $rowCount = $this->news->delete('news_id= :id',['id' => $id]);
+           $rowCount = $this->news->delete('id= :id',['id' => $id]);
            if($rowCount > 0)
            {
             if(!empty($news['image']) && file_exists(PATH_ASSETS_UPLOADS .$news['image'] ))
@@ -240,7 +273,7 @@ class NewsController
             $_SESSION['msg'] = $th->getMessage();
         }
         header(
-            'location:' . BASE_URL_ADMIN . '&action=news-index'
+            'location:' . BASE_URL_ADMIN . '&action=news-list'
         );
     }
 

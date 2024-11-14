@@ -10,15 +10,13 @@ if(isset($_SESSION['success'])){
 ?>
 
 <?php if(!empty($_SESSION['errors'])): ?>
-
-    <div class="alert alert-danger">
+<div class="alert alert-danger">
 <ul>
         <?php foreach($_SESSION['errors'] as $value): ?>
             <li><?= $value ?></li>
         <?php endforeach; ?>
 </ul>
 </div>
-
 <?php 
 unset($_SESSION['errors']);
 endif;            
@@ -26,21 +24,25 @@ endif;
 
 <!-- Form Thêm Tin tức -->
  
-<form action="<?= BASE_URL_ADMIN . '&action=news-store' ?>" method="post" enctype="multipart/form-data">
+<form action="<?= BASE_URL_ADMIN . '&action=news-update&id=' .$news['id'] ?>" method="post" enctype="multipart/form-data">
 <div class="my-3">
-        <label for="title" class="form-label">Tiêu đề: </label>
-        <input type="text" class="form-control" name="title" id="title" value="<?= $_SESSION['data']['title'] ?? null ?>">
+        <label for="name" class="form-label">Tiêu đề: </label>
+        <input type="text" class="form-control" name="title" id="title" value="<?= $news['title'] ?? null ?>">
     </div>
     <div class="my-3">
-        <label for="content" class="form-label">Nội dung: </label>
-        <textarea type="" class="form-control" name="content" id="content" ><?= $_SESSION['data']['content'] ?? null ?></textarea>
+        <label for="address" class="form-label">Nội dung: </label>
+        <textarea type="" class="form-control" name="content" id="content" ><?= $news['content'] ?? null ?></textarea>
     </div>
     <div class="mb-3 mt-3">
-        <label for="imageURL" class="form-label">Hình ảnh: </label>
-        <input type="file" class="form-control" name="imageURL" id="imageURL" value="<?= $_SESSION['data']['imageURL'] ?? null ?>">
+        <label for="name" class="form-label">Hình ẩnh: </label>
+        <input type="file" class="form-control" name="imageURL" id="imageURL" >
+        
+        <?php if(!empty($news['imageURL'])) :?>
+            <img src="<?= BASE_ASSETS_UPLOADS . $news['imageURL']?>" width="100px">
+        <?php endif; ?>
     </div>
     <div class="my-3">
-        <label for="" class="form-label">Người đăng: </label>
+        <label for="user_id" class="form-label">Người đăng: </label>
         <input type="text" class="form-control" name="user_id" id="user_id" value="<?= $_SESSION['data']['user_id'] ?? null ?>">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
