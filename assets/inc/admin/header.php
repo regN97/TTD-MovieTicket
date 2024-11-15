@@ -52,13 +52,19 @@
                 <li>
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
-                        Quản lý thể loại
+                        Quản lý thể loại phim
                     </a>
                 </li>
                 <li>
                     <a href="<?= BASE_URL_ADMIN . '&action=artists-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý Artists
+                    </a>
+                </li>
+                <li>
+                    <a href="<?=  BASE_URL_ADMIN . '&action=rooms-list' ?>" class="my-2 btn btn-light">
+                        <i class="fa-solid fa-gauge-high me-2"></i>
+                        Quản lý phòng chiếu
                     </a>
                 </li>
                 <li>

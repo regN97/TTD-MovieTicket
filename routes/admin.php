@@ -31,4 +31,13 @@ match ($action) {
     'artists-updatePage' => (new ArtistController)->updatePage(),
     'artists-update'     => (new ArtistController)->update(),
     'artists-delete'     => (new ArtistController)->delete(),
+
+    // CRUD Rooms
+    'rooms-list'       => (new RoomController)->list(),
+    'rooms-create'     => (new RoomController)->create(),
+    'rooms-store'      => (new RoomController)->store(),
+    'rooms-show'       => (new RoomController)->show(),
+    'rooms-updatePage' => (new RoomController)->updatePage(),
+    'rooms-update'     => (new RoomController)->update(),
+    'rooms-delete'     => (new RoomController)->delete(),    
 };
