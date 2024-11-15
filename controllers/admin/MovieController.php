@@ -11,6 +11,8 @@ class MovieController
 
     public function list()
     {
+        unset($_SESSION['data']);
+
         $view = 'movies/list';
         $title = 'Danh sách phim';
         $data = $this->movie->select('*');
