@@ -23,4 +23,12 @@ match ($action) {
     'movies-update'     => (new MovieController)->update(),     // Lưu dữ liệu cập nhật
     'movies-delete'     => (new MovieController)->delete(),     // Chức năng xóa
 
+    // CRUD Artists
+    'artists-list'       => (new ArtistController)->list(),
+    'artists-create'     => (new ArtistController)->create(),
+    'artists-store'      => (new ArtistController)->store(),
+    'artists-show'       => (new ArtistController)->show(),
+    'artists-updatePage' => (new ArtistController)->updatePage(),
+    'artists-update'     => (new ArtistController)->update(),
+    'artists-delete'     => (new ArtistController)->delete(),
 };
