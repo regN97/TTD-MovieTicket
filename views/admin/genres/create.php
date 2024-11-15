@@ -11,17 +11,17 @@ if (isset($_SESSION['success'])) {
 
 <?php if (!empty($_SESSION['errors'])): ?>
 
-    <ul>
-        <div>
-            <?php foreach ($_SESSION['errors'] as $value): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach ($_SESSION['errors'] as $value) : ?>
                 <li><?= $value ?></li>
             <?php endforeach; ?>
-        </div>
-    </ul>
+        </ul>
+    </div>
 
 <?php
     unset($_SESSION['errors']);
-endif;
+    endif;
 ?>
 
 <form action="<?= BASE_URL_ADMIN . '&action=genres-store' ?>" method="post" enctype="multipart/form-data">
