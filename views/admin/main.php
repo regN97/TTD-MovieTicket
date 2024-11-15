@@ -2,7 +2,7 @@
 
 <!-- Code bên trong admin-ct-right -->
 <div class="admin-ct-right">   
-        <h1 class="mt-3 mb-3"><?= $title ?? 'Admin Dashboard' ?></h1>
+        <h1 class="mb-3"><?= $title ?? 'Admin Dashboard' ?></h1>
 
         <div>
             <?php
