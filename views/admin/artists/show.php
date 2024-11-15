@@ -11,21 +11,22 @@
             <td>
                 <?php
 
-                    switch ($key){
-                        case 'imageURL':
-                            if(!empty($value)){
-                                $link = BASE_ASSETS_UPLOADS . $artist['imageURL'];
+                switch ($key) {
+                    case 'imageURL':
+                        if (!empty($value)) {
+                            $link = BASE_ASSETS_UPLOADS . $artist['imageURL'];
 
-                                echo "<img src='$link' width='100px'";
-                            }
-                            break;
+                            echo "<img src='$link' width='100px'";
+                        }
+                        break;
 
-                        default:
-                            echo $value;
-                            break;
-                    }
+                    default:
+                        echo $value;
+                        break;
+                }
                 ?>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
+<a href="<?= BASE_URL_ADMIN . '&action=artists-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
