@@ -94,6 +94,18 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?= BASE_URL_ADMIN . '&action=ranks-list' ?>" class="my-2 btn btn-light">
+                        <i class="fa-solid fa-gauge-high me-2"></i>
+                        Quản lý thứ hạng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= BASE_URL_ADMIN . '&action=roles-list' ?>" class="my-2 btn btn-light">
+                        <i class="fa-solid fa-gauge-high me-2"></i>
+                        Quản lý vai trò
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý bình luận
