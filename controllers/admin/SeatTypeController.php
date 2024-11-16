@@ -45,8 +45,8 @@ class SeatTypeController
                 $_SESSION['errors']['type'] = 'Vui lòng chọn loại ghế!';
             }
 
-            if (empty($data['price'])) {
-                $_SESSION['errors']['price'] = 'Vui lòng nhập giá tiền!';
+            if (empty($data['price']) || $data['price'] <= 0) {
+                $_SESSION['errors']['price'] = 'Vui lòng nhập giá tiền & phải lớn hơn 0!';
             }
             // End validate
 
@@ -157,8 +157,8 @@ class SeatTypeController
                 $_SESSION['errors']['type'] = 'Vui lòng chọn loại ghế!';
             }
 
-            if (empty($data['price'])) {
-                $_SESSION['errors']['price'] = 'Vui lòng nhập giá tiền!';
+            if (empty($data['price']) || $data['price'] <= 0) {
+                $_SESSION['errors']['price'] = 'Vui lòng nhập giá tiền & phải lớn hơn 0!';
             }
             // End validate
 
