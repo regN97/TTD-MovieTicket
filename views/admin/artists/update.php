@@ -28,11 +28,15 @@ if(isset($_SESSION['success'])){
     <div class="mb-3 mt-3">
         <label for="name" class="form-label">Tên diễn viên/đạo diễn:</label>
         <input type="text" class="form-control" id="name" name="name"
-            value="<?= $artist['name'] ?? null ?>">
+            value="<?php if (isset($_SESSION['data'])) {
+                        echo $_SESSION['data']['name'];
+                    } else {
+                        echo $artist['name'];
+                    } ?>">
     </div>
     <div class="mb-3 mt-3">
         <label for="roles" class="form-label">Vai trò:</label>
-        <select name="roles" id="roles">
+        <select name="roles" id="roles" class="form-select">
             <option value="">Lựa chọn vai trò</option>
             <option value="Đạo diễn" <?php if(isset($artist['roles']) && $artist['roles'] === 'Đạo diễn') echo 'selected' ?>>Đạo diễn</option>
             <option value="Diễn viên" <?php if(isset($artist['roles']) && $artist['roles'] === 'Diễn viên') echo 'selected' ?>>Diễn viên</option>
@@ -41,12 +45,20 @@ if(isset($_SESSION['success'])){
     <div class="mb-3 mt-3">
         <label for="bio" class="form-label">Thông tin:</label>
         <input type="text" class="form-control" id="bio" name="bio"
-            value="<?= $artist['bio'] ?? null ?>">
+            value="<?php if (isset($_SESSION['data'])) {
+                        echo $_SESSION['data']['bio'];
+                    } else {
+                        echo $artist['bio'];
+                    } ?>">
     </div>
     <div class="mb-3 mt-3">
         <label for="country" class="form-label">Quê quán:</label>
         <input type="text" class="form-control" id="country" name="country"
-            value="<?= $artist['country'] ?? null ?>">
+            value="<?php if (isset($_SESSION['data'])) {
+                        echo $_SESSION['data']['country'];
+                    } else {
+                        echo $artist['country'];
+                    } ?>">
     </div>
     <div class="mb-3 mt-3">
         <label for="imageURL" class="form-label">Hình ảnh:</label>

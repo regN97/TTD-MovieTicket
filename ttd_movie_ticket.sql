@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 14, 2024 at 03:42 AM
+-- Generation Time: Nov 15, 2024 at 04:58 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -35,6 +35,13 @@ CREATE TABLE `artists` (
   `country` varchar(50) NOT NULL,
   `imageURL` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `artists`
+--
+
+INSERT INTO `artists` (`id`, `name`, `roles`, `bio`, `country`, `imageURL`) VALUES
+(2, 'test abc', 'Diễn viên', 'abc', 'xyz', 'artists/1731685924-Mary_Elizabeth_Ellis.jpg');
 
 -- --------------------------------------------------------
 
@@ -76,6 +83,14 @@ CREATE TABLE `genres` (
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `genres`
+--
+
+INSERT INTO `genres` (`id`, `name`, `description`) VALUES
+(1, 'Hành động', 'Kịch tính, nhiều pha hành động, đấu tranh, truy đuổi, và những cảnh quay mãn nhãn.'),
+(3, 'Tình cảm', 'Lãng mạn, cảm xúc, tình yêu, và quan hệ. Những câu chuyện này thường xoay quanh sự phát triển của tình cảm giữa các nhân vật, với những khoảnh khắc ngọt ngào, xúc động và đôi khi là thử thách.        ');
+
 -- --------------------------------------------------------
 
 --
@@ -89,9 +104,17 @@ CREATE TABLE `movies` (
   `duration` tinyint UNSIGNED NOT NULL,
   `release_date` date NOT NULL,
   `language` varchar(50) NOT NULL,
-  `imageURL` varchar(255) NOT NULL,
+  `imageURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `movies`
+--
+
+INSERT INTO `movies` (`id`, `name`, `description`, `duration`, `release_date`, `language`, `imageURL`, `type`) VALUES
+(1, 'zcscscscs', 'update', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731683808-co_dau_hao_mon.jpg', 'T18'),
+(4, 'Hyundai Creta', 'asdasdasd', 220, '2024-11-12', 'Vietnamese, English', 'movies/1731683997-hoc_vien_dieu_anh_hung.jpg', 'T16');
 
 -- --------------------------------------------------------
 
@@ -144,7 +167,8 @@ CREATE TABLE `orders` (
   `status` varchar(50) NOT NULL,
   `total_price` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `paymentMethod` varchar(50) NOT NULL
+  `paymentMethod` varchar(50) NOT NULL,
+  `discount` decimal(3,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -169,7 +193,8 @@ CREATE TABLE `order_details` (
 CREATE TABLE `ranks` (
   `id` int NOT NULL,
   `name` varchar(50) NOT NULL,
-  `benefits` varchar(255) NOT NULL
+  `benefits` varchar(255) NOT NULL,
+  `level` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -399,6 +424,7 @@ ALTER TABLE `tickets`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `fk_user_rank` (`rank_id`),
   ADD KEY `fk_user_role` (`role_id`);
 
@@ -410,7 +436,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -428,13 +454,13 @@ ALTER TABLE `food_and_drinks`
 -- AUTO_INCREMENT for table `genres`
 --
 ALTER TABLE `genres`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `movie_artists`

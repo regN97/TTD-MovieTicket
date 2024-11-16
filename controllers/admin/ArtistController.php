@@ -9,19 +9,19 @@ class ArtistController
         $this->artist = new Artist();   
     }
 
-    // Hiển thị danh sách diễn viên/đạo diễn
+    // Hiển thị danh sách Artists
     public function list()
     {
         unset($_SESSION['data']);
 
         $view = 'artists/list';
-        $title = 'Danh sách diễn viên/đạo diễn';
+        $title = 'Danh sách Artists';
         $data = $this->artist->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
 
-    // Xem chi tiết diễn viên/đạo diễn
+    // Xem chi tiết Artists
     public function show()
     {
         try {
@@ -38,7 +38,7 @@ class ArtistController
             }
 
             $view = 'artists/show';
-            $title = "Chi tiết diễn viên/đạo diễn";
+            $title = "Chi tiết Artists";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -53,7 +53,7 @@ class ArtistController
     // Hiển thị form thêm mới
     public function create(){
         $view = 'artists/create';
-        $title = 'Thêm mới diễn viên/đạo diễn';
+        $title = 'Thêm mới Artists';
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -148,13 +148,13 @@ class ArtistController
             }
 
             $view = 'artists/update';
-            $title = "Cập nhật đạo diễn/diễn viên có id = $id";
+            $title = "Cập nhật Artists có id = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
-            header('Location: ' . BASE_URL_ADMIN . '&action=genres-create');
+            header('Location: ' . BASE_URL_ADMIN . '&action=artists-create');
             exit();
         }        
     }

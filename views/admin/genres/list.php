@@ -14,22 +14,23 @@ if (isset($_SESSION['success'])) {
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>STT</th>
             <th>Tên thể loại</th>
             <th>Mô tả</th>
             <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($data as $genre): ?>
+        <?php $stt = 1;
+        foreach ($data as $genre): ?>
             <tr>
-                <td><?= $genre['id'] ?></td>
+                <td><?= $stt++; ?></td>
                 <td><?= $genre['name'] ?></td>
-                <td><?php 
+                <td><?php
                     $maxLength = 50;
                     $shortenData = mb_substr($genre['description'], 0, $maxLength, 'UTF-8');
                     echo $shortenData . ' ...';
-                ?></td>
+                    ?></td>
                 <td class="d-flex justify-content-center">
                     <a href="<?= BASE_URL_ADMIN . '&action=genres-show&id=' . $genre['id'] ?>"
                         class="btn btn-info">Xem</a>
