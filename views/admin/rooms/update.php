@@ -36,7 +36,7 @@ endif;
     </div>
     <div class="my-3">
         <label for="type" class="form-label">Loại phòng:</label>
-        <select name="type" id="type">
+        <select class="form-select" name="type" id="type">
             <option value="">Lựa chọn loại phòng</option>
             <option value="IMAX" <?php if (isset($room['type']) && $room['type'] === 'IMAX') echo 'selected' ?>>IMAX</option>
             <option value="3D" <?php if (isset($room['type']) && $room['type'] === '3D') echo 'selected' ?>>3D</option>

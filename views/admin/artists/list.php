@@ -17,7 +17,7 @@ if(isset($_SESSION['success'])){
         <tr>
             <th>STT</th>
             <th>Ảnh</th>
-            <th>Tên diễn viên/đạo diễn</th>
+            <th>Tên nghệ sĩ</th>
             <th>Vai trò</th>
             <th>Thông tin</th>
             <th>Quê quán</th>

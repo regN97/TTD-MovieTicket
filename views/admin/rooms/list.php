@@ -19,6 +19,7 @@ if (isset($_SESSION['success'])) {
             <th class="text-center">Loại phòng</th>
             <th class="text-center">Mô tả</th>
             <th class="text-center">Tổng số ghế</th>
+            <th class="text-center">Thao tác</th>
         </tr>
     </thead>
     <tbody>

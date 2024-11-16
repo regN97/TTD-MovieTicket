@@ -68,6 +68,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?=  BASE_URL_ADMIN . '&action=seatType-list' ?>" class="my-2 btn btn-light">
+                        <i class="fa-solid fa-gauge-high me-2"></i>
+                        Quản lý loại ghế
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý tài khoản

@@ -39,5 +39,14 @@ match ($action) {
     'rooms-show'       => (new RoomController)->show(),
     'rooms-updatePage' => (new RoomController)->updatePage(),
     'rooms-update'     => (new RoomController)->update(),
-    'rooms-delete'     => (new RoomController)->delete(),    
+    'rooms-delete'     => (new RoomController)->delete(),
+
+    // CRUD Seat type
+    'seatType-list'       => (new SeatTypeController)->list(),
+    'seatType-create'     => (new SeatTypeController)->create(),
+    'seatType-store'      => (new SeatTypeController)->store(),
+    'seatType-show'       => (new SeatTypeController)->show(),
+    'seatType-updatePage' => (new SeatTypeController)->updatePage(),
+    'seatType-update'     => (new SeatTypeController)->update(),
+    'seatType-delete'     => (new SeatTypeController)->delete(),
 };
