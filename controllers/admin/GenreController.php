@@ -53,8 +53,9 @@ class GenreController
 
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
-                throw new Exception("Vui lòng kiểm tra lại!");
+                throw new Exception("Có lỗi xảy ra, vui lòng kiểm tra lại!");
             }
+            // End validate
 
             $rowCount = $this->genre->insert($data);
 
@@ -105,7 +106,7 @@ class GenreController
     }
 
     // Hiển thị trang update
-    public function toUpdate()
+    public function updatePage()
     {
         try {
             if (!isset($_GET['id'])) {
@@ -190,7 +191,7 @@ class GenreController
             }
         }
 
-        header('Location: ' . BASE_URL_ADMIN . '&action=genres-toUpdate&id=' . $id);
+        header('Location: ' . BASE_URL_ADMIN . '&action=genres-updatePage&id=' . $id);
         exit();
     }
 
@@ -216,7 +217,6 @@ class GenreController
                 $_SESSION['msg'] = 'Xóa thành công!';
             } else {
                 throw new Exception("Xóa không thành công!");
-                
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
