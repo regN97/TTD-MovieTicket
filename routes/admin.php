@@ -48,7 +48,7 @@ match ($action) {
     'seatType-show'       => (new SeatTypeController)->show(),
     'seatType-updatePage' => (new SeatTypeController)->updatePage(),
     'seatType-update'     => (new SeatTypeController)->update(),
-    'seatType-delete'     => (new SeatTypeController)->delete(),    
+    'seatType-delete'     => (new SeatTypeController)->delete(),
 
     // CRUD foodanddrinks
     'foodanddrinks-list'       => (new FoodAndDrinkController)->list(),
@@ -57,5 +57,14 @@ match ($action) {
     'foodanddrinks-show'       => (new FoodAndDrinkController)->show(),
     'foodanddrinks-updatePage' => (new FoodAndDrinkController)->updatePage(),
     'foodanddrinks-update'     => (new FoodAndDrinkController)->update(),
-    'foodanddrinks-delete'     => (new FoodAndDrinkController)->delete(), 
+    'foodanddrinks-delete'     => (new FoodAndDrinkController)->delete(),
+
+    // CRUD seats
+    'seats-list'       => (new SeatController)->list(),
+    'seats-create'     => (new SeatController)->create(),
+    'seats-store'      => (new SeatController)->store(),
+    'seats-show'       => (new SeatController)->show(),
+    'seats-updatePage' => (new SeatController)->updatePage(),
+    'seats-update'     => (new SeatController)->update(),
+    'seats-delete'     => (new SeatController)->delete(),
 };

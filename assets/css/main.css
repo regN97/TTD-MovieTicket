@@ -191,7 +191,6 @@ nav {
 }
 
 .admin-side-bar {
-  height: 40rem;
   background-color: var(--secondary-color);
   width: 18%;
 }
