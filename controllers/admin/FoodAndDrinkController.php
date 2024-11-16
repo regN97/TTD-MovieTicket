@@ -82,12 +82,15 @@ class FoodAndDrinkController
                     $_SESSION['errors']['validateType'] = "Hãy chọn 1 trong 2 phân loại!";
                 }
             }
-            if (empty($data['price'])) {
-                $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống!";
+
+            if (empty($data['price']) || $data['price'] <= 0) {
+                $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống và phải lớn hơn 0!";
             }
-            if (empty($data['quantity'])) {
-                $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống!";
+
+            if (empty($data['quantity']) || $data['quantity'] <= 0) {
+                $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống và phải lớn hơn 0!";
             }
+
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Vui lòng kiểm tra lại!");
@@ -173,11 +176,12 @@ class FoodAndDrinkController
                     $_SESSION['errors']['validateType'] = "Hãy chọn 1 trong 2 phân loại!";
                 }
             }
-            if (empty($data['price'])) {
-                $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống!";
+            if (empty($data['price']) || $data['price'] <= 0) {
+                $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống và phải lớn hơn 0!";
             }
-            if (empty($data['quantity'])) {
-                $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống!";
+
+            if (empty($data['quantity']) || $data['quantity'] <= 0) {
+                $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống và phải lớn hơn 0!";
             }
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;

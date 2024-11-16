@@ -36,7 +36,7 @@ if(isset($_SESSION['success'])){
     </div>
     <div class="mb-3 mt-3">
         <label for="type" class="form-label">Phân loại:</label>
-        <select name="type" id="type">
+        <select class="form-select" name="type" id="type">
             <option value="">Lựa chọn phân loại</option>
             <option value="Single" <?php if(isset($foodAndDrink['type']) && $foodAndDrink['type'] === 'Single') echo 'selected' ?>>Single</option>
             <option value="Combo" <?php if(isset($foodAndDrink['type']) && $foodAndDrink['type'] === 'Combo') echo 'selected' ?>>Combo</option>
@@ -44,7 +44,7 @@ if(isset($_SESSION['success'])){
     </div>
     <div class="mb-3 mt-3">
         <label for="price" class="form-label">Giá tiền:</label>
-        <input type="text" class="form-control" id="price" name="price"
+        <input type="number" class="form-control" id="price" name="price"
             value="<?php if (isset($_SESSION['data'])) {
                         echo $_SESSION['data']['price'];
                     } else {
@@ -53,7 +53,7 @@ if(isset($_SESSION['success'])){
     </div>
     <div class="mb-3 mt-3">
         <label for="quantity" class="form-label">Số lượng tồn kho:</label>
-        <input type="text" class="form-control" id="quantity" name="quantity"
+        <input type="number" class="form-control" id="quantity" name="quantity"
         value="<?php if (isset($_SESSION['data'])) {
                         echo $_SESSION['data']['quantity'];
                     } else {
