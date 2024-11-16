@@ -210,7 +210,7 @@ class RoomController
             }
         }
 
-        header('Location: ' . BASE_URL_ADMIN . '&action=rooms-updatePage&id=' . $_GET['id']);
+        header('Location: ' . BASE_URL_ADMIN . '&action=rooms-updatePage&id=' . $id);
         exit();
     }
     public function delete()
