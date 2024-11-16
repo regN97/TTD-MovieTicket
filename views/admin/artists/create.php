@@ -31,7 +31,7 @@ if(isset($_SESSION['success'])){
     </div>
     <div class="mb-3 mt-3">
         <label for="roles" class="form-label">Vai trò:</label>
-        <select name="roles" id="roles">
+        <select name="roles" id="roles" class="form-select">
             <option value="">Lựa chọn vai trò</option>
             <option value="Đạo diễn" <?php if(isset($_SESSION['data']['roles']) && $_SESSION['data']['roles'] === 'Đạo diễn') echo 'selected' ?>>Đạo diễn</option>
             <option value="Diễn viên" <?php if(isset($_SESSION['data']['roles']) && $_SESSION['data']['roles'] === 'Diễn viên') echo 'selected' ?>>Diễn viên</option>
