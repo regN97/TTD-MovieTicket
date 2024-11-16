@@ -48,5 +48,14 @@ match ($action) {
     'seatType-show'       => (new SeatTypeController)->show(),
     'seatType-updatePage' => (new SeatTypeController)->updatePage(),
     'seatType-update'     => (new SeatTypeController)->update(),
-    'seatType-delete'     => (new SeatTypeController)->delete(),
+    'seatType-delete'     => (new SeatTypeController)->delete(),    
+
+    // CRUD foodanddrinks
+    'foodanddrinks-list'       => (new FoodAndDrinkController)->list(),
+    'foodanddrinks-create'     => (new FoodAndDrinkController)->create(),
+    'foodanddrinks-store'      => (new FoodAndDrinkController)->store(),
+    'foodanddrinks-show'       => (new FoodAndDrinkController)->show(),
+    'foodanddrinks-updatePage' => (new FoodAndDrinkController)->updatePage(),
+    'foodanddrinks-update'     => (new FoodAndDrinkController)->update(),
+    'foodanddrinks-delete'     => (new FoodAndDrinkController)->delete(), 
 };

@@ -62,15 +62,21 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?=  BASE_URL_ADMIN . '&action=rooms-list' ?>" class="my-2 btn btn-light">
+                    <a href="<?= BASE_URL_ADMIN . '&action=rooms-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý phòng chiếu
                     </a>
                 </li>
                 <li>
-                    <a href="<?=  BASE_URL_ADMIN . '&action=seatType-list' ?>" class="my-2 btn btn-light">
+                    <a href="<?= BASE_URL_ADMIN . '&action=seatType-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý loại ghế
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= BASE_URL_ADMIN . '&action=foodanddrinks-list' ?>" class="my-2 btn btn-light">
+                        <i class="fa-solid fa-gauge-high me-2"></i>
+                        Quản lý bỏng nước
                     </a>
                 </li>
                 <li>
