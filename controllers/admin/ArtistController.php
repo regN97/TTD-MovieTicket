@@ -154,7 +154,7 @@ class ArtistController
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
-            header('Location: ' . BASE_URL_ADMIN . '&action=genres-create');
+            header('Location: ' . BASE_URL_ADMIN . '&action=artists-create');
             exit();
         }        
     }

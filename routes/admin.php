@@ -40,4 +40,13 @@ match ($action) {
     'rooms-updatePage' => (new RoomController)->updatePage(),
     'rooms-update'     => (new RoomController)->update(),
     'rooms-delete'     => (new RoomController)->delete(),    
+
+    // CRUD foodanddrinks
+    'foodanddrinks-list'       => (new FoodAndDrinkController)->list(),
+    'foodanddrinks-create'     => (new FoodAndDrinkController)->create(),
+    'foodanddrinks-store'      => (new FoodAndDrinkController)->store(),
+    'foodanddrinks-show'       => (new FoodAndDrinkController)->show(),
+    'foodanddrinks-updatePage' => (new FoodAndDrinkController)->updatePage(),
+    'foodanddrinks-update'     => (new FoodAndDrinkController)->update(),
+    'foodanddrinks-delete'     => (new FoodAndDrinkController)->delete(), 
 };
