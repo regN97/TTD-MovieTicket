@@ -102,7 +102,7 @@ class BaseModel
     {
         $keys = array_keys($data);
 
-        $columns = implode(', ', $keys);
+        $columns = implode(', ', array_map(function($keys){return"`$keys`";},$keys));
 
         
         $placehoders = ':' . implode(', :', $keys);
