@@ -15,7 +15,7 @@ class FoodAndDrinkController
         unset($_SESSION['data']);
 
         $view = 'foodanddrinks/list';
-        $title = 'Danh sách bỏng nước';
+        $title = 'Danh sách đồ ăn & đồ uống';
         $data = $this->foodAndDrink->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
@@ -38,7 +38,7 @@ class FoodAndDrinkController
             }
 
             $view = 'foodanddrinks/show';
-            $title = "Chi tiết bỏng nước có ID = $id";
+            $title = "Chi tiết đồ ăn & đồ uống có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -53,7 +53,7 @@ class FoodAndDrinkController
     // Hiển thị form thêm mới
     public function create(){
         $view = 'foodanddrinks/create';
-        $title = 'Thêm mới bỏng nước';
+        $title = 'Thêm mới đồ ăn & đồ uống';
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -131,7 +131,7 @@ class FoodAndDrinkController
             }
 
             $view = 'foodanddrinks/update';
-            $title = "Cập nhật bỏng nước có ID = $id";
+            $title = "Cập nhật đồ ăn & đồ uống có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

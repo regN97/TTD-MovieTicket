@@ -67,7 +67,7 @@ endif;
     </div>
     <div class="my-3">
         <label for="status" class="form-label">Trạng thái:</label>
-        <select class="form-select" name="status" id="status">
+        <select class="form-select" name="status">
             <option value="Active" <?php if (isset($seat['s_status']) && $seat['s_status'] === 'Active') echo 'selected' ?>>Active</option>
             <option value="Deactive" <?php if (isset($seat['s_status']) && $seat['s_status'] === 'Deactive') echo 'selected' ?>>Deactive</option>
         </select>
