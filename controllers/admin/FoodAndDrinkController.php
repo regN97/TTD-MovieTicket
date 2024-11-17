@@ -38,7 +38,7 @@ class FoodAndDrinkController
             }
 
             $view = 'foodanddrinks/show';
-            $title = "Chi tiết bỏng nước";
+            $title = "Chi tiết bỏng nước có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -131,7 +131,7 @@ class FoodAndDrinkController
             }
 
             $view = 'foodanddrinks/update';
-            $title = "Cập nhật bỏng nước có id = $id";
+            $title = "Cập nhật bỏng nước có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

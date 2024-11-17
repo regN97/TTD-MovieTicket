@@ -38,7 +38,7 @@ class RankController
             }
 
             $view = 'ranks/show';
-            $title = "Chi tiết thứ hạng";
+            $title = "Chi tiết thứ hạng có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -123,7 +123,7 @@ class RankController
             }
 
             $view = 'ranks/update';
-            $title = "Cập nhật thứ hạng có id = $id";
+            $title = "Cập nhật thứ hạng có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

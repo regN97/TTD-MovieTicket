@@ -123,7 +123,7 @@ class MovieController
             }
 
             $view = 'movies/show';
-            $title = 'Chi tiết phim';
+            $title = 'Chi tiết phim có ID = ' . $id;
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -151,7 +151,7 @@ class MovieController
             }
 
             $view = 'movies/update';
-            $title = "Cập nhật Movie có ID = $id";
+            $title = "Cập nhật phim có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

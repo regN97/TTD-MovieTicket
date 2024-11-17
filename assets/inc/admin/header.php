@@ -58,7 +58,7 @@
                 <li>
                     <a href="<?= BASE_URL_ADMIN . '&action=artists-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
-                        Quản lý Artists
+                        Quản lý nghệ sĩ
                     </a>
                 </li>
                 <li>

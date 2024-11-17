@@ -93,7 +93,7 @@ class GenreController
             }
 
             $view = 'genres/show';
-            $title = "Chi tiết thể loại";
+            $title = "Chi tiết thể loại có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -122,7 +122,7 @@ class GenreController
             }
 
             $view = 'genres/update';
-            $title = "Cập nhật Genre có ID = $id";
+            $title = "Cập nhật thể loại phim có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

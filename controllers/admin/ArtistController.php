@@ -15,7 +15,7 @@ class ArtistController
         unset($_SESSION['data']);
 
         $view = 'artists/list';
-        $title = 'Danh sách Artists';
+        $title = 'Danh sách nghệ sĩ';
         $data = $this->artist->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
@@ -38,7 +38,7 @@ class ArtistController
             }
 
             $view = 'artists/show';
-            $title = "Chi tiết Artists";
+            $title = "Chi tiết nghệ sĩ có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -148,7 +148,7 @@ class ArtistController
             }
 
             $view = 'artists/update';
-            $title = "Cập nhật Artists có id = $id";
+            $title = "Cập nhật nghệ sĩ có id = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

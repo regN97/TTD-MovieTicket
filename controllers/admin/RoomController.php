@@ -14,7 +14,7 @@ class RoomController
         unset($_SESSION['data']);
 
         $view = 'rooms/list';
-        $title = 'Danh sách phòng';
+        $title = 'Danh sách phòng chiếu';
         $data = $this->room->select('*');
 
         require_once PATH_VIEW_ADMIN_MAIN;
@@ -22,7 +22,7 @@ class RoomController
     public function create()
     {
         $view = 'rooms/create';
-        $title = 'Thêm mới phòng';
+        $title = 'Thêm mới phòng chiếu';
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -71,10 +71,10 @@ class RoomController
 
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
-                $_SESSION['msg'] = 'Thêm phòng chiếu thành công!';
+                $_SESSION['msg'] = 'Thêm mới thành công!';
                 unset($_SESSION['data']);
             } else {
-                throw new Exception("Thêm phòng chiếu không thành công!");
+                throw new Exception("Thêm mới không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
@@ -100,7 +100,7 @@ class RoomController
             }
 
             $view = 'rooms/show';
-            $title = 'Chi tiết phòng chiếu';
+            $title = 'Chi tiết phòng chiếu có ID = ' . $id;
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {

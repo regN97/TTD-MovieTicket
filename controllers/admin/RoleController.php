@@ -6,7 +6,7 @@ class RoleController
 
     public function __construct()
     {
-        $this->role = new Role();   
+        $this->role = new Role();
     }
 
     // Hiển thị danh sách role
@@ -38,7 +38,7 @@ class RoleController
             }
 
             $view = 'roles/show';
-            $title = "Chi tiết vai trò";
+            $title = "Chi tiết vai trò có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -51,7 +51,8 @@ class RoleController
     }
 
     // Hiển thị form thêm mới
-    public function create(){
+    public function create()
+    {
         $view = 'roles/create';
         $title = 'Thêm mới role';
 
@@ -62,12 +63,12 @@ class RoleController
     public function store()
     {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception(('Yêu cầu phương thức phải là POST !'));
             }
 
             $data = $_POST + $_FILES;
-            
+
             $_SESSION['errors'] = [];
 
             // Validate
@@ -104,7 +105,8 @@ class RoleController
     }
 
     // Hiển thị form cập nhật theo ID
-    public function updatePage(){
+    public function updatePage()
+    {
         try {
             $id = $_GET['id'];
 
@@ -119,7 +121,7 @@ class RoleController
             }
 
             $view = 'roles/update';
-            $title = "Cập nhật vai trò có id = $id";
+            $title = "Cập nhật vai trò có ID = $id";
 
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
@@ -127,13 +129,14 @@ class RoleController
             $_SESSION['msg'] = $th->getMessage();
             header('Location: ' . BASE_URL_ADMIN . '&action=roles-create');
             exit();
-        }        
+        }
     }
 
     // Lưu giữ liệu cập nhật theo ID
-    public function update(){
+    public function update()
+    {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception(('Yêu cầu phương thức phải là POST !'));
             }
 
@@ -147,9 +150,9 @@ class RoleController
             if (empty($role)) {
                 throw new Exception("ID không tồn tại, vui lòng kiểm tra lại!");
             }
-            
+
             $data = $_POST;
-            
+
             $_SESSION['errors'] = [];
 
             // Validate
@@ -166,7 +169,7 @@ class RoleController
             }
 
             $rowCount = $this->role->update($data, 'id = :id', ['id' => $id]);
-            
+
             // Kiểm tra insert có thành công hay không
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
@@ -211,15 +214,14 @@ class RoleController
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = 'Xóa thành công!';
             } else {
-                throw new Exception("Xóa không thành công!");                
+                throw new Exception("Xóa không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
         }
-        
+
         header('Location: ' . BASE_URL_ADMIN . '&action=roles-list');
         exit();
     }
 }
-?>
