@@ -1,27 +1,31 @@
-<table class="table table-bordered">
+<table class="table">
     <tr>
-        <th>Trường Dữ Liệu</th>
-        <th>Giá Trị</th>
+        <th>TRƯỜNG DỮ LIỆU</th>
+        <th>GIÁ TRỊ</th>
     </tr>
-    <?php foreach($news as $key => $value): ?>
+
+    <?php 
+    foreach ($news as $key => $value): ?>
         <tr>
             <td><?= strtoupper($key) ?></td>
             <td>
-                <?php 
+                <?php
+
                 switch ($key) {
-                    case 'image':
-                        if(!empty($value)){
-                            $link = BASE_ASSETS_CLIENT_IMAGE . $value ;
+                    case 'imageURL':
+                        if (!empty($value)) {
+                            $link = BASE_ASSETS_UPLOADS . $value;
+
                             echo "<img src='$link' width='100px'>";
                         }
-                        
                         break;
-                    
+
                     default:
-                       echo $value;
+                    echo $value;
+                   
                         break;
                 }
-                
+
                 ?>
             </td>
         </tr>

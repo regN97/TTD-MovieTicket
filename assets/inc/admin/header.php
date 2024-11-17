@@ -104,7 +104,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="my-2 btn btn-light">
+                <a href="<?= BASE_URL_ADMIN . '&action=news-list' ?>" class="my-2 btn btn-light">
                         <i class="fa-solid fa-gauge-high me-2"></i>
                         Quản lý tin tức
                     </a>

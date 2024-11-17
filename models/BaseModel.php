@@ -102,9 +102,8 @@ class BaseModel
     {
         $keys = array_keys($data);
 
-        $columns = implode(', ', array_map(function($keys){return"`$keys`";},$keys));
+        $columns = implode(', ', $keys);
 
-        
         $placehoders = ':' . implode(', :', $keys);
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placehoders)";

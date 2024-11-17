@@ -40,8 +40,13 @@ endif;
         <input type="file" class="form-control" name="imageURL" id="imageURL" value="<?= $_SESSION['data']['imageURL'] ?? null ?>">
     </div>
     <div class="my-3">
-        <label for="" class="form-label">Người đăng: </label>
-        <input type="text" class="form-control" name="user_id" id="user_id" value="<?= $_SESSION['data']['user_id'] ?? null ?>">
+        <label for="user_id" class="form-label">Người đăng:</label>
+        <select class="form-select" name="user_id" id="user_id">
+            <option value="">Lựa chọn người đăng</option>
+            <?php  foreach($userPluck as $id =>$name): ?>
+            <option value="<?= $id?>" ><?= $name?></option>
+            <?php endforeach;?>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     

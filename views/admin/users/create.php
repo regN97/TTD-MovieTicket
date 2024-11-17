@@ -23,7 +23,9 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['errors']);
 endif;
 ?>
-
+<?php
+//  debug($_SESSION['data']['rank_id'])
+ ?>
 <form action="<?= BASE_URL_ADMIN . '&action=user-store' ?>" method="post" enctype="multipart/form-data">
 <div class="my-3">
         <label for="name" class="form-label">Tên Người dùng: </label>
@@ -35,7 +37,7 @@ endif;
     </div>
     <div class="my-3">
         <label for="tel" class="form-label">Số điện thoại: </label>
-        <input type="text" class="form-control" name="tel" id="tel" value="<?= $_SESSION['data']['tel'] ?? null ?>">
+        <input type="number" class="form-control" name="tel" id="tel" value="<?= $_SESSION['data']['tel'] ?? null ?>">
     </div> 
     <div class="my-3">
         <label for="email" class="form-label">Email: </label>
@@ -50,7 +52,7 @@ endif;
         <select class="form-select" name="rank_id" id="rank_id">
         <option value="">Lựa chọn thứ hạng</option>
         <?php  foreach($rankPluck as $id =>$name):?>
-            <option value="<?= $id?>" <?php if (isset($_SESSION['data']['rank']) && $_SESSION['data']['rank'] === $name ) echo 'selected' ?>><?= $name?></option>
+            <option value="<?= $id?>" ><?= $name?></option>
             <?php endforeach;?>
         </select>
     </div>
@@ -58,14 +60,14 @@ endif;
         <label for="role_id" class="form-label">Vai trò:</label>
         <select class="form-select" name="role_id" id="role_id">
             <option value="">Lựa chọn vai trò</option>
-            <?php  foreach($rolePluck as $id =>$name):?>
-            <option value="<?= $id?>" <?php if (isset($_SESSION['data']['role']) && $_SESSION['data']['role'] === $name ) echo 'selected' ?>><?= $name?></option>
+            <?php  foreach($rolePluck as $id =>$name): ?>
+            <option value="<?= $id?>" ><?= $name?></option>
             <?php endforeach;?>
         </select>
     </div>
     <div class="my-3">
         <label for="points" class="form-label">Points:</label>
-        <input type="number" class="u+form-control" name="points" id="points"
+        <input type="number" class="form-control" name="points" id="points"
             value="<?= $_SESSION['data']['points'] ?? null ?>">
     </div>
     <div class="mb-3 mt-3">

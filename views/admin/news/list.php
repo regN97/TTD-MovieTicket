@@ -23,27 +23,28 @@ if(isset($_SESSION['success'])){
         <th>Thao tác</th>
     </tr>
     
-    <?php foreach ($data as $key => $news):?>
+    <?php foreach ($data as $key => $news): 
+        // debug($data);
+        ?>
         <tr>
         <td><?= $key+1 ?></td>
-        <td><?= $news['title'] ?></td>
-        <td><?= $news['content'] ?></td>
+        <td><?= $news['n_title'] ?></td>
+        <td><?= $news['n_content'] ?></td>
         <td>  
-            <?php if(!empty($news['imageURL'])) : ?> 
-            <img src="<?= BASE_ASSETS_UPLOADS . $news['imageURL']?>" width="100px">
+            <?php if(!empty($news['n_imageURL'])) : ?> 
+            <img src="<?= BASE_ASSETS_UPLOADS . $news['n_imageURL']?>" width="100px">
             <?php endif ;?>  
         </td>
-        <td><?= $news['created_at'] ?></td>
-        <td><?= $news['user_id'] ?></td>
-
+        <td><?= $news['n_created_at'] ?></td>
+        <td><?= $news['u_name'] ?></td>
         <td>
-            <a href="<?= BASE_URL_ADMIN . '&action=news-show&id=' . $news['id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-show&id=' . $news['n_id'] ?>"
                     class="btn btn-info">Xem</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=news-updatePage&id=' . $news['id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-updatePage&id=' . $news['n_id'] ?>"
                 class="btn btn-warning ms-3 me-3">Sửa</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=news-delete&id=' . $news['id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=news-delete&id=' . $news['n_id'] ?>"
                 onclick="return confirm('Bạn có chắc muốn xoá?')"
                 class="btn btn-danger">Xoá</a>
         </td>

@@ -64,7 +64,52 @@ WHERE u.id = :id;
     
     }
 
+    public function insertUser($data)
+    {
+        $keys = array_keys($data);
 
+        $columns = implode(', ', array_map(function($keys){return"`$keys`";},$keys));
+
+        
+        $placehoders = ':' . implode(', :', $keys);
+
+        $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placehoders)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($data);
+
+        return $this->pdo->lastInsertId();
+    }
+    public function updateUser($data, $conditions = null, $params = [])
+    {
+        $keys = array_keys($data);
+
+        $arraySets = array_map(fn($key) => "$key = :set_$key", $keys);
+
+        $sets = implode(', ', $arraySets);
+
+        $sql = "UPDATE {$this->table} SET $sets";
+
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
+
+        $stmt = $this->pdo->prepare(($sql));
+
+        // BindParam trong set
+        foreach ($data as $key => &$value) {
+            $stmt->bindParam(":set_$key", $value);
+        }
+
+        // BindParam trong where
+        foreach ($params as $key => &$value) {
+            $stmt->bindParam(":$key", $value);
+        }
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
 
 }
 

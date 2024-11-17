@@ -74,8 +74,8 @@ match ($action) {
     'user-create'     => (new UserController)->create(),    
     'user-store'      => (new UserController)->store(),
     'user-show'       => (new UserController)->show(),
-    // 'user-updatePage' => (new UserController)->updatePage(),
-    // 'user-update'     => (new UserController)->update(),
+    'user-updatePage' => (new UserController)->updatePage(),
+    'user-update'     => (new UserController)->update(),
     'user-delete'     => (new UserController)->delete(), 
 
 };

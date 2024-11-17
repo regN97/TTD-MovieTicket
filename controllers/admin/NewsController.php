@@ -2,9 +2,11 @@
 class NewsController 
 {
     private $news ;
+    private $user;
     public function __construct()
     {
         $this -> news = new News();
+        $this -> user = new User();
     }
 
     // Hiển thị danh sách tin tức 
@@ -13,7 +15,7 @@ class NewsController
         unset($_SESSION['data']);
         $view = 'news/list';
         $title = 'Danh sách tin tức';
-        $data = $this->news->select('*');
+        $data = $this->news->getAll();
 
         require_once PATH_VIEW_ADMIN_MAIN;
         
@@ -25,11 +27,12 @@ class NewsController
      {
         try {
             if(!isset($_GET['id']))
+            
             {
              throw new Exception('Thiếu tham số "id"',99);
             }
             $id = $_GET['id'];
-            $news = $this ->news -> find('*','id= :id',['id' => $id]);
+            $news = $this ->news -> getID($id);
             if(empty($news))
             {
              throw new Exception("Tin tức có ID =$id Không tồn tại!");
@@ -54,6 +57,9 @@ class NewsController
     {
         $view ='news/create';
         $title='Thêm mới tin tức';
+
+        $user = $this->user->select();
+        $userPluck = array_column($user,'name','id');
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -140,16 +146,16 @@ class NewsController
             if(!isset($id)){
                 throw new Exception('Thiếu tham số "id', 99);
             }
-
-            $news = $this->news->find('*', 'id = :id', ['id' => $id]);
-
+            $news = $this->news->getID($id);
+            // debug($news);
             if(empty($news)){
                 throw new Exception("News có ID = $id không tồn tại!");
             }
 
             $view = 'news/update';
             $title = "Cập nhật News có ID = $id";
-
+            $user = $this->user->select();
+            $userPluck = array_column($user,'name','id');
             require_once PATH_VIEW_ADMIN_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
@@ -173,7 +179,7 @@ class NewsController
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
-            $news = $this->news->find('*', 'id = :id', ['id' => $id]);
+            $news = $this->news->getID($id);
 
             if(empty($news)){
                 throw new Exception("News có ID = $id không tồn tại!");
@@ -216,7 +222,7 @@ class NewsController
                 $data['imageURL'] =upload_file('news',$data['imageURL']);
             }
             else {
-                $data['imageURL']=null;
+                $data['imageURL']= $news['n_imageURL'];
             }
             $data['created_at'] = date('Y-m-d H:i:s');
 
