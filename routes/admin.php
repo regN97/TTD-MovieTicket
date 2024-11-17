@@ -5,6 +5,15 @@ $action = $_GET['action'] ?? '/';
 match ($action) {
     '/'                 => (new DashboardController)->index(),
 
+     // CRUD News
+     'news-list'        => (new NewsController)->list(),    // Hiển thị danh sách tin tức
+     'news-show'        => (new NewsController())->show(),     // Hiển thị danh sách 
+     'news-create'      => (new NewsController())->create(),   // Hiển thị danh sách
+     'news-store'       => (new NewsController())->store(),    // Hiển thị danh sách
+     'news-updatePage'  => (new NewsController())->updatePage(),     // Hiển thị danh sách
+     'news-update'      => (new NewsController())->update(),   // Hiển thị danh sách
+     'news-delete'      => (new NewsController())->delete(),   // Xoá dữ liệu theo ID
+ 
     // CRUD Genres
     'genres-list'       => (new GenreController)->list(),           // Trang danh sách
     'genres-create'     => (new GenreController)->create(),         // Trang tạo mới
@@ -68,21 +77,14 @@ match ($action) {
     'seats-update'     => (new SeatController)->update(),
     'seats-delete'     => (new SeatController)->delete(), 
 
-    // CRUD ranks
-    'ranks-list'       => (new RankController)->list(),
-    'ranks-create'     => (new RankController)->create(),
-    'ranks-store'      => (new RankController)->store(),
-    'ranks-show'       => (new RankController)->show(),
-    'ranks-updatePage' => (new RankController)->updatePage(),
-    'ranks-update'     => (new RankController)->update(),
-    'ranks-delete'     => (new RankController)->delete(),
 
-    // CRUD roles
-    'roles-list'       => (new RoleController)->list(),
-    'roles-create'     => (new RoleController)->create(),
-    'roles-store'      => (new RoleController)->store(),
-    'roles-show'       => (new RoleController)->show(),
-    'roles-updatePage' => (new RoleController)->updatePage(),
-    'roles-update'     => (new RoleController)->update(),
-    'roles-delete'     => (new RoleController)->delete(),
+    // CRUD users
+    'users-list'       => (new UserController)->list(),
+    'users-create'     => (new UserController)->create(),    
+    'users-store'      => (new UserController)->store(),
+    'users-show'       => (new UserController)->show(),
+    'users-updatePage' => (new UserController)->updatePage(),
+    'users-update'     => (new UserController)->update(),
+    'users-delete'     => (new UserController)->delete(), 
+
 };
