@@ -6,7 +6,7 @@ class FoodAndDrinkController
 
     public function __construct()
     {
-        $this->foodAndDrink = new FoodAndDrink();   
+        $this->foodAndDrink = new FoodAndDrink();
     }
 
     // Hiển thị danh sách bỏng nước
@@ -51,7 +51,8 @@ class FoodAndDrinkController
     }
 
     // Hiển thị form thêm mới
-    public function create(){
+    public function create()
+    {
         $view = 'foodanddrinks/create';
         $title = 'Thêm mới đồ ăn & đồ uống';
 
@@ -62,12 +63,12 @@ class FoodAndDrinkController
     public function store()
     {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception(('Yêu cầu phương thức phải là POST !'));
             }
 
             $data = $_POST + $_FILES;
-            
+
             $_SESSION['errors'] = [];
 
             // Validate
@@ -76,9 +77,9 @@ class FoodAndDrinkController
             }
             if (empty($data['type'])) {
                 $_SESSION['errors']['type'] = "Hãy chọn phân loại!";
-            }else{
+            } else {
                 $validateType = ['Single', 'Combo'];
-                if(!in_array($data['type'], $validateType)){                    
+                if (!in_array($data['type'], $validateType)) {
                     $_SESSION['errors']['validateType'] = "Hãy chọn 1 trong 2 phân loại!";
                 }
             }
@@ -91,9 +92,30 @@ class FoodAndDrinkController
                 $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống và phải lớn hơn 0!";
             }
 
+            if ($data['imageURL']['size'] > 0) {
+                if ($data['imageURL']['size'] > 2 * 1024 * 1024) {
+                    $_SESSION['errors']['data_size'] = 'Hình ảnh có dung lượng tối đa 2MB!';
+                }
+
+                $fileType = $data['imageURL']['type'];
+                $allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+
+                if (!in_array($fileType, $allowedTypes)) {
+                    $_SESSION['errors']['imageURL_type'] = 'Xin lỗi, chỉ chấp nhận các loại file JPG, FPEG, PNG, GIF!';
+                }
+            } else {
+                $_SESSION['errors']['imageURL'] = "Hình ảnh không được bỏ trống!";
+            }
+
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Vui lòng kiểm tra lại!");
+            }
+
+            if ($data['imageURL']['size'] > 0) {
+                $data['imageURL'] = upload_file('foodanddrinks', $data['imageURL']);
+            } else {
+                $data['imageURL'] = null;
             }
 
             $rowCount = $this->foodAndDrink->insert($data);
@@ -116,7 +138,8 @@ class FoodAndDrinkController
     }
 
     // Hiển thị form cập nhật theo ID
-    public function updatePage(){
+    public function updatePage()
+    {
         try {
             $id = $_GET['id'];
 
@@ -139,13 +162,14 @@ class FoodAndDrinkController
             $_SESSION['msg'] = $th->getMessage();
             header('Location: ' . BASE_URL_ADMIN . '&action=foodanddrinks-create');
             exit();
-        }        
+        }
     }
 
     // Lưu giữ liệu cập nhật theo ID
-    public function update(){
+    public function update()
+    {
         try {
-            if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception(('Yêu cầu phương thức phải là POST !'));
             }
 
@@ -159,9 +183,9 @@ class FoodAndDrinkController
             if (empty($foodAndDrink)) {
                 throw new Exception("ID không tồn tại, vui lòng kiểm tra lại!");
             }
-            
+
             $data = $_POST + $_FILES;
-            
+
             $_SESSION['errors'] = [];
 
             // Validate
@@ -170,9 +194,9 @@ class FoodAndDrinkController
             }
             if (empty($data['type'])) {
                 $_SESSION['errors']['type'] = "Hãy chọn phân loại!";
-            }else{
+            } else {
                 $validateType = ['Single', 'Combo'];
-                if(!in_array($data['type'], $validateType)){                    
+                if (!in_array($data['type'], $validateType)) {
                     $_SESSION['errors']['validateType'] = "Hãy chọn 1 trong 2 phân loại!";
                 }
             }
@@ -183,9 +207,29 @@ class FoodAndDrinkController
             if (empty($data['quantity']) || $data['quantity'] <= 0) {
                 $_SESSION['errors']['quantity'] = "Số lượng tồn kho không được bỏ trống và phải lớn hơn 0!";
             }
+
+            if ($data['imageURL']['size'] > 0) {
+                if ($data['imageURL']['size'] > 2 * 1024 * 1024) {
+                    $_SESSION['errors']['data_size'] = 'Hình ảnh có dung lượng tối đa 2MB!';
+                }
+
+                $fileType = $data['imageURL']['type'];
+                $allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+
+                if (!in_array($fileType, $allowedTypes)) {
+                    $_SESSION['errors']['imageURL_type'] = 'Xin lỗi, chỉ chấp nhận các loại file JPG, FPEG, PNG, GIF!';
+                }
+            }
+
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Vui lòng kiểm tra lại!");
+            }
+
+            if ($data['imageURL']['size'] > 0) {
+                $data['imageURL'] = upload_file('foodanddrinks', $data['imageURL']);
+            } else {
+                $data['imageURL'] = $foodAndDrink['imageURL'];
             }
 
             $rowCount = $this->foodAndDrink->update($data, 'id = :id', ['id' => $id]);
@@ -234,15 +278,14 @@ class FoodAndDrinkController
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = 'Xóa thành công!';
             } else {
-                throw new Exception("Xóa không thành công!");                
+                throw new Exception("Xóa không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
         }
-        
+
         header('Location: ' . BASE_URL_ADMIN . '&action=foodanddrinks-list');
         exit();
     }
 }
-?>

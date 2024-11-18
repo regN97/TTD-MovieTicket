@@ -11,7 +11,7 @@
                 <?php
 
                 switch ($key) {
-                    case 'imageURL':
+                    case 'u_imageURL':
                         if (!empty($value)) {
                             $link = BASE_ASSETS_UPLOADS . $value;
 

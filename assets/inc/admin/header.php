@@ -23,6 +23,13 @@
                         <i class='bx bx-moon fs-22'></i>
                     </button>
                 </div>
+                <?php if (!empty($_SESSION['user'])): ?>
+                    <div class="header-item ms-3">
+                        <a class="btn btn-icon btn-topbar material-shadow-none btn-ghost-secondary rounded-circle light-dark-mode text-danger"
+                            href="<?= BASE_URL_ADMIN . '&action=logout' ?>"
+                            onclick="return confirm('Có chắc chắn đăng xuất?')"> <b>Logout</b> </a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

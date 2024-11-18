@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_SESSION['success'])){
+if (isset($_SESSION['success'])) {
     $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
 
     echo "<div class='alert $class'>{$_SESSION['msg']}</div>";
@@ -19,9 +19,9 @@ if(isset($_SESSION['success'])){
             <?php endforeach; ?>
         </ul>
     </div>
-<?php 
+<?php
     unset($_SESSION['errors']);
-    endif; 
+endif;
 ?>
 <form action="<?= BASE_URL_ADMIN . '&action=foodanddrinks-store' ?>" method="POST" enctype="multipart/form-data">
     <div class="mb-3 mt-3">
@@ -33,8 +33,8 @@ if(isset($_SESSION['success'])){
         <label for="type" class="form-label">Phân loại:</label>
         <select name="type" id="type" class="form-select">
             <option value="">Lựa chọn phân loại</option>
-            <option value="Single" <?php if(isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'Single') echo 'selected' ?>>Single</option>
-            <option value="Combo" <?php if(isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'Combo') echo 'selected' ?>>Combo</option>
+            <option value="Single" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'Single') echo 'selected' ?>>Single</option>
+            <option value="Combo" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'Combo') echo 'selected' ?>>Combo</option>
         </select>
     </div>
     <div class="mb-3 mt-3">
@@ -46,6 +46,10 @@ if(isset($_SESSION['success'])){
         <label for="quantity" class="form-label">Số lượng tồn kho:</label>
         <input type="number" class="form-control" id="quantity" name="quantity"
             value="<?= $_SESSION['data']['quantity'] ?? null ?>">
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="imageURL" class="form-label">Hình ảnh:</label>
+        <input type="file" class="form-control" name="imageURL" id="imageURL">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

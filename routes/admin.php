@@ -2,18 +2,30 @@
 
 $action = $_GET['action'] ?? '/';
 
+if (
+    empty($_SESSION['user'])
+    && !in_array($action, ['show-form-login', 'login'])
+) {
+    header('Location: ' . BASE_URL_ADMIN . '&action=show-form-login');
+    exit();
+}
+
 match ($action) {
     '/'                 => (new DashboardController)->index(),
 
-     // CRUD News
-     'news-list'        => (new NewsController)->list(),    // Hiển thị danh sách tin tức
-     'news-show'        => (new NewsController())->show(),     // Hiển thị danh sách 
-     'news-create'      => (new NewsController())->create(),   // Hiển thị danh sách
-     'news-store'       => (new NewsController())->store(),    // Hiển thị danh sách
-     'news-updatePage'  => (new NewsController())->updatePage(),     // Hiển thị danh sách
-     'news-update'      => (new NewsController())->update(),   // Hiển thị danh sách
-     'news-delete'      => (new NewsController())->delete(),   // Xoá dữ liệu theo ID
- 
+    'show-form-login'   => (new AuthenController)->showFormLogin(),
+    'login'                 => (new AuthenController)->login(),
+    'logout'                => (new AuthenController)->logout(),
+
+    // CRUD News
+    'news-list'        => (new NewsController)->list(),    // Hiển thị danh sách tin tức
+    'news-show'        => (new NewsController())->show(),     // Hiển thị danh sách 
+    'news-create'      => (new NewsController())->create(),   // Hiển thị danh sách
+    'news-store'       => (new NewsController())->store(),    // Hiển thị danh sách
+    'news-updatePage'  => (new NewsController())->updatePage(),     // Hiển thị danh sách
+    'news-update'      => (new NewsController())->update(),   // Hiển thị danh sách
+    'news-delete'      => (new NewsController())->delete(),   // Xoá dữ liệu theo ID
+
     // CRUD Genres
     'genres-list'       => (new GenreController)->list(),           // Trang danh sách
     'genres-create'     => (new GenreController)->create(),         // Trang tạo mới
@@ -75,12 +87,12 @@ match ($action) {
     'seats-show'       => (new SeatController)->show(),
     'seats-updatePage' => (new SeatController)->updatePage(),
     'seats-update'     => (new SeatController)->update(),
-    'seats-delete'     => (new SeatController)->delete(), 
+    'seats-delete'     => (new SeatController)->delete(),
 
 
     // CRUD users
     'users-list'       => (new UserController)->list(),
-    'users-create'     => (new UserController)->create(),    
+    'users-create'     => (new UserController)->create(),
     'users-store'      => (new UserController)->store(),
     'users-show'       => (new UserController)->show(),
     'users-updatePage' => (new UserController)->updatePage(),
