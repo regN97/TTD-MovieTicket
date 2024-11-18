@@ -85,6 +85,23 @@ match ($action) {
     'users-show'       => (new UserController)->show(),
     'users-updatePage' => (new UserController)->updatePage(),
     'users-update'     => (new UserController)->update(),
-    'users-delete'     => (new UserController)->delete(), 
+    'users-delete'     => (new UserController)->delete(),
 
+    // CRUD ranks
+    'ranks-list'       => (new RankController)->list(),
+    'ranks-create'     => (new RankController)->create(),
+    'ranks-store'      => (new RankController)->store(),
+    'ranks-show'       => (new RankController)->show(),
+    'ranks-updatePage' => (new RankController)->updatePage(),
+    'ranks-update'     => (new RankController)->update(),
+    'ranks-delete'     => (new RankController)->delete(),
+
+    // CRUD roles
+    'roles-list'       => (new RoleController)->list(),
+    'roles-create'     => (new RoleController)->create(),
+    'roles-store'      => (new RoleController)->store(),
+    'roles-show'       => (new RoleController)->show(),
+    'roles-updatePage' => (new RoleController)->updatePage(),
+    'roles-update'     => (new RoleController)->update(),
+    'roles-delete'     => (new RoleController)->delete(),
 };

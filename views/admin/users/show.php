@@ -30,4 +30,4 @@
     <?php endforeach; ?>
 </table>
 
-<a href="<?= BASE_URL_ADMIN . '&action=user-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
+<a href="<?= BASE_URL_ADMIN . '&action=users-list' ?>" class="btn btn-danger">Quay lại danh sách</a>

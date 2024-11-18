@@ -26,14 +26,14 @@ endif;
 <?php
 //  debug($_SESSION['data']['rank_id'])
  ?>
-<form action="<?= BASE_URL_ADMIN . '&action=user-store' ?>" method="post" enctype="multipart/form-data">
+<form action="<?= BASE_URL_ADMIN . '&action=users-store' ?>" method="post" enctype="multipart/form-data">
 <div class="my-3">
         <label for="name" class="form-label">Tên Người dùng: </label>
         <input type="text" class="form-control" name="name" id="name" value="<?= $_SESSION['data']['name'] ?? null ?>">
     </div>
     <div class="my-3">
         <label for="password" class="form-label">Mật Khẩu dùng: </label>
-        <input type="password" class="form-control" name="password" id="password" value="<?= $_SESSION['data']['password'] ?? null ?>">
+        <input type="password" class="form-control" name="password" id="password">
     </div>
     <div class="my-3">
         <label for="tel" class="form-label">Số điện thoại: </label>
@@ -50,18 +50,22 @@ endif;
     <div class="my-3">
         <label for="rank_id" class="form-label">Thứ hạng:</label>
         <select class="form-select" name="rank_id" id="rank_id">
-        <option value="">Lựa chọn thứ hạng</option>
-        <?php  foreach($rankPluck as $id =>$name):?>
-            <option value="<?= $id?>" ><?= $name?></option>
-            <?php endforeach;?>
+
+        <?php  foreach($rankPluck as $id => $name):?>
+
+            <option value="<?= $id ?>" ><?= $name ?></option>
+
+        <?php endforeach;?>
         </select>
     </div>
 <div class="my-3">
         <label for="role_id" class="form-label">Vai trò:</label>
         <select class="form-select" name="role_id" id="role_id">
-            <option value="">Lựa chọn vai trò</option>
-            <?php  foreach($rolePluck as $id =>$name): ?>
-            <option value="<?= $id?>" ><?= $name?></option>
+
+            <?php  foreach($rolePluck as $id => $name): ?>
+
+            <option value="<?= $id ?>" ><?= $name ?></option>
+
             <?php endforeach;?>
         </select>
     </div>
@@ -75,5 +79,5 @@ endif;
         <input type="file" class="form-control" name="imageURL" id="imageURL" value="<?= $_SESSION['data']['imageURL'] ?? null ?>">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="<?= BASE_URL_ADMIN . '&action=user-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
+    <a href="<?= BASE_URL_ADMIN . '&action=users-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
 </form>
