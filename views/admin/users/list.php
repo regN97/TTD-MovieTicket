@@ -1,4 +1,4 @@
-<a href="<?= BASE_URL_ADMIN . '&action=user-create' ?>" class="btn btn-primary mb-3">Thêm mới</a>
+<a href="<?= BASE_URL_ADMIN . '&action=users-create' ?>" class="btn btn-primary mb-3">Thêm mới</a>
 
 <?php
 if(isset($_SESSION['success'])){
@@ -46,13 +46,13 @@ if(isset($_SESSION['success'])){
         </td>
 
         <td>
-            <a href="<?= BASE_URL_ADMIN . '&action=user-show&id=' . $user['u_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=users-show&id=' . $user['u_id'] ?>"
                     class="btn btn-info">Xem</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=user-updatePage&id=' . $user['u_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=users-updatePage&id=' . $user['u_id'] ?>"
                 class="btn btn-warning ms-3 me-3">Sửa</a>
 
-            <a href="<?= BASE_URL_ADMIN . '&action=user-delete&id=' . $user['u_id'] ?>"
+            <a href="<?= BASE_URL_ADMIN . '&action=users-delete&id=' . $user['u_id'] ?>"
                 onclick="return confirm('Bạn có chắc muốn xoá?')"
                 class="btn btn-danger">Xoá</a>
         </td>

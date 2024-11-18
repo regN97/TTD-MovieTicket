@@ -166,6 +166,24 @@
                 </li>
                 <!-- End Quản lý tài khoản -->
 
+                <!-- Start Quản lý tin tức -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarNews" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarNews">
+                        <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí tin tức</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarNews">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="<?= BASE_URL_ADMIN . '&action=news-list' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                    Danh sách tin tức
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- End Quản lý tin tức -->
+
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
             </ul>

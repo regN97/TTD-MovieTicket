@@ -79,8 +79,8 @@ class RankController
                 $_SESSION['errors']['benefits'] = "Mô tả lợi ích không được bỏ trống!";
             }
 
-            if (empty($data['level']) || $data['level'] <= 0) {
-                $_SESSION['errors']['level'] = "Cấp độ không được bỏ trống và phải lớn hơn 0!";
+            if (empty($data['level']) || $data['level'] < 0) {
+                $_SESSION['errors']['level'] = "Mốc điểm không được bỏ trống và phải lớn hơn 0!";
             }
 
             if (!empty($_SESSION['errors'])) {
@@ -165,8 +165,8 @@ class RankController
                 $_SESSION['errors']['benefits'] = "Mô tả lợi ích không được bỏ trống!";
             }
 
-            if (empty($data['level']) || $data['level'] <= 0) {
-                $_SESSION['errors']['level'] = "Cấp độ không được bỏ trống và phải lớn hơn 0!";
+            if (empty($data['level']) || $data['level'] < 0) {
+                $_SESSION['errors']['level'] = "Mốc điểm không được bỏ trống và phải lớn hơn 0!";
             }
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;

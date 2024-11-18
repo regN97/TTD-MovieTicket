@@ -44,7 +44,9 @@ endif;
         <select class="form-select" name="user_id" id="user_id">
             <option value="">Lựa chọn người đăng</option>
             <?php  foreach($userPluck as $id =>$name): ?>
+
             <option value="<?= $id?>" ><?= $name?></option>
+            
             <?php endforeach;?>
         </select>
     </div>
