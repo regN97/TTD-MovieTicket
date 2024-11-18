@@ -1,7 +1,7 @@
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="index.html" class="logo logo-light">
+        <a href="<?= BASE_URL_ADMIN ?>" class="logo logo-light">
             <span class="logo-lg mt-4">
                 <h3 class="display-7 mt-4" style="color: #ffffff !important; display: inline;">Movie Ticket </h3>
                 <h3 class="display-7 mt-4" style="color: #ff0000 !important; display: inline;">TTD</h3>
@@ -93,6 +93,24 @@
                     </div>
                 </li>
                 <!-- End Quản lý Phòng Chiếu -->
+
+                <!-- Start Quản lý lịch chiếu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarSchedules" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarSchedules">
+                        <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí lịch chiếu phim</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarSchedules">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="<?= BASE_URL_ADMIN . '&action=schedules-list' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                    Danh sách lịch chiếu phim
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- End Quản lý lịch chiếu -->
 
                 <!-- Start Quản lý nghệ sĩ -->
                 <li class="nav-item">
