@@ -104,4 +104,13 @@ match ($action) {
     'roles-updatePage' => (new RoleController)->updatePage(),
     'roles-update'     => (new RoleController)->update(),
     'roles-delete'     => (new RoleController)->delete(),
+
+    // CRUD schedules
+    'schedules-list'       => (new ScheduleController)->list(),
+    'schedules-create'     => (new ScheduleController)->create(),
+    'schedules-store'      => (new ScheduleController)->store(),
+    'schedules-show'       => (new ScheduleController)->show(),
+    'schedules-updatePage' => (new ScheduleController)->updatePage(),
+    'schedules-update'     => (new ScheduleController)->update(),
+    'schedules-delete'     => (new ScheduleController)->delete(),
 };
