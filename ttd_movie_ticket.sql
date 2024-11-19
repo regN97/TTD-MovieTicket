@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 18, 2024 at 07:28 AM
+-- Generation Time: Nov 19, 2024 at 10:39 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -68,16 +68,18 @@ CREATE TABLE `food_and_drinks` (
   `name` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL,
   `price` int NOT NULL,
-  `quantity` smallint UNSIGNED NOT NULL
+  `quantity` smallint UNSIGNED NOT NULL,
+  `imageURL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `food_and_drinks`
 --
 
-INSERT INTO `food_and_drinks` (`id`, `name`, `type`, `price`, `quantity`) VALUES
-(1, 'asd', 'Single', 321321, 500),
-(2, 'test', 'Combo', 222, 11);
+INSERT INTO `food_and_drinks` (`id`, `name`, `type`, `price`, `quantity`, `imageURL`) VALUES
+(1, 'asd', 'Single', 321321, 500, NULL),
+(2, 'test', 'Combo', 222, 11, NULL),
+(3, 'zzzzzzz', 'Combo', 123123, 500, 'foodanddrinks/1731923587-0002224_hawaii_300.png');
 
 -- --------------------------------------------------------
 
@@ -121,7 +123,8 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id`, `name`, `description`, `duration`, `release_date`, `language`, `imageURL`, `type`) VALUES
-(1, 'zcscscscs', 'update', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731683808-co_dau_hao_mon.jpg', 'T18');
+(1, 'zcscscscs', 'update', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731683808-co_dau_hao_mon.jpg', 'T18'),
+(5, 'Đôi bạn học yêu', 'đỉnh của chóp', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731917366-doi_ban_hoc_yeu.jpg', 'T18');
 
 -- --------------------------------------------------------
 
@@ -181,6 +184,7 @@ CREATE TABLE `orders` (
   `status` varchar(50) NOT NULL,
   `total_price` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `paymentMethod` varchar(50) NOT NULL,
   `discount` decimal(3,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -194,8 +198,8 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_details` (
   `id` int NOT NULL,
   `order_id` int NOT NULL,
-  `target_type` varchar(50) NOT NULL,
-  `target_id` int NOT NULL
+  `ticket_id` int NOT NULL,
+  `fnd_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -279,6 +283,13 @@ CREATE TABLE `schedules` (
   `end_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `schedules`
+--
+
+INSERT INTO `schedules` (`id`, `room_id`, `movie_id`, `start_at`, `end_at`) VALUES
+(1, 1, 5, '2024-11-18 12:30:00', '2024-11-18 14:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -334,7 +345,9 @@ CREATE TABLE `tickets` (
   `id` int NOT NULL,
   `seat_id` int NOT NULL,
   `schedule_id` int NOT NULL,
+  `fnd_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -362,7 +375,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `tel`, `email`, `address`, `role_id`, `rank_id`, `points`, `imageURL`) VALUES
-(1, 'Trần Đức Trung', '123456', '0395183309', 'trungtrandev97@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 1, 4, 99999, 'user/1731911690-ẢnhCV.png');
+(1, 'Trần Đức Trung', '123456', '0395183309', 'trungtrandev97@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 1, 4, 99999, 'user/1731911690-ẢnhCV.png'),
+(3, 'Ngô Việt Toàn', '123456', '0981614398', 'ngoviettoan@gmail.com', 'zxc', 3, 5, 0, 'user/1732003717-0002624_seafood-pesto_300 (1).png');
 
 --
 -- Indexes for dumped tables
@@ -435,7 +449,9 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_details` (`order_id`);
+  ADD KEY `fk_order_details` (`order_id`),
+  ADD KEY `fk_details_ticket` (`ticket_id`),
+  ADD KEY `fk_details_fnd` (`fnd_id`);
 
 --
 -- Indexes for table `ranks`
@@ -483,7 +499,8 @@ ALTER TABLE `seat_types`
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_ticket_seat` (`seat_id`),
-  ADD KEY `fk_ticket_schedule` (`schedule_id`);
+  ADD KEY `fk_ticket_schedule` (`schedule_id`),
+  ADD KEY `fk_ticket_fnd` (`fnd_id`);
 
 --
 -- Indexes for table `users`
@@ -514,7 +531,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `food_and_drinks`
 --
 ALTER TABLE `food_and_drinks`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `genres`
@@ -526,7 +543,7 @@ ALTER TABLE `genres`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `movie_artists`
@@ -580,7 +597,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `seats`
@@ -604,7 +621,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -647,6 +664,8 @@ ALTER TABLE `orders`
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
+  ADD CONSTRAINT `fk_details_fnd` FOREIGN KEY (`fnd_id`) REFERENCES `food_and_drinks` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_details_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_order_details` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
@@ -667,6 +686,7 @@ ALTER TABLE `seats`
 -- Constraints for table `tickets`
 --
 ALTER TABLE `tickets`
+  ADD CONSTRAINT `fk_ticket_fnd` FOREIGN KEY (`fnd_id`) REFERENCES `food_and_drinks` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_ticket_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_ticket_seat` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 

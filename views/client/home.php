@@ -21,7 +21,7 @@
 
     <!-- Section-->
     <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
+        <div class="container">
             <?php
             if (isset($view)) {
                 require_once PATH_VIEW_CLIENT . $view . '.php';
