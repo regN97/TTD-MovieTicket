@@ -21,11 +21,15 @@
         <div class="navbar-container">
             <nav class="navbar">
                 <ul class="navbar-menu">
-                    <li><a href="<?= BASE_URL ?>">Trang chủ</a></li>
                     <li><a href="#">Lịch chiếu</a></li>
                     <li><a href="#">Rạp</a></li>
                     <li><a href="#">Tin tức</a></li>
-                    <li><a href="#">Tài khoản</a></li>
+                    <?php if (empty($_SESSION['user'])) { ?>
+                        <li><a href="?action=show-form-login">Đăng nhập</a></li>
+                    <?php } else { ?>
+                        <li><a href="#">Tài khoản</a></li>
+                        <li><a href="?action=logout">Đăng xuất</a></li>
+                    <?php } ?>
                 </ul>
             </nav>
         </div>
