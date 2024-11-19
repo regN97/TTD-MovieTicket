@@ -21,6 +21,9 @@ define('BASE_ASSETS_CSS', BASE_URL . 'assets/css/');
 define('BASE_ASSETS_CLIENT_IMAGE', BASE_URL . 'assets/client/img/');
 define('BASE_ASSETS_JAVASCRIPT', BASE_URL . 'assets/js/');
 
+define('PATH_ASSETS_INC_CLIENT', PATH_ROOT . 'assets/inc/client/');
+define('PATH_ASSETS_INC_ADMIN', PATH_ROOT . 'assets/inc/admin/');
+
 
 define('PATH_ASSETS_UPLOADS', PATH_ROOT . 'assets/uploads/');
 
