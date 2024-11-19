@@ -1,3 +1,4 @@
+<!-- Footer-->
 <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 pt-5 mt-5 border-top">
     <div class="col mb-3">
         <img src="<?= BASE_ASSETS_CLIENT_IMAGE . 'TTD.png' ?>" alt="logo" width="250" height="170">
@@ -57,8 +58,3 @@
         </ul>
     </div>
 </footer>
-<!-- End footer -->
-<script src="<?= BASE_ASSETS_JAVASCRIPT . 'main.js' ?>"></script>
-</body>
-
-</html>

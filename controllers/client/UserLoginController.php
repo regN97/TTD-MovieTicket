@@ -45,19 +45,7 @@ class UserLoginController
             }
 
             // Kiểm tra role tài khoản
-            if (!empty($user) && $user['role_id'] == 1) {
-                $_SESSION['user'] = $user;
-                header('Location: ' . BASE_URL_ADMIN);
-                exit();
-            }
-
-            if (!empty($user) && $user['role_id'] == 2) {
-                $_SESSION['user'] = $user;
-                header('Location: ' . BASE_URL_ADMIN);
-                exit();
-            }
-
-            if (!empty($user) && $user['role_id'] == 3) {
+            if (!empty($user)) {
                 $_SESSION['user'] = $user;
                 header('Location: ' . BASE_URL);
                 exit();
