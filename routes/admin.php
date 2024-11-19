@@ -92,8 +92,6 @@ match ($action) {
 
     // CRUD users
     'users-list'       => (new UserController)->list(),
-    'users-create'     => (new UserController)->create(),
-    'users-store'      => (new UserController)->store(),
     'users-show'       => (new UserController)->show(),
     'users-updatePage' => (new UserController)->updatePage(),
     'users-update'     => (new UserController)->update(),

@@ -1,5 +1,3 @@
-<a href="<?= BASE_URL_ADMIN . '&action=users-create' ?>" class="btn btn-primary mb-3">Thêm mới</a>
-
 <?php
 if (isset($_SESSION['success'])) {
     $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
@@ -17,10 +15,6 @@ if (isset($_SESSION['success'])) {
         <th>STT</th>
         <th>Tên người dùng</th>
         <th>Email</th>
-        <th>Số điện thoại</th>
-        <th>Địa chỉ</th>
-        <th>Thứ Hạng</th>
-        <th>Vai Trò</th>
         <th>Điểm</th>
         <th>Ảnh</th>
         <th>Thao Tác</th>
@@ -31,23 +25,15 @@ if (isset($_SESSION['success'])) {
             <td><?= $key + 1 ?></td>
             <td><?= $user['u_name'] ?></td>
             <td><?= $user['u_email'] ?></td>
-            <td><?= $user['u_tel'] ?></td>
-            <td><?php
-                $maxLength = 20;
-                $shortenData = mb_substr($user['u_address'], 0, $maxLength, 'UTF-8');
-                echo $shortenData . ' ...';
-                ?></td>
-            <td><?= $user['ra_name'] ?></td>
-            <td><?= $user['ro_name'] ?></td>
             <td><?= $user['u_points'] ?></td>
 
-            <td>
+            <td class="text-center">
                 <?php if (!empty($user['u_imageURL'])) : ?>
-                    <img src="<?= BASE_ASSETS_UPLOADS . $user['u_imageURL'] ?>" width="100px">
+                    <img class="rounded" src="<?= BASE_ASSETS_UPLOADS . $user['u_imageURL'] ?>" width="100px" height="100px">
                 <?php endif; ?>
             </td>
 
-            <td>
+            <td class="d-flex justify-content-center">
                 <a href="<?= BASE_URL_ADMIN . '&action=users-show&id=' . $user['u_id'] ?>"
                     class="btn btn-info">Xem</a>
 
