@@ -18,7 +18,16 @@
                         <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Movie</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="?action=movies-list">Đang chiếu</a></li>
+                        <li><a class="dropdown-item" href="?action=#">Sắp chiếu</a></li>
+                    </ul>
+                </li>
             </ul>
+
+
             <?php if (!empty($_SESSION['user'])) {
                 if ($_SESSION['user']['role_id'] == 3) { ?>
                     <div class="flex-shrink-0 dropdown">
