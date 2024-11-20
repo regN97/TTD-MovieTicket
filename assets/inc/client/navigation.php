@@ -19,14 +19,17 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Movie</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Phim</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="?action=movies-list">Đang chiếu</a></li>
-                        <li><a class="dropdown-item" href="?action=#">Sắp chiếu</a></li>
+                        <li><a class="dropdown-item" href="?action=movies-isShowing">Đang chiếu</a></li>
+                        <li><a class="dropdown-item" href="?action=movies-upcoming">Sắp chiếu</a></li>
                     </ul>
                 </li>
             </ul>
 
+            <form action="?action=movies-search" method="POST" class="input-group w-25">
+                <input type="text" name="movies-search" id="name" class="form-control rounded me-3" placeholder="Từ khóa tìm kiếm..." />
+            </form>
 
             <?php if (!empty($_SESSION['user'])) {
                 if ($_SESSION['user']['role_id'] == 3) { ?>

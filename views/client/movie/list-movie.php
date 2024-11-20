@@ -11,24 +11,18 @@ if (isset($_SESSION['success'])) {
 
 <?php if (!empty($_SESSION['errors'])): ?>
 
-<div class="alert alert-danger">
-    <ul>
-        <?php foreach ($_SESSION['errors'] as $value): ?>
-            <li><?= $value ?></li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach ($_SESSION['errors'] as $value): ?>
+                <li><?= $value ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 
 <?php
-unset($_SESSION['errors']);
+    unset($_SESSION['errors']);
 endif;
 ?>
-
-<form action="?action=movies-search" method="post" class="input-group w-25 mb-3">
-    <input type="text" name="movies-search" id="name" class="form-control rounded me-3" 
-           placeholder="Search"/>
-    <button type="submit" class="btn btn-outline-primary">Search</button>
-</form>
 
 <table class="table table-bordered">
     <thead>
@@ -44,8 +38,8 @@ endif;
         </tr>
     </thead>
     <tbody>
-        <?php if(empty($_SESSION['result'])) { ?>
-        <?php $stt = 1;
+        <?php if (empty($_SESSION['result'])) { ?>
+            <?php $stt = 1;
             foreach ($data as $movie): ?>
                 <tr>
                     <td class="text-center"><?= $stt++; ?></td>
@@ -60,7 +54,7 @@ endif;
                         <?php endif; ?>
                     </td>
                     <td class="text-center"><?= $movie['type'] ?></td>
-                    </tr>
+                </tr>
             <?php endforeach; ?>
         <?php } else { ?>
             <?php $stt = 1;
@@ -78,8 +72,69 @@ endif;
                         <?php endif; ?>
                     </td>
                     <td class="text-center"><?= $movie['type'] ?></td>
-                    </tr>
-            <?php endforeach;?>
-        <?php unset($_SESSION['result']); } ?>
+                </tr>
+            <?php endforeach; ?>
+        <?php unset($_SESSION['result']);
+        } ?>
     </tbody>
 </table>
+
+<div class="col-md-2">
+    <div class="row">
+        <div class="col-6 col-sm-12">
+            <div class="dropdown genre-dropdown mb-4">
+                <a href="#" id="genresDropdown" class="btn btn-outline-dark dropdown-toggle w-100" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    Tất cả
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="genresDropdown">
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tất cả</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Hành động</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Kinh dị</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Gia đình</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Hài</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tình cảm</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tâm lý</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-10">
+    <div class="row grid">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+            <div class="card card-xs mb-4">
+                <a href="/phim/paddington-gau-thu-chu-du/" title="Paddington: Gấu Thủ Chu Du">
+                    <img alt="Paddington: Gấu Thủ Chu Du" src="https://cdn.moveek.com/storage/media/cache/short/6729c0ad0d674052301821.jpg" class="card-img-top lazyloaded">
+                </a>
+                <div class="card-body border-top">
+                    <h3 class="text-truncate h5 mb-1">
+                        <a href="/phim/paddington-gau-thu-chu-du/" title="Paddington: Gấu Thủ Chu Du">
+                            Paddington: Gấu Thủ Chu Du
+                        </a>
+                    </h3>
+                    <div class="row no-gutters small">
+                        <div class="col text-muted">
+                            29/01
+                        </div>
+                        <div class="col text-right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

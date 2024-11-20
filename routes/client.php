@@ -13,8 +13,9 @@ match ($action) {
     // Register
     'register-form' => (new RegisterController)->index(),
     'register-store' => (new RegisterController)->store(),
-    
+
     // Movie
-    'movies-list' => (new MovieController)->list(),
-    'movies-search' => (new MovieController)->search(),
+    'movies-isShowing' => (new ClientMovieController)->list(),
+    'movies-upcoming' => (new ClientMovieController)->list(),
+    'movies-search' => (new ClientMovieController)->searchByName(),
 };

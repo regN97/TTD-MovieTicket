@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 19, 2024 at 10:39 AM
+-- Generation Time: Nov 20, 2024 at 03:36 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -123,7 +123,6 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id`, `name`, `description`, `duration`, `release_date`, `language`, `imageURL`, `type`) VALUES
-(1, 'zcscscscs', 'update', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731683808-co_dau_hao_mon.jpg', 'T18'),
 (5, 'Đôi bạn học yêu', 'đỉnh của chóp', 120, '2024-11-15', 'Vietnamese, English', 'movies/1731917366-doi_ban_hoc_yeu.jpg', 'T18');
 
 -- --------------------------------------------------------
@@ -376,7 +375,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `password`, `tel`, `email`, `address`, `role_id`, `rank_id`, `points`, `imageURL`) VALUES
 (1, 'Trần Đức Trung', '123456', '0395183309', 'trungtrandev97@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 1, 4, 99999, 'user/1731911690-ẢnhCV.png'),
-(3, 'Ngô Việt Toàn', '123456', '0981614398', 'ngoviettoan@gmail.com', 'zxc', 3, 5, 0, 'user/1732003717-0002624_seafood-pesto_300 (1).png');
+(3, 'Ngô Việt Toàn', '123456', '0981614398', 'ngoviettoan@gmail.com', 'zxc', 3, 5, 0, 'user/1732003717-0002624_seafood-pesto_300 (1).png'),
+(4, 'Đặng Quỳnh Anh', '123456', '0395183309', 'quynhanh@gmail.com', 'Số 09, LK22, KĐT Vân Canh', 3, 5, 1, 'user/1732032528-414739799_757105576439804_4578821074129208035_n.jpg');
 
 --
 -- Indexes for dumped tables
@@ -621,7 +621,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
