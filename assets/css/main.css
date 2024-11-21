@@ -1,3 +1,7 @@
+:root {
+  --primary-btn: rgb(254, 247, 221);
+}
+
 .logoSaleNoti {
   width: 85%;
 }
@@ -15,7 +19,7 @@
 }
 
 .bg-nav {
-  background-color: rgb(254, 247, 221);
+  background-color: var(--primary-btn);
 }
 
 .bg-body {
@@ -23,7 +27,7 @@
 }
 
 .bg-div {
-  background-color: rgb(254, 247, 221);
+  background-color: var(--primary-btn);
   border-radius: 10px;
 }
 
@@ -31,6 +35,10 @@
   background-image: url(../client/img/redBanner.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.bg-header {
+  background-image: url(../client/img/bg-header.png);
 }
 
 .nav-a {
@@ -57,4 +65,13 @@
 .nav-a:hover::before {
   width: 50%;
   transform: translate(50%);
+}
+
+.mv-title {
+  text-decoration: none;
+  color: black;
+}
+
+.mv-title:hover {
+  color: rgb(66, 101, 189);
 }
