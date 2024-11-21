@@ -84,6 +84,13 @@ class ClientMovieController
         exit();
     }
 
+    public function detail(){
+        $view = 'movie/show-movie';
+        $title = '';
+        $description = '';
+        require_once PATH_VIEW_CLIENT_MAIN;
+    }
+    
     public function searchPage()
     {
         $view = 'search';

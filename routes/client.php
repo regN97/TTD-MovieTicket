@@ -18,5 +18,6 @@ match ($action) {
     'movies-isShowing' => (new ClientMovieController)->list(),
     'movies-upcoming' => (new ClientMovieController)->list(),
     'movies-search' => (new ClientMovieController)->search(),
+    'movies-detail' => (new ClientMovieController)->detail(),
     'search-page' => (new ClientMovieController)->searchPage(),
 };
