@@ -1,0 +1,60 @@
+.logoSaleNoti {
+    width: 85%;
+  }
+  
+  .contact-logo {
+    width: 21%;
+  }
+  
+  .contact-logo:hover {
+    width: 19%;
+  }
+  
+  .footer-logo {
+    text-decoration: none;
+  }
+  
+  .bg-nav{
+    background-color: rgb(254,247,221);
+  }
+  
+  .bg-body{
+    background-image: url(../client/img/bg.jpg);
+  }
+  
+  .bg-div{
+    background-color: rgb(254,247,221);
+    border-radius: 10px;
+  }
+  
+  .bg-footer{
+    background-image: url(../client/img/redBanner.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; 
+  }
+  
+  .nav-a{
+    position: relative;
+    padding: 0 15px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'myFont';
+  }
+  .nav-a:hover{
+    color: rgb(229,32,38);
+  }
+  .nav-a::before{
+    content: "";
+    top: 100%;
+    left: 0;
+    width: 0%;
+    height: 5px;
+    background-color: rgb(229,32,38);
+    position: absolute;
+    transition: .5s;
+  }
+  .nav-a:hover::before{
+    width: 50%;
+    transform: translate(50%);
+  }
