@@ -57,6 +57,11 @@ match ($action) {
     'artists-update'     => (new ArtistController)->update(),
     'artists-delete'     => (new ArtistController)->delete(),
 
+    // Create movie artist
+    'movie-artists-create'     => (new MovieArtistController)->create(),
+    'movie-artists-store'     => (new MovieArtistController)->store(),
+
+
     // CRUD Rooms
     'rooms-list'       => (new RoomController)->list(),
     'rooms-create'     => (new RoomController)->create(),
