@@ -19,18 +19,25 @@ class ClientMovieController
             $view = 'movie/list-movie';
             $data = $this->movie->select('*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
 
+            $title = 'Phim đang chiếu';
+            $description = 'Danh sách các phim hiện đang chiếu rạp trên toàn quốc 21/11/2024. Xem lịch chiếu phim, giá vé tiện lợi, đặt vé nhanh chỉ với 1 bước!';
+
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         } else if ($action = 'movies-upcoming') {
             $view = 'movie/list-movie';
             $data = $this->movie->select('*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
 
+            $title = 'Phim sắp chiếu';
+            $description = 'Danh sách các phim dự kiến sẽ khởi chiếu tại các hệ thống rạp trên toàn quốc.';
+
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         }
     }
 
-    public function searchByName()
+
+    public function search()
     {
 
         try {
@@ -43,7 +50,7 @@ class ClientMovieController
                 throw new Exception("Hãy nhập từ khóa tìm kiếm!");
             }
 
-            $searchKey = trim($_POST['movies-search']);
+            $_SESSION['searchKey'] = trim($_POST['movies-search']);
 
             $_SESSION['result'] = [];
 
@@ -53,8 +60,8 @@ class ClientMovieController
 
             if (!empty($movies)) {
                 foreach ($movies as $key) {
-                    if (strpos($key['name'], $searchKey) !== FALSE) {
-                        $movie = $this->movie->find('*', 'name like :name', ['name' => '%' . $searchKey . '%']);
+                    if (strpos($key['name'], $_SESSION['searchKey']) !== FALSE) {
+                        $movie = $this->movie->find('*', 'name like :name', ['name' => '%' . $_SESSION['searchKey'] . '%']);
                         if (!empty($movie)) {
                             array_push($_SESSION['result'], $movie);
                         }
@@ -66,14 +73,24 @@ class ClientMovieController
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = "Tìm kiếm thành công!";
             } else {
-                $_SESSION['errors']['search'] = "Không tìm thấy bộ phim bạn cần!";
+                $_SESSION['errors']['search'] = "Tìm kiếm không thành công!";
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
         }
 
-        header('Location: ' . BASE_URL . '?action=movies-isShowing');
+        header('Location: ' . BASE_URL . '?action=search-page');
         exit();
+    }
+
+    public function searchPage()
+    {
+        $view = 'search';
+
+        $title = 'Tìm kiếm';
+        $description = "Theo từ khóa";
+
+        require_once PATH_VIEW_CLIENT_MAIN;
     }
 }

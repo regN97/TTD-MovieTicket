@@ -19,10 +19,10 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Phim</a>
+                    <a class="nav-a nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Phim</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="?action=movies-isShowing">Đang chiếu</a></li>
-                        <li><a class="dropdown-item" href="?action=movies-upcoming">Sắp chiếu</a></li>
+                        <li><a class="nav-a dropdown-item" href="?action=movies-isShowing">Đang chiếu</a></li>
+                        <li><a class="nav-a dropdown-item" href="?action=movies-upcoming">Sắp chiếu</a></li>
                     </ul>
                 </li>
             </ul>
