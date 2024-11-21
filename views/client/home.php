@@ -16,7 +16,7 @@
     <link href="<?= BASE_ASSETS_CSS . 'main.css'; ?>" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-image bg-body">
     <?php require_once PATH_ASSETS_INC_CLIENT . 'navigation.php'; ?>
     <?php require_once PATH_ASSETS_INC_CLIENT . 'header.php'; ?>
 
