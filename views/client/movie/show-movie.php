@@ -1,9 +1,9 @@
 <div class="bg-div text-white">
     <div class="container py-3">
         <div class="row row-sm">
-            <div class="d-none d-sm--block col-2">
+            <div class="d-none d-sm-block col-2">
                 <a href="" title="ảnh phim">
-                    <img src="<?= BASE_ASSETS_CLIENT_IMAGE . 'quy_an_tang_2.jpg' ?>" class="img-fluid rounded border ls-is-cached lazyloaded">
+                    <img src="<?= BASE_ASSETS_UPLOADS . 'movies/1731672540-ai_oan_trong_vuon_xuan.jpg' ?>" class="img-fluid rounded border ls-is-cached lazyloaded">
                 </a>
             </div>
             <div class="col-12 colo-sm-10">
