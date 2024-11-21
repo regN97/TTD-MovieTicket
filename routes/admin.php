@@ -35,6 +35,10 @@ match ($action) {
     'genres-update'     => (new GenreController)->update(),         // Lưu dữ liệu cập nhật
     'genres-delete'     => (new GenreController)->delete(),         // Chức năng xóa
 
+    // Create movie_genres
+    'movie-genres-creat'      => (new MovieGenreController)->create(),
+    'movie-genres-store'      => (new MovieGenreController)->store(),
+
     // CRUD Movies
     'movies-list'       => (new MovieController)->list(),       // Trang danh sách
     'movies-create'     => (new MovieController)->create(),     // Trang tạo mới

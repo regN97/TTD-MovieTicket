@@ -84,13 +84,33 @@ class ClientMovieController
         exit();
     }
 
-    public function detail(){
-        $view = 'movie/show-movie';
-        $title = '';
-        $description = '';
-        require_once PATH_VIEW_CLIENT_MAIN;
+    public function detail()
+    {
+        try {
+            if (!isset($_GET['id'])) {
+                throw new Exception("Thiếu tham số 'id'", 99);
+            }
+
+            $id = $_GET['id'];
+
+            $movies = $this->movie->find('*', 'id = :id', ['id' => $id]);
+
+            if (empty($movies)) {
+                throw new Exception("Phim không có trong hệ thống, vui lòng kiểm tra lại!");
+            }
+
+            $view = 'movie/show-movie';
+
+            require_once PATH_VIEW_CLIENT_MAIN;
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL . '?action=movies-isShowing');
+            exit();
+        }
     }
-    
+
     public function searchPage()
     {
         $view = 'search';

@@ -3,12 +3,12 @@
         <div class="row row-sm">
             <div class="d-none d-sm-block col-2">
                 <a href="" title="ảnh phim">
-                    <img src="<?= BASE_ASSETS_UPLOADS . 'movies/1731672540-ai_oan_trong_vuon_xuan.jpg' ?>" class="img-fluid rounded border ls-is-cached lazyloaded">
+                    <img src="<?= BASE_ASSETS_UPLOADS . $movies['imageURL'] ?>" class="img-fluid rounded border ls-is-cached lazyloaded">
                 </a>
             </div>
             <div class="col-12 col-sm-10">
                 <div class="mb-3 text-sm-left">
-                    <h1 class="mb-0 text-truncate">Tên phim</h1>
+                    <h1 class="mb-0 text-truncate"><?= $movies['name'] ?></h1>
                     <p class="mb-0 text-truncate">Thể loại</p>
                 </div>
                 <div class="row">
