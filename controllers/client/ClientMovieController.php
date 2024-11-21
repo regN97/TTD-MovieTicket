@@ -94,8 +94,10 @@ class ClientMovieController
             $id = $_GET['id'];
 
             $movies = $this->movie->find('*', 'id = :id', ['id' => $id]);
+            $movieGenre = $this->movie->getMovieGenre($id);
+            $movieArtist = $this->movie->getMovieArtist($id);
 
-            if (empty($movies)) {
+            if (empty($movieGenre) || empty($movieArtist) || empty($movies)) {
                 throw new Exception("Phim không có trong hệ thống, vui lòng kiểm tra lại!");
             }
 
