@@ -76,4 +76,12 @@ class ClientMovieController
         header('Location: ' . BASE_URL . '?action=movies-isShowing');
         exit();
     }
+
+    public function detail(){
+        $view = 'movie/show-movie';
+        $title = '';
+        $description = '';
+
+        require_once PATH_VIEW_CLIENT_MAIN;
+    }
 }
