@@ -3,7 +3,7 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <?php
-            if (isset($view)) { ?>
+            if (isset($view) && isset($title)) { ?>
                 <h1 class="display-4 fw-bolder"><?= $title ?></h1>
                 <p class="lead fw-normal text-white-50 mb-0"><?= $description ?></p>
             <?php } else { ?>

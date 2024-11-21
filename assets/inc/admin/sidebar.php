@@ -55,6 +55,15 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="collapse menu-dropdown" id="sidebarMovies">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="<?= BASE_URL_ADMIN . '&action=movie-genres-creat' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                    Thêm ràng buộc phim - thể loại
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <!-- End Quản lý phim -->
 

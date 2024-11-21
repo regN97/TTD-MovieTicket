@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class SeatController
 {
@@ -84,18 +84,17 @@ class SeatController
             // Validate dữ liệu
             if (empty($data['seat_row'])) {
                 $_SESSION['errors']['seat_row'] = 'Hãy nhập hàng ghế!';
-            } else if(!empty($data['seat_row']) && !in_array($data['seat_row'], $rowValidate)) {
+            } else if (!empty($data['seat_row']) && !in_array($data['seat_row'], $rowValidate)) {
                 $_SESSION['errors']['seat_row'] = 'Hãy chọn 1 hàng ghế! (A, B, C, D, E, F, G, H)';
             }
 
             if (empty($data['seat_column'])) {
                 $_SESSION['errors']['seat_column'] = 'Hãy nhập số cột!';
-            } else if(!empty($data['seat_column']) && !in_array($data['seat_column'], $columnValidate)) {
+            } else if (!empty($data['seat_column']) && !in_array($data['seat_column'], $columnValidate)) {
                 $_SESSION['errors']['seat_column'] = 'Hãy chọn 1 số cột! (1, 2, 3, 4, 5, 6, 7, 8, 9)';
             }
 
-            if (!empty($_SESSION['errors']))
-            {
+            if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Có lỗi xảy ra, vui lòng kiểm tra lại!");
             }
@@ -107,7 +106,7 @@ class SeatController
                 $_SESSION['msg'] = 'Thêm ghế thành công!';
                 unset($_SESSION['data']);
             } else {
-                throw new Exception("Thêm ghé không thành công!");
+                throw new Exception("Thêm ghế không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
@@ -250,5 +249,3 @@ class SeatController
         exit();
     }
 }
-
-?>
