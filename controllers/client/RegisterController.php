@@ -13,6 +13,7 @@ class RegisterController
     {
         $view = 'register/create';
         $title = 'Đăng ký tài khoản';
+        $description = 'Đăng ký tài khoản TTD Movie Ticket';
 
         require_once PATH_VIEW_CLIENT_MAIN;
     }
@@ -39,6 +40,10 @@ class RegisterController
 
             if (strlen($data['password']) < 0 || strlen($data['password']) > 30) {
                 $_SESSION['errors']['password'] = "Mật khẩu không hợp lệ! Vui lòng thử lại.";
+            }
+
+            if ($data['password'] !== $data['repassword']) {
+                $_SESSION['errors']['repassword'] = "Mật khẩu không trùng khớp!";
             }
 
             if (empty($data['tel'])) {
@@ -103,8 +108,12 @@ class RegisterController
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL . '?action=register-form');
+            exit();
         }
-        header('Location: ' . BASE_URL . '?action=register-form');
+
+        header('Location: ' . BASE_URL . '?action=show-form-login');
         exit();
     }
 }

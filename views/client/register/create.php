@@ -23,41 +23,49 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['errors']);
 endif;
 ?>
+<div class="bg-div py-3">
+    <form class="container w-50" action="?action=register-store" method="post" enctype="multipart/form-data">
+        <h2><?= $title; ?></h2>
+        <div class="row my-2">
+            <div class="col-sm-6">
+                <label for="name" class="form-label">Họ và tên: </label>
+                <input type="text" class="form-control" name="name" id="name" value="<?= $_SESSION['data']['name'] ?? null ?>">
+            </div>
+            <div class="col-sm-6">
+                <label for="email" class="form-label">Email: </label>
+                <input type="email" class="form-control" name="email" id="email" value="<?= $_SESSION['data']['email'] ?? null ?>">
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-sm-6">
+                <label for="password" class="form-label">Mật khẩu: </label>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <div class="col-sm-6">
+                <label for="repassword" class="form-label">Xác minh mật khẩu: </label>
+                <input type="password" class="form-control" name="repassword" id="repassword">
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-sm-6">
+                <label for="tel" class="form-label">Số điện thoại: </label>
+                <input type="text" class="form-control" name="tel" id="tel" value="<?= $_SESSION['data']['tel'] ?? null ?>">
+            </div>
+            <div class="col-sm-6">
+                <label for="address" class="form-label">Địa chỉ: </label>
+                <input type="text" class="form-control" name="address" id="address" value="<?= $_SESSION['data']['address'] ?? null ?>">
+            </div>
+        </div>
+        <div class="">
+            <input type="number" name="rank_id" id="rank_id" value="5" hidden>
+        </div>
+        <div class="">
+            <input type="number" name="role_id" id="role_id" value="3" hidden>
+        </div>
+        <div class="my-3">
+            <input type="number" class="form-control" name="points" id="points" value="1" hidden>
+        </div>
 
-<form class="container w-50" action="?action=register-store" method="post" enctype="multipart/form-data">
-    <h2><?= $title; ?></h2>
-    <div class="my-3">
-        <label for="name" class="form-label">Tên người dùng: </label>
-        <input type="text" class="form-control" name="name" id="name" value="<?= $_SESSION['data']['name'] ?? null ?>">
-    </div>
-    <div class="my-3">
-        <label for="password" class="form-label">Mật Khẩu dùng: </label>
-        <input type="password" class="form-control" name="password" id="password">
-    </div>
-    <div class="my-3">
-        <label for="tel" class="form-label">Số điện thoại: </label>
-        <input type="text" class="form-control" name="tel" id="tel" value="<?= $_SESSION['data']['tel'] ?? null ?>">
-    </div>
-    <div class="my-3">
-        <label for="email" class="form-label">Email: </label>
-        <input type="email" class="form-control" name="email" id="email" value="<?= $_SESSION['data']['email'] ?? null ?>">
-    </div>
-    <div class="my-3">
-        <label for="address" class="form-label">Địa chỉ: </label>
-        <input type="text" class="form-control" name="address" id="address" value="<?= $_SESSION['data']['address'] ?? null ?>">
-    </div>
-    <div class="my-3">
-        <input type="number" name="rank_id" id="rank_id" value="5" hidden>
-    </div>
-    <div class="my-3">
-        <input type="number" name="role_id" id="role_id" value="3" hidden>
-    </div>
-    <div class="my-3">
-        <input type="number" class="form-control" name="points" id="points" value="1" hidden>
-    </div>
-    <div class="mb-3 mt-3">
-        <label for="imageURL" class="form-label">Hình ảnh: </label>
-        <input type="file" class="form-control" name="imageURL" id="imageURL" value="<?= $_SESSION['data']['imageURL'] ?? null ?>">
-    </div>
-    <button type="submit" class="btn btn-primary">Đăng ký</button>
-</form>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+</div>

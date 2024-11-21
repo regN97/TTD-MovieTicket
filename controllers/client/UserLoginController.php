@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class UserLoginController
 {
@@ -12,6 +12,9 @@ class UserLoginController
     public function showFormLogin()
     {
         $view = 'authen/form-login';
+
+        $title = 'Đăng nhập';
+        $description = 'Đăng nhập với tài khoản TTD Movie Ticket';
 
         require_once PATH_VIEW_CLIENT_MAIN;
     }
@@ -50,7 +53,6 @@ class UserLoginController
                 header('Location: ' . BASE_URL);
                 exit();
             }
-            
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
@@ -68,5 +70,3 @@ class UserLoginController
         exit();
     }
 }
-
-?>
