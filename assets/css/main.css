@@ -41,6 +41,11 @@
   background-image: url(../client/img/bg-header.png);
 }
 
+.bg-detail{
+  background-color: rgb(18, 38, 63);
+  border-radius: 10px;
+}
+
 .nav-a {
   position: relative;
   padding: 0 15px;
