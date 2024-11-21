@@ -1,5 +1,5 @@
 <!-- Footer-->
-<footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 pt-5 mt-5 border-top">
+<footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 pt-5 border-top bg-footer">
     <div class="col mb-3">
         <img src="<?= BASE_ASSETS_CLIENT_IMAGE . 'TTD.png' ?>" alt="logo" width="250" height="170">
     </div>
