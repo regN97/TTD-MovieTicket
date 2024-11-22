@@ -4,9 +4,13 @@ class RoomController
 {
     private $room;
 
+    private $seat;
+
     public function __construct()
     {
         $this->room = new Room();
+
+        $this->seat = new Seat();
     }
 
     public function list()
@@ -94,6 +98,17 @@ class RoomController
             $id = $_GET['id'];
 
             $room = $this->room->find('*', 'id = :id', ['id' => $id]);
+
+            $seats = $this->seat->select();
+
+            $seatInRoom = [];
+
+            // Chỉ lấy ra các ghế có room_id trùng với id phòng chiếu
+            foreach ($seats as $seat) {
+                if ($seat['room_id'] == $id) {
+                    $seatInRoom[] = $seat;
+                }
+            }
 
             if (empty($room)) {
                 throw new Exception("Không tìm thấy phòng chiếu có id = $id!", 98);
