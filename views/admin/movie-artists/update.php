@@ -24,29 +24,29 @@ if (isset($_SESSION['success'])) {
 endif;
 ?>
 
-<form action="<?= BASE_URL_ADMIN . '&action=movie-genres-store' ?>" method="post" enctype="multipart/form-data">
+<form action="<?= BASE_URL_ADMIN . '&action=movie-artists-update&id=' . $movieArtists['ma_id'] ?>" method="post" enctype="multipart/form-data">
     <div class="my-3">
         <label for="movie_id" class="form-label">Tên phim:</label>
         <select class="form-select" name="movie_id" id="movie_id">
-            <option value="" selected>Lựa chọn phim</option>
             <?php foreach ($moviePluck as $id => $name): ?>
 
-                <option value="<?= $id ?>"><?= $name ?></option>
+                <option value="<?= $id ?>"
+                    <?= $id == $movieArtists['m_id'] ? 'selected' : '' ?>><?= $name ?></option>
 
             <?php endforeach; ?>
         </select>
     </div>
     <div class="my-3">
-        <label for="genre_id" class="form-label">Tên thể loại:</label>
-        <select class="form-select" name="genre_id" id="genre_id">
-            <option value="" selected>Lựa chọn thể loại</option>
-            <?php foreach ($genrePluck as $id => $name): ?>
+        <label for="artist_id" class="form-label">Tên nghệ sĩ:</label>
+        <select class="form-select" name="artist_id" id="artist_id">
+            <?php foreach ($artistPluck as $id => $name): ?>
 
-                <option value="<?= $id ?>"><?= $name ?></option>
+                <option value="<?= $id ?>"
+                    <?= $id == $movieArtists['a_id'] ? 'selected' : '' ?>><?= $name ?></option>
 
             <?php endforeach; ?>
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="<?= BASE_URL_ADMIN . '&action=movie-genres-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
+    <a href="<?= BASE_URL_ADMIN . '&action=movie-artists-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
 </form>
