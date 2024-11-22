@@ -46,10 +46,10 @@ endif;
     <div class="my-3">
         <label for="description" class="form-label">Mô tả:</label>
         <textarea name="description" id="description" class="form-control"><?php if (isset($_SESSION['data'])) {
-                                                                                        echo $_SESSION['data']['description'];
-                                                                                    } else {
-                                                                                        echo $room['description'];
-                                                                                    } ?></textarea>
+                                                                                echo $_SESSION['data']['description'];
+                                                                            } else {
+                                                                                echo $room['description'];
+                                                                            } ?></textarea>
     </div>
     <div class="my-3">
         <label for="total_seats" class="form-label">Tổng số ghế:</label>
@@ -59,6 +59,14 @@ endif;
                     } else {
                         echo $room['total_seats'];
                     } ?>">
+    </div>
+    <div class="my-3">
+        <label for="status" class="form-label">Trạng thái:</label>
+        <select class="form-select" name="status">
+            <option value="">Lựa chọn trạng thái</option>
+            <option value="Active" <?php if (isset($room['status']) && $room['status'] === 'Active') echo 'selected' ?>>Active</option>
+            <option value="Deactive" <?php if (isset($room['status']) && $room['status'] === 'Deactive') echo 'selected' ?>>Deactive</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a href="<?= BASE_URL_ADMIN . '&action=rooms-list' ?>" class="btn btn-danger">Quay lại danh sách</a>

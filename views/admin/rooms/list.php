@@ -19,6 +19,7 @@ if (isset($_SESSION['success'])) {
             <th class="text-center">Loại phòng</th>
             <th class="text-center">Mô tả</th>
             <th class="text-center">Tổng số ghế</th>
+            <th class="text-center">Trạng thái</th>
             <th class="text-center">Thao tác</th>
         </tr>
     </thead>
@@ -35,6 +36,7 @@ if (isset($_SESSION['success'])) {
                                         echo $shortenData . ' ...';
                                         ?></td>
                 <td class="text-center"><?= $room['total_seats'] ?></td>
+                <td class="text-center"><?= $room['status'] ?></td>
                 <td class="d-flex justify-content-center">
                     <a href="<?= BASE_URL_ADMIN . '&action=rooms-show&id=' . $room['id'] ?>"
                         class="btn btn-info">Xem</a>

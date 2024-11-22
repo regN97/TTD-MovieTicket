@@ -48,6 +48,14 @@ endif;
         <input type="number" class="form-control" name="total_seats" id="total_seats"
             value="<?= $_SESSION['data']['total_seats'] ?? null ?>">
     </div>
+    <div class="my-3">
+        <label for="status" class="form-label">Trạng thái:</label>
+        <select class="form-select" name="status">
+            <option value="">Lựa chọn trạng thái</option>
+            <option value="Active" <?php if (isset($_SESSION['data']['status']) && $_SESSION['data']['status'] === 'Active') echo 'selected' ?>>Active</option>
+            <option value="Deactive" <?php if (isset($_SESSION['data']['status']) && $_SESSION['data']['status'] === 'Deactive') echo 'selected' ?>>Deactive</option>
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a href="<?= BASE_URL_ADMIN . '&action=rooms-list' ?>" class="btn btn-danger">Quay lại danh sách</a>
 </form>

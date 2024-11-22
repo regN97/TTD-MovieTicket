@@ -36,8 +36,13 @@ match ($action) {
     'genres-delete'     => (new GenreController)->delete(),         // Chức năng xóa
 
     // Create movie_genres
-    'movie-genres-creat'      => (new MovieGenreController)->create(),
+    'movie-genres-create'      => (new MovieGenreController)->create(),
     'movie-genres-store'      => (new MovieGenreController)->store(),
+    'movie-genres-list'       => (new MovieGenreController)->list(),
+    'movie-genres-show'       => (new MovieGenreController)->show(),
+    'movie-genres-updatePage' => (new MovieGenreController)->updatePage(),
+    'movie-genres-update'     => (new MovieGenreController)->update(),
+    'movie-genres-delete'     => (new MovieGenreController)->delete(),
 
     // CRUD Movies
     'movies-list'       => (new MovieController)->list(),       // Trang danh sách
@@ -59,7 +64,12 @@ match ($action) {
 
     // Create movie artist
     'movie-artists-create'     => (new MovieArtistController)->create(),
-    'movie-artists-store'     => (new MovieArtistController)->store(),
+    'movie-artists-store'      => (new MovieArtistController)->store(),
+    'movie-artists-list'       => (new MovieArtistController)->list(),
+    'movie-artists-show'       => (new MovieArtistController)->show(),
+    'movie-artists-updatePage' => (new MovieArtistController)->updatePage(),
+    'movie-artists-update'     => (new MovieArtistController)->update(),
+    'movie-artists-delete'     => (new MovieArtistController)->delete(),
 
 
     // CRUD Rooms
