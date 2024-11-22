@@ -22,7 +22,23 @@ class UserController
 
         $view = 'users/list';
         $title = 'Danh sách người dùng';
-        $data = $this->user->getAll();
+                // Số sản phẩm trên mỗi trang
+                $perPage = 5;
+
+                // Xác định trang hiện tại (mặc định là 1)
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+       
+                $data = $this->user->getAll($page, $perPage, '*');
+       
+                $totalUser = $this->user->count();
+               $totalPages = ceil($totalUser / $perPage);
+       
+               if ($page > $totalPages) {
+                   // Chuyển hướng đến trang cuối cùng
+                   header('Location:'. BASE_URL_ADMIN .'&action=users-list'.'&page=' . $totalPages);
+                   exit();
+               }
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }

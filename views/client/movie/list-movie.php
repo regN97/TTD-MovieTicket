@@ -89,5 +89,26 @@ endif;
                 <?php } ?>
             <?php } ?>
         </div>
+        <div class="container mb-2 ">
+    <div class="d-flex justify-content-end">
+        <?php if ($page > 1): ?>
+            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL . '?action='.$action . '&page=' . ($page - 1) ?>">« Trước</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+    <a class="totalPages btn btn-outline-dark mx-1 col-1 " href="<?= BASE_URL . '?action='.$action . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+<?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL . '?action='.$action . '&page=' . ($page + 1) ?>">Sau »</a>
+        <?php endif; ?>
     </div>
 </div>
+    </div>
+</div>
+<style>
+    .totalPages:hover {
+        text-decoration: underline;
+    }
+</style>
+

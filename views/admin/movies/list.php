@@ -11,6 +11,12 @@ if (isset($_SESSION['success'])) {
 }
 ?>
 
+<style>
+    .totalPages:hover {
+        text-decoration: underline;
+    }
+</style>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -32,10 +38,10 @@ if (isset($_SESSION['success'])) {
                 <td class="text-center"><?= $stt++; ?></td>
                 <td class="text-center"><?= $movie['name'] ?></td>
                 <td class="text-center"><?php
-                    $maxLength = 50;
-                    $shortenData = mb_substr($movie['description'], 0, $maxLength, 'UTF-8');
-                    echo $shortenData . ' ...';
-                    ?></td>
+                                        $maxLength = 50;
+                                        $shortenData = mb_substr($movie['description'], 0, $maxLength, 'UTF-8');
+                                        echo $shortenData . ' ...';
+                                        ?></td>
                 <td class="text-center"><?= $movie['duration'] ?></td>
                 <td class="text-center"><?= $movie['release_date'] ?></td>
                 <td class="text-center"><?= $movie['language'] ?></td>
@@ -58,3 +64,17 @@ if (isset($_SESSION['success'])) {
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<div class="container mb-3">
+    <div class="d-flex justify-content-start">
+        <?php if ($page > 1): ?>
+            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL_ADMIN . '&action=movies-list' . '&page=' . ($page - 1) ?>">« Trước</a>
+        <?php endif; ?>
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a class="totalPages btn btn-outline-dark mx-1 col-1" href="<?= BASE_URL_ADMIN . '&action=movies-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+        <?php endfor; ?>
+        <?php if ($page < $totalPages): ?>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=movies-list' . '&page=' . ($page + 1) ?>">Sau »</a>
+        <?php endif; ?>
+    </div>
+</div>

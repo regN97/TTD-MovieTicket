@@ -11,6 +11,11 @@ if (isset($_SESSION['success'])) {
 }
 ?>
 
+<style>
+    .totalPages:hover {
+        text-decoration: underline;
+    }
+</style>
 
 <table class="table table-bordered">
     <tr>
@@ -55,3 +60,18 @@ if (isset($_SESSION['success'])) {
         </tr>
     <?php endforeach; ?>
 </table>
+<div class="container mb-3">
+    <div class="d-flex justify-content-start">
+        <?php if ($page > 1): ?>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=news-list' . '&page=' . ($page - 1) ?>">« Trước</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a class="totalPages btn btn-primary mx-1 col " href="<?= BASE_URL_ADMIN . '&action=news-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+        <?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=news-list' . '&page=' . ($page + 1) ?>">Sau »</a>
+        <?php endif; ?>
+    </div>
+</div>

@@ -16,7 +16,24 @@ class NewsController
 
         $view = 'news/list';
         $title = 'Danh sách tin tức';
-        $data = $this->news->getAll();
+
+        // Số sản phẩm trên mỗi trang
+        $perPage = 5;
+
+        // Xác định trang hiện tại (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+        $data = $this->news->getAll($page, $perPage, '*');
+
+        $totalNews = $this->news->count();
+        $totalPages = ceil($totalNews / $perPage);
+
+        if ($page > $totalPages) {
+            // Chuyển hướng đến trang cuối cùng
+            header('Location:' . BASE_URL_ADMIN . '&action=news-list' . '&page=' . $totalPages);
+            exit();
+        }
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -128,7 +145,7 @@ class NewsController
             $_SESSION['msg'] = $th->getMessage();
         }
         header('Location: ' . BASE_URL_ADMIN . '&action=news-create');
-        exit();  
+        exit();
     }
     // Hiển thị form cập nhật theo ID
     public function updatePage()
@@ -223,7 +240,7 @@ class NewsController
             } else {
                 $data['imageURL'] = $news['n_imageURL'];
             }
-            
+
             $data['created_at'] = date('Y-m-d H:i:s');
 
             $rowCount = $this->news->update($data, 'id = :id', ['id' => $id]);
@@ -284,5 +301,3 @@ class NewsController
         );
     }
 }
-
-?>

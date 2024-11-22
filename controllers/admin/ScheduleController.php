@@ -21,7 +21,23 @@ class ScheduleController
 
         $view = 'schedules/list';
         $title = 'Danh sách lịch chiếu phim';
-        $data = $this->schedule->getAll();
+                // Số sản phẩm trên mỗi trang
+                $perPage = 5;
+
+                // Xác định trang hiện tại (mặc định là 1)
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+       
+                $data = $this->schedule->getAll($page, $perPage, '*');
+       
+                $totalSchedules = $this->schedule->count();
+               $totalPages = ceil($totalSchedules / $perPage);
+       
+               if ($page > $totalPages) {
+                   // Chuyển hướng đến trang cuối cùng
+                   header('Location:'. BASE_URL_ADMIN .'&action=schedules-list'.'&page=' . $totalPages);
+                   exit();
+               }
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }

@@ -15,7 +15,24 @@ class MovieController
 
         $view = 'movies/list';
         $title = 'Danh sách phim';
-        $data = $this->movie->select('*');
+
+        // Số sản phẩm trên mỗi trang
+        $perPage = 5;
+
+         // Xác định trang hiện tại (mặc định là 1)
+         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+         $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+         $data = $this->movie->paginate($page, $perPage, '*');
+
+         $totalMovie = $this->movie->count();
+        $totalPages = ceil($totalMovie / $perPage);
+
+        if ($page > $totalPages) {
+            // Chuyển hướng đến trang cuối cùng
+            header('Location:'. BASE_URL_ADMIN .'&action=movies-list'.'&page=' . $totalPages);
+            exit();
+        }
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }

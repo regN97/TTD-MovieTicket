@@ -34,14 +34,6 @@ endif;
                                                                                 } ?>">
     </div>
     <div class="my-3">
-        <label for="password" class="form-label">Mật Khẩu dùng: </label>
-        <input type="password" class="form-control" name="password" id="password" value="<?php if (isset($_SESSION['data'])) {
-                                                                                                echo $_SESSION['data']['password'];
-                                                                                            } else {
-                                                                                                echo $user['u_password'];
-                                                                                            } ?>">
-    </div>
-    <div class="my-3">
         <label for="tel" class="form-label">Số điện thoại: </label>
         <input type="text" class="form-control" name="tel" id="tel" value="<?php if (isset($_SESSION['data'])) {
                                                                                 echo $_SESSION['data']['tel'];

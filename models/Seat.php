@@ -4,7 +4,7 @@ class Seat extends BaseModel
 {
     protected $table = 'seats';
 
-    public function getAll()
+    public function getAll($page = 1, $perPage = 5, $columns = '*', $conditions = null, $params = [])
     {
         $sql = "
             SELECT
@@ -19,8 +19,16 @@ class Seat extends BaseModel
             FROM seats s
             JOIN rooms r ON r.id = s.room_id
             JOIN seat_types st ON st.id = s.type_id
-            ORDER BY s.id DESC
         ";
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
+
+        $offset = ($page - 1) * $perPage;
+
+        // PDO không hỗ trợ trực tiếp bindParam cho LIMIT và OFFSET, 
+        // vì vậy ta phải sử dụng bindValue or truyền thẳng giá trị luôn cũng được.
+        $sql .= " LIMIT $perPage OFFSET $offset";
 
         $stmt = $this->pdo->prepare($sql);
 

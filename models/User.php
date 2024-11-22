@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 class User extends BaseModel
 {
     protected $table = 'users';
-    public function getAll()
+    public function getAll($page = 1, $perPage = 5, $columns = '*', $conditions = null, $params = [])
     {
         $sql = "
         SELECT 
@@ -23,23 +23,30 @@ class User extends BaseModel
          ra.name                ra_name
          
          FROM 
-    users u
-JOIN roles ro ON ro.id = u.role_id
-JOIN ranks ra ON ra.id = u.rank_id
-ORDER BY  u.id DESC 
-    ";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt -> fetchAll();
-    
+         users u
+        JOIN roles ro ON ro.id = u.role_id
+        JOIN ranks ra ON ra.id = u.rank_id";
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
+
+        $offset = ($page - 1) * $perPage;
+
+        // PDO không hỗ trợ trực tiếp bindParam cho LIMIT và OFFSET, 
+        // vì vậy ta phải sử dụng bindValue or truyền thẳng giá trị luôn cũng được.
+        $sql .= " LIMIT $perPage OFFSET $offset";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
-    public function getID($id){
+    public function getID($id)
+    {
         $sql = "
         SELECT 
          u.id                   u_id,
          u.name                 u_name,
-         u.password             u_password,
          u.tel                  u_tel,
          u.email                u_email,
          u.address              u_address,
@@ -58,19 +65,20 @@ JOIN roles ro ON ro.id = u.role_id
 JOIN ranks ra ON ra.id = u.rank_id
 WHERE u.id = :id;
     ";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute(['id'=> $id]);
-    return $stmt -> fetch();
-    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch();
     }
 
     public function insertUser($data)
     {
         $keys = array_keys($data);
 
-        $columns = implode(', ', array_map(function($keys){return"`$keys`";},$keys));
+        $columns = implode(', ', array_map(function ($keys) {
+            return "`$keys`";
+        }, $keys));
 
-        
+
         $placehoders = ':' . implode(', :', $keys);
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placehoders)";
@@ -110,7 +118,4 @@ WHERE u.id = :id;
 
         return $stmt->rowCount();
     }
-
 }
-
-?>

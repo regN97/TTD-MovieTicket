@@ -19,7 +19,24 @@ class MovieArtistController
 
         $view = 'movie-artists/list';
         $title = 'Danh sách ràng buộc Movie và Artist';
-        $data = $this->movieArtist->getAll();
+        // Số sản phẩm trên mỗi trang
+        $perPage = 5;
+
+        // Xác định trang hiện tại (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+        $data = $this->movieArtist->getAll($page, $perPage, '*');
+
+        $totalUser = $this->movieArtist->count();
+       $totalPages = ceil($totalUser / $perPage);
+
+       if ($page > $totalPages) {
+           // Chuyển hướng đến trang cuối cùng
+           header('Location:'. BASE_URL_ADMIN .'&action=movie-artists-list'.'&page=' . $totalPages);
+           exit();
+       }
+
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
