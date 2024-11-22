@@ -14,26 +14,58 @@ class ClientMovieController
     public function list()
     {
         $action = isset($_GET['action']) ? $_GET['action'] : '';
+        
+        // Số sản phẩm trên mỗi trang
+         $perPage = 12;
 
         if ($action == 'movies-isShowing') {
             $view = 'movie/list-movie';
-            $data = $this->movie->select('*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
-
             $title = 'Phim đang chiếu';
             $description = 'Danh sách các phim hiện đang chiếu rạp trên toàn quốc 21/11/2024. Xem lịch chiếu phim, giá vé tiện lợi, đặt vé nhanh chỉ với 1 bước!';
 
+       
+
+        // Xác định trang hiện tại (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+        $data = $this->movie->paginate($page, $perPage, '*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
+
+        $totalMovie = $this->movie->count('release_date <= :release_date', ['release_date' => date('Y-m-d')]);
+       $totalPages = ceil($totalMovie / $perPage);
+
+       if ($page > $totalPages) {
+           // Chuyển hướng đến trang cuối cùng
+           header('Location:'. BASE_URL .'&action=movies-isShowing'.'&page=' . $totalPages);
+           exit();
+       }
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
-        } else if ($action = 'movies-upcoming') {
+        } else if ($action == 'movies-upcoming') {
             $view = 'movie/list-movie';
-            $data = $this->movie->select('*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
-
             $title = 'Phim sắp chiếu';
             $description = 'Danh sách các phim dự kiến sẽ khởi chiếu tại các hệ thống rạp trên toàn quốc.';
+
+         // Xác định trang hiện tại (mặc định là 1)
+         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+         $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+         $data = $this->movie->paginate($page, $perPage, '*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
+
+         $totalMovie = $this->movie->count('release_date > :release_date', ['release_date' => date('Y-m-d')]);
+        $totalPages = ceil($totalMovie / $perPage);
+
+        if ($page > $totalPages) {
+            // Chuyển hướng đến trang cuối cùng
+            header('Location:'. BASE_URL .'&action=movies-upcoming'.'&page=' . $totalPages);
+            exit();
+        }
 
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         }
+
+
     }
 
 

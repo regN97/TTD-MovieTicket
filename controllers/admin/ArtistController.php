@@ -16,7 +16,23 @@ class ArtistController
 
         $view = 'artists/list';
         $title = 'Danh sách nghệ sĩ';
-        $data = $this->artist->select('*');
+                // Số sản phẩm trên mỗi trang
+                $perPage = 5;
+
+                // Xác định trang hiện tại (mặc định là 1)
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+       
+                $data = $this->artist->paginate($page, $perPage, '*');
+       
+                $totalArtist = $this->artist->count();
+               $totalPages = ceil($totalArtist / $perPage);
+       
+               if ($page > $totalPages) {
+                   // Chuyển hướng đến trang cuối cùng
+                   header('Location:'. BASE_URL_ADMIN .'&action=artist-list'.'&page=' . $totalPages);
+                   exit();
+               }
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }

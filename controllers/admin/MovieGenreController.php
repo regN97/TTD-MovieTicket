@@ -22,7 +22,24 @@ class MovieGenreController
 
         $view = 'movie-genres/list';
         $title = 'Danh sách ràng buộc Movie và Genre';
-        $data = $this->movieGenres->getAll();
+        // Số sản phẩm trên mỗi trang
+        $perPage = 5;
+
+        // Xác định trang hiện tại (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+        $data = $this->movieGenres->getAll($page, $perPage, '*');
+
+        $totalUser = $this->movieGenres->count();
+       $totalPages = ceil($totalUser / $perPage);
+
+       if ($page > $totalPages) {
+           // Chuyển hướng đến trang cuối cùng
+           header('Location:'. BASE_URL_ADMIN .'&action=movie-genres-list'.'&page=' . $totalPages);
+           exit();
+       }
+
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }

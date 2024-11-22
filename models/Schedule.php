@@ -4,7 +4,7 @@ class Schedule extends BaseModel {
 
     public $table = 'schedules';
 
-    public function getAll()
+    public function getAll($page = 1, $perPage = 5, $columns = '*', $conditions = null, $params = [])
     {
         $sql = "
             SELECT
@@ -18,8 +18,18 @@ class Schedule extends BaseModel {
             FROM schedules s
             JOIN rooms r ON r.id = s.room_id
             JOIN movies m ON m.id = s.movie_id
-            ORDER BY s.id DESC
         ";
+
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
+
+        $offset = ($page - 1) * $perPage;
+
+        // PDO không hỗ trợ trực tiếp bindParam cho LIMIT và OFFSET, 
+        // vì vậy ta phải sử dụng bindValue or truyền thẳng giá trị luôn cũng được.
+        
+        $sql .= " LIMIT $perPage OFFSET $offset";
 
         $stmt = $this->pdo->prepare($sql);
 

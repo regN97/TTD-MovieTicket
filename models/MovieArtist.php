@@ -4,7 +4,7 @@ class MovieArtist extends BaseModel
 {
     protected $table = 'movie_artists';
 
-    public function getAll()
+    public function getAll($page = 1, $perPage = 5, $columns = '*', $conditions = null, $params = [])
     {
         $sql = "
             SELECT
@@ -15,9 +15,16 @@ class MovieArtist extends BaseModel
             FROM movie_artists ma
             JOIN movies m ON m.id = ma.movie_id
             JOIN artists a ON a.id = ma.artist_id
-            ORDER BY ma.id DESC;
         ";
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
 
+        $offset = ($page - 1) * $perPage;
+
+        // PDO không hỗ trợ trực tiếp bindParam cho LIMIT và OFFSET, 
+        // vì vậy ta phải sử dụng bindValue or truyền thẳng giá trị luôn cũng được.
+        $sql .= " LIMIT $perPage OFFSET $offset";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute();
