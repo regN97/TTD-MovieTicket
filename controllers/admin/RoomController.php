@@ -59,11 +59,6 @@ class RoomController
                 $_SESSION['errors']['description'] = 'Vui lòng nhập mô tả!';
             }
 
-            if (empty($data['total_seats'])) {
-                $_SESSION['errors']['total_seats'] = 'Vui lòng nhập số ghế!';
-            } else if (is_numeric($data['total_seats']) && $data['total_seats'] > 59 && $data['total_seats'] <= 0) {
-                $_SESSION['errors']['total_seats'] = 'Số ghế phải lớn hơn 0 và nhỏ hơn 60!';
-            }
             // End validate
 
             if (!empty($_SESSION['errors'])) {
@@ -194,11 +189,6 @@ class RoomController
                 $_SESSION['errors']['description'] = 'Vui lòng nhập mô tả!';
             }
 
-            if (empty($data['total_seats'])) {
-                $_SESSION['errors']['total_seats'] = 'Vui lòng nhập số ghế!';
-            } else if (is_numeric($data['total_seats']) && $data['total_seats'] > 59 && $data['total_seats'] <= 0) {
-                $_SESSION['errors']['total_seats'] = 'Số ghế phải lớn hơn 0 và nhỏ hơn 60!';
-            }
             // End validate
 
             if (!empty($_SESSION['errors'])) {

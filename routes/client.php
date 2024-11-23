@@ -20,4 +20,8 @@ match ($action) {
     'movies-search' => (new ClientMovieController)->search(),
     'movies-detail' => (new ClientMovieController)->detail(),
     'search-page' => (new ClientMovieController)->searchPage(),
+    'movies-schedule'   => (new ClientMovieController)->schedule(),
+
+    // Đặt vé
+    'picking-seat' => (new TicketController)->index(),
 };

@@ -5,40 +5,46 @@ class ClientMovieController
 
     private $movie;
 
+    private $room;
+
+    private $schedule;
+
     public function __construct()
     {
         $this->movie = new Movie();
+        $this->room = new Room();
+        $this->schedule = new Schedule();
     }
 
 
     public function list()
     {
         $action = isset($_GET['action']) ? $_GET['action'] : '';
-        
+
         // Số sản phẩm trên mỗi trang
-         $perPage = 12;
+        $perPage = 12;
 
         if ($action == 'movies-isShowing') {
             $view = 'movie/list-movie';
             $title = 'Phim đang chiếu';
             $description = 'Danh sách các phim hiện đang chiếu rạp trên toàn quốc 21/11/2024. Xem lịch chiếu phim, giá vé tiện lợi, đặt vé nhanh chỉ với 1 bước!';
 
-       
 
-        // Xác định trang hiện tại (mặc định là 1)
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
 
-        $data = $this->movie->paginate($page, $perPage, '*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
+            // Xác định trang hiện tại (mặc định là 1)
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
 
-        $totalMovie = $this->movie->count('release_date <= :release_date', ['release_date' => date('Y-m-d')]);
-       $totalPages = ceil($totalMovie / $perPage);
+            $data = $this->movie->paginate($page, $perPage, '*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
 
-       if ($page > $totalPages) {
-           // Chuyển hướng đến trang cuối cùng
-           header('Location:'. BASE_URL .'&action=movies-isShowing'.'&page=' . $totalPages);
-           exit();
-       }
+            $totalMovie = $this->movie->count('release_date <= :release_date', ['release_date' => date('Y-m-d')]);
+            $totalPages = ceil($totalMovie / $perPage);
+
+            if ($page > $totalPages) {
+                // Chuyển hướng đến trang cuối cùng
+                header('Location:' . BASE_URL . '&action=movies-isShowing' . '&page=' . $totalPages);
+                exit();
+            }
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         } else if ($action == 'movies-upcoming') {
@@ -46,26 +52,24 @@ class ClientMovieController
             $title = 'Phim sắp chiếu';
             $description = 'Danh sách các phim dự kiến sẽ khởi chiếu tại các hệ thống rạp trên toàn quốc.';
 
-         // Xác định trang hiện tại (mặc định là 1)
-         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-         $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+            // Xác định trang hiện tại (mặc định là 1)
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
 
-         $data = $this->movie->paginate($page, $perPage, '*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
+            $data = $this->movie->paginate($page, $perPage, '*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
 
-         $totalMovie = $this->movie->count('release_date > :release_date', ['release_date' => date('Y-m-d')]);
-        $totalPages = ceil($totalMovie / $perPage);
+            $totalMovie = $this->movie->count('release_date > :release_date', ['release_date' => date('Y-m-d')]);
+            $totalPages = ceil($totalMovie / $perPage);
 
-        if ($page > $totalPages) {
-            // Chuyển hướng đến trang cuối cùng
-            header('Location:'. BASE_URL .'&action=movies-upcoming'.'&page=' . $totalPages);
-            exit();
-        }
+            if ($page > $totalPages) {
+                // Chuyển hướng đến trang cuối cùng
+                header('Location:' . BASE_URL . '&action=movies-upcoming' . '&page=' . $totalPages);
+                exit();
+            }
 
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         }
-
-
     }
 
 
@@ -129,6 +133,9 @@ class ClientMovieController
             $movieGenre = $this->movie->getMovieGenre($id);
             $movieArtist = $this->movie->getMovieArtist($id);
 
+            $rooms = $this->room->select();
+            $schedules = $this->schedule->select();
+
             if (empty($movieGenre) || empty($movieArtist) || empty($movies)) {
                 throw new Exception("Phim không có trong hệ thống, vui lòng kiểm tra lại!");
             }
@@ -153,5 +160,35 @@ class ClientMovieController
         $description = "Theo từ khóa";
 
         require_once PATH_VIEW_CLIENT_MAIN;
+    }
+
+    public function schedule()
+    {
+        try {
+
+            $sDate = $_GET['date']; // định dạng đang là Y-m-d
+
+            $movie_id = $_GET['movie_id'];
+
+            $_SESSION['schedule'] = [];
+
+            $_SESSION['errors'] = [];
+
+            $schedule = $this->schedule->select('*', 'DATE(`start_at`) = :start_at AND movie_id = :movie_id', ['start_at' => $sDate, 'movie_id' => $movie_id]);
+
+            if (empty($schedule)) {
+                $_SESSION['errors']['schedule'] = "Phim chưa có lịch chiếu cụ thể!";
+            }
+
+            if (!empty($schedule)) {
+                $_SESSION['schedule'] = $schedule;
+            }
+        } catch (\Throwable $th) {
+            unset($_SESSION['schedule']);
+            $_SESSION['errors'] = $th->getMessage();
+        }
+
+        header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $movie_id);
+        exit();
     }
 }
