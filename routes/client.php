@@ -23,5 +23,5 @@ match ($action) {
     'movies-schedule'   => (new ClientMovieController)->schedule(),
 
     // Đặt vé
-    'picking-seat' => (new TicketController)->index(),
+    'picking-seat' => (new TicketController)->pickingSeat(),
 };

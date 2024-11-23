@@ -41,7 +41,7 @@
             <?php if ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -50,7 +50,7 @@
             <?php if ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -59,7 +59,7 @@
             <?php if ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -68,7 +68,7 @@
             <?php if ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -77,7 +77,7 @@
             <?php if ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -86,7 +86,7 @@
             <?php if ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
@@ -95,7 +95,7 @@
             <?php if ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Active') { ?>
                 <a class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } elseif ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Deactive') { ?>
-                <a class="col-2 btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
             <?php } ?>
         <?php endforeach; ?>
     </div>
