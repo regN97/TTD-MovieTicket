@@ -67,7 +67,7 @@ if (isset($_SESSION['success'])) {
         <?php endif; ?>
 
         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a class="totalPages btn btn-primary mx-1 col " href="<?= BASE_URL_ADMIN . '&action=news-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+            <a class="totalPages btn btn-outline-dark mx-1 col-1" href="<?= BASE_URL_ADMIN . '&action=news-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
         <?php endfor; ?>
 
         <?php if ($page < $totalPages): ?>

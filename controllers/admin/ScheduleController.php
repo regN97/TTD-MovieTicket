@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ScheduleController
 {
@@ -17,27 +17,38 @@ class ScheduleController
 
     public function list()
     {
-        unset($_SESSION['data']);
+        // 23-11-2024 - Đã sửa được lỗi nếu không có bản ghi thì bị "Too many redirect"
+        try {
+            unset($_SESSION['data']);
 
-        $view = 'schedules/list';
-        $title = 'Danh sách lịch chiếu phim';
-                // Số sản phẩm trên mỗi trang
-                $perPage = 5;
+            $view = 'schedules/list';
+            $title = 'Danh sách lịch chiếu phim';
+            // Số sản phẩm trên mỗi trang
+            $perPage = 5;
 
-                // Xác định trang hiện tại (mặc định là 1)
-                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
-       
-                $data = $this->schedule->getAll($page, $perPage, '*');
-       
-                $totalSchedules = $this->schedule->count();
-               $totalPages = ceil($totalSchedules / $perPage);
-       
-               if ($page > $totalPages) {
-                   // Chuyển hướng đến trang cuối cùng
-                   header('Location:'. BASE_URL_ADMIN .'&action=schedules-list'.'&page=' . $totalPages);
-                   exit();
-               }
+            // Xác định trang hiện tại (mặc định là 1)
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+            $data = $this->schedule->getAll($page, $perPage, '*');
+
+            if (empty($data)) {
+                throw new Exception("Không có bản ghi nào được tìm thấy!");
+            }
+
+            $totalSchedules = $this->schedule->count();
+            $totalPages = ceil($totalSchedules / $perPage);
+
+            if ($page > $totalPages && !empty($data)) {
+                // Chuyển hướng đến trang cuối cùng
+                header('Location:' . BASE_URL_ADMIN . '&action=schedules-list' . '&page=' . $totalPages);
+                exit();
+            }
+        } catch (\Throwable $th) {
+            $_SESSION['errors'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+        }
+
 
         require_once PATH_VIEW_ADMIN_MAIN;
     }
@@ -53,8 +64,7 @@ class ScheduleController
 
             $schedule = $this->schedule->getById($id);
 
-            if(empty($schedule))
-            {
+            if (empty($schedule)) {
                 throw new Exception("Lịch chiếu phim có ID = $id không tồn tại!", 98);
             }
 
@@ -62,7 +72,6 @@ class ScheduleController
             $title = 'Chi tiết lịch chiếu phim có ID = ' . $id;
 
             require_once PATH_VIEW_ADMIN_MAIN;
-
         } catch (\Throwable $th) {
             $_SESSION['errors'] = false;
             $_SESSION['msg'] = $th->getMessage();
@@ -97,14 +106,36 @@ class ScheduleController
 
             $_SESSION['errors'] = [];
 
+            // Set timezone mặc định về việt nam
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $currentTime = date('m-d H:i');
+
             // Validate dữ liệu
             if (empty($data['start_at'])) {
                 $_SESSION['errors']['start_at'] = "Hãy nhập thời gian bắt đầu!";
             }
 
+            // Ngăn không cho thêm lịch chiếu quá giờ hiện tại
+            if (date_format(date_create($data['start_at']), 'm-d H:i') < $currentTime) {
+                $_SESSION['errors']['start_at'] = "Thời gian bắt đầu phải lớn hơn thời gian hiện tại!";
+            }
+
             if (empty($data['end_at'])) {
                 $_SESSION['errors']['end_at'] = "Hãy nhập thời gian kết thúc!";
             }
+
+            if (date_format(date_create($data['end_at']), 'm-d H:i') < date_format(date_create($data['start_at']), 'm-d H:i')) {
+                $_SESSION['errors']['start_at'] = "Thời gian kết thúc phải lớn hơn thời gian bắt đầu";
+            }
+
+            // Giải quyết không cho nhập lịch chiếu trùng lặp
+            $schedule = $this->schedule->find('*', 'start_at = :start_at', ['start_at' => $data['start_at']]);
+
+            if (!empty($schedule)) {
+                $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại, vui lòng chọn thời gian khác";
+            }
+            // End validate
 
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
@@ -120,7 +151,6 @@ class ScheduleController
             } else {
                 throw new Exception("Thêm lịch chiếu phim không thành công!");
             }
-
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
@@ -187,14 +217,36 @@ class ScheduleController
 
             $_SESSION['errors'] = [];
 
+            // Set timezone mặc định về việt nam
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $currentTime = date('m-d H:i');
+
             // Validate dữ liệu
             if (empty($data['start_at'])) {
                 $_SESSION['errors']['start_at'] = "Hãy nhập thời gian bắt đầu!";
             }
 
+            // Ngăn không cho thêm lịch chiếu quá giờ hiện tại
+            if (date_format(date_create($data['start_at']), 'm-d H:i') < $currentTime) {
+                $_SESSION['errors']['start_at'] = "Thời gian bắt đầu phải lớn hơn thời gian hiện tại!";
+            }
+
             if (empty($data['end_at'])) {
                 $_SESSION['errors']['end_at'] = "Hãy nhập thời gian kết thúc!";
             }
+
+            if (date_format(date_create($data['end_at']), 'm-d H:i') < date_format(date_create($data['start_at']), 'm-d H:i')) {
+                $_SESSION['errors']['start_at'] = "Thời gian kết thúc phải lớn hơn thời gian bắt đầu";
+            }
+
+            // Giải quyết không cho nhập lịch chiếu trùng lặp
+            $schedule = $this->schedule->find('*', 'start_at = :start_at', ['start_at' => $data['start_at']]);
+
+            if (!empty($schedule)) {
+                $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại, vui lòng chọn thời gian khác";
+            }
+            // End validate
 
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
@@ -256,5 +308,3 @@ class ScheduleController
         exit();
     }
 }
-
-?>

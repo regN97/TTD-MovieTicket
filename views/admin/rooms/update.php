@@ -51,15 +51,7 @@ endif;
                                                                                 echo $room['description'];
                                                                             } ?></textarea>
     </div>
-    <div class="my-3">
-        <label for="total_seats" class="form-label">Tổng số ghế:</label>
-        <input type="number" class="form-control" name="total_seats" id="total_seats"
-            value="<?php if (isset($_SESSION['data'])) {
-                        echo $_SESSION['data']['total_seats'];
-                    } else {
-                        echo $room['total_seats'];
-                    } ?>">
-    </div>
+
     <div class="my-3">
         <label for="status" class="form-label">Trạng thái:</label>
         <select class="form-select" name="status">

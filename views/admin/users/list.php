@@ -57,15 +57,15 @@ if (isset($_SESSION['success'])) {
 <div class="container mb-3">
     <div class="d-flex justify-content-start">
         <?php if ($page > 1): ?>
-            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . ($page - 1) ?>">« Trước</a>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . ($page - 1) ?>">« Trước</a>
         <?php endif; ?>
 
         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a class="totalPages btn btn-outline-dark mx-1 col-1 " href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+            <a class="totalPages btn btn-outline-dark mx-1 col-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
         <?php endfor; ?>
 
         <?php if ($page < $totalPages): ?>
-            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . ($page + 1) ?>">Sau »</a>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . ($page + 1) ?>">Sau »</a>
         <?php endif; ?>
     </div>
 </div>

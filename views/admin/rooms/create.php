@@ -43,11 +43,7 @@ endif;
         <label for="description" class="form-label">Mô tả:</label>
         <textarea name="description" id="description" class="form-control"><?= $_SESSION['data']['description'] ?? null ?></textarea>
     </div>
-    <div class="my-3">
-        <label for="total_seats" class="form-label">Tổng số ghế:</label>
-        <input type="number" class="form-control" name="total_seats" id="total_seats"
-            value="<?= $_SESSION['data']['total_seats'] ?? null ?>">
-    </div>
+
     <div class="my-3">
         <label for="status" class="form-label">Trạng thái:</label>
         <select class="form-select" name="status">

@@ -130,24 +130,6 @@
                 </li>
                 <!-- End Quản lý lịch chiếu -->
 
-                <!-- Start Quản lý nghệ sĩ -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarArtists" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarArtists">
-                        <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí nghệ sĩ</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarArtists">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?= BASE_URL_ADMIN . '&action=artists-list' ?>" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách nghệ sĩ
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- End Quản lý nghệ sĩ -->
-
                 <!-- Start Quản lý đồ ăn & đồ uống -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarFoodAndDrink" data-bs-toggle="collapse" role="button"
