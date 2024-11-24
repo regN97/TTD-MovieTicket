@@ -6,6 +6,7 @@ class TicketController
     private $room;
     private $schedule;
     private $seat;
+    private $seatType;
 
     public function __construct()
     {
@@ -13,41 +14,55 @@ class TicketController
         $this->room = new Room();
         $this->schedule = new Schedule();
         $this->seat = new Seat();
+        $this->seatType = new SeatType();
     }
     public function pickingSeat()
     {
         try {
-            if(!isset($_POST)){
-                throw new Exception("Thiếu tham số 'id'", 99);
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                throw new Exception("Yêu cầu phương thức phải là POST !", 99);
             }
-            $id = $_POST;
-            $movies = $this->movie->find('*', 'id = :id', ['id' => $id['movie_id']]);
-            $movieGenre = $this->movie->getMovieGenre($id['movie_id']);
-            $movieArtist = $this->movie->getMovieArtist($id['movie_id']);
-            $rooms = $this->room->select();
-            $schedules = $this->schedule->select();
-            $seats = $this->seat->select();
+
+            if (empty($_POST['room_id']) || empty($_POST['schedule_id']) || empty($_POST['movie_id'])) {
+                throw new Exception("Vui lòng chọn suất chiếu, phòng chiếu!");
+            }
+
+            // movie_id, room_id, schedule_id
+            $data = $_POST;
+
+            $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
+            $movieGenre = $this->movie->getMovieGenre($data['movie_id']);
+            $movieArtist = $this->movie->getMovieArtist($data['movie_id']);
+            $rooms = $this->room->find('*', 'id = :id', ['id' => $data['room_id']]);
+            $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
+            $seats = $this->seat->select('*');
+            $seatTypes = $this->seatType->select('*');
 
             $seatInRoom = [];
 
             // Chỉ lấy ra các ghế có room_id trùng với id phòng chiếu
             foreach ($seats as $seat) {
-                if ($seat['room_id'] == $id['room_id']) {
+                if ($seat['room_id'] == $data['room_id']) {
                     $seatInRoom[] = $seat;
                 }
             }
 
-        $view = 'movie/picking-seat';
-        $title = "Chọn ghế ngồi";
-        $description = "Chọn vị trí chỗ ngồi phù hợp với bạn";
+            $view = 'movie/picking-seat';
+            $title = "Chọn ghế ngồi";
+            $description = "Chọn vị trí chỗ ngồi phù hợp với bạn";
 
-        require_once PATH_VIEW_CLIENT_MAIN;
+            require_once PATH_VIEW_CLIENT_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=picking-seat');
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
             exit();
         }
+    }
+
+    public function ticketDetail()
+    {
+        debug($_POST);
     }
 }

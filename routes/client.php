@@ -24,4 +24,6 @@ match ($action) {
 
     // Đặt vé
     'picking-seat' => (new TicketController)->pickingSeat(),
+    // Xử lý đặt vé
+    'ticket-detail' => (new TicketController)->ticketDetail(),
 };
