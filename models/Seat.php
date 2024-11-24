@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Seat extends BaseModel
 {
@@ -56,10 +56,9 @@ class Seat extends BaseModel
         ";
 
         $stmt = $this->pdo->prepare($sql);
-        
+
         $stmt->execute(['id' => $id]);
 
         return $stmt->fetch();
     }
 }
-?>
