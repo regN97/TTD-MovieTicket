@@ -66,7 +66,7 @@
                     <div class="row bg-light text-dark rounded-3 mb-3 p-3">
                         <p class="fs-5 fw-semibold text-black-50">TỔNG ĐƠN HÀNG</p>
                         <div class="d-flex">
-                            <span class="totalPrice fw-bold me-1 fs-5"><?= $data['total_price'] ?></span> <span>&#8363;</span>
+                            <span id="totalPrice" class="fw-bold me-1 fs-5"><?= $data['total_price'] ?></span> <span>&#8363;</span>
                         </div>
                     </div>
                     <div class="row bg-light text-dark rounded-3 mb-3 p-3 d-flex justify-content-between">
@@ -80,96 +80,57 @@
 </div>
 
 <script>
-    const sweetQuantity = document.getElementById('sweetQuantity');
-    const sweetPrice = document.getElementById('sweetPrice');
-    const betaQuantity = document.getElementById('betaQuantity');
-    const betaPrice = document.getElementById('betaPrice');
-    const familyQuantity = document.getElementById('familyQuantity');
-    const familyPrice = document.getElementById('familyPrice');
+    function updateQuantity(elementId, priceId, totalPriceId, operation) {
+        const quantityElement = document.getElementById(elementId);
+        const priceElement = document.getElementById(priceId);
+        const totalPriceElement = document.getElementById(totalPriceId);
 
-    const currentTotalPrice = document.querySelector('.totalPrice');
+        if (!quantityElement || !priceElement || !totalPriceElement) {
+            console.error("ID truyền vào không đúng, kiểm tra lại!");
+            return;
+        }
+
+        let quantity = parseInt(quantityElement.textContent);
+        const price = parseInt(priceElement.textContent);
+        let totalPrice = parseInt(totalPriceElement.textContent);
+
+        if (operation === 'add') {
+            if (quantity < 10) {
+                quantity++;
+                totalPrice += price;
+            }
+        } else if (operation === 'remove') {
+            if (quantity > 0) {
+                quantity--;
+                totalPrice -= price;
+            }
+        }
+
+        quantityElement.textContent = quantity;
+        totalPriceElement.textContent = totalPrice;
+    }
 
     function addSweet() {
-        let quantity = parseInt(sweetQuantity.textContent);
-        const price = parseInt(sweetPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity < 10 && quantity >= 0) {
-            quantity++;
-            sum += price;
-
-            sweetQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'add');
     }
 
     function removeSweet() {
-        let quantity = parseInt(sweetQuantity.textContent);
-        const price = parseInt(sweetPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity > 0) {
-            quantity--;
-            sum -= price;
-
-            sweetQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'remove');
     }
 
     function addBeta() {
-        let quantity = parseInt(betaQuantity.textContent);
-        const price = parseInt(betaPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity < 10 && quantity >= 0) {
-            quantity++;
-            sum += price;
-
-            betaQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'add');
     }
 
     function removeBeta() {
-        let quantity = parseInt(betaQuantity.textContent);
-        const price = parseInt(betaPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity > 0) {
-            quantity--;
-            sum -= price;
-
-            betaQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'remove');
     }
 
     function addFamily() {
-        let quantity = parseInt(familyQuantity.textContent);
-        const price = parseInt(familyPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity < 10 && quantity >= 0) {
-            quantity++;
-            sum += price;
-
-            familyQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'add');
     }
 
     function removeFamily() {
-        let quantity = parseInt(familyQuantity.textContent);
-        const price = parseInt(familyPrice.textContent);
-        let sum = parseInt(currentTotalPrice.textContent);
-
-        if (quantity > 0) {
-            quantity--;
-            sum -= price;
-
-            familyQuantity.textContent = quantity;
-            currentTotalPrice.textContent = sum;
-        }
+        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'remove');
     }
 </script>
