@@ -130,10 +130,10 @@ class ScheduleController
             }
 
             // Giải quyết không cho nhập lịch chiếu trùng lặp
-            $schedule = $this->schedule->find('*', 'start_at = :start_at', ['start_at' => $data['start_at']]);
+            $schedule = $this->schedule->find('*', 'start_at = :start_at AND room_id = :room_id', ['start_at' => $data['start_at'],'room_id' => $data['room_id']]);
 
             if (!empty($schedule)) {
-                $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại, vui lòng chọn thời gian khác";
+                $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại ở phòng này, vui lòng chọn thời gian khác";
             }
             // End validate
 
