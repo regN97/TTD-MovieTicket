@@ -42,6 +42,14 @@ endif;
             <option value="Combo" <?php if (isset($foodAndDrink['type']) && $foodAndDrink['type'] === 'Combo') echo 'selected' ?>>Combo</option>
         </select>
     </div>
+    <div class="my-3">
+        <label for="description" class="form-label">Mô tả:</label>
+        <textarea class="form-control" id="description" name="description" rows="3"><?php if (isset($_SESSION['data'])) {
+                                                                                        echo $_SESSION['data']['description'];
+                                                                                    } else {
+                                                                                        echo $foodAndDrink['description'];
+                                                                                    } ?></textarea>
+    </div>
     <div class="mb-3 mt-3">
         <label for="price" class="form-label">Giá tiền:</label>
         <input type="number" class="form-control" id="price" name="price"

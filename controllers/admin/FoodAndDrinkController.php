@@ -84,6 +84,12 @@ class FoodAndDrinkController
                 }
             }
 
+            if (empty($data['description'])) {
+                $_SESSION['errors']['description'] = "Vui lòng nhập mô tả!";
+            } else if (strlen($data['description']) > 1000) {
+                $_SESSION['errors']['description'] = "Độ dài của mô tả không được quá 1000 ký tự!";
+            }
+
             if (empty($data['price']) || $data['price'] <= 0) {
                 $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống và phải lớn hơn 0!";
             }
@@ -192,6 +198,7 @@ class FoodAndDrinkController
             if (empty($data['name']) || strlen($data['name']) > 50) {
                 $_SESSION['errors']['name'] = "Tên sản phẩm không được bỏ trống và không được vượt quá 50 ký tự!";
             }
+
             if (empty($data['type'])) {
                 $_SESSION['errors']['type'] = "Hãy chọn phân loại!";
             } else {
@@ -200,6 +207,13 @@ class FoodAndDrinkController
                     $_SESSION['errors']['validateType'] = "Hãy chọn 1 trong 2 phân loại!";
                 }
             }
+
+            if (empty($data['description'])) {
+                $_SESSION['errors']['description'] = "Vui lòng nhập mô tả!";
+            } else if (strlen($data['description']) > 1000) {
+                $_SESSION['errors']['description'] = "Độ dài của mô tả không được quá 1000 ký tự!";
+            }
+
             if (empty($data['price']) || $data['price'] <= 0) {
                 $_SESSION['errors']['price'] = "Giá tiền không được bỏ trống và phải lớn hơn 0!";
             }

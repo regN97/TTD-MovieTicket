@@ -24,7 +24,7 @@ if (isset($_SESSION['success'])) {
         <th>Nội dung</th>
         <th>Hình ảnh</th>
         <th>Thời điểm tạo</th>
-        <th>Người đăng</th>
+        <th>Người tạo</th>
         <th>Thao tác</th>
     </tr>
 
@@ -33,7 +33,11 @@ if (isset($_SESSION['success'])) {
     ?>
         <tr>
             <td><?= $key + 1 ?></td>
-            <td><?= $news['n_title'] ?></td>
+            <td><?php
+                $maxLength = 20;
+                $shortenData = mb_substr($news['n_title'], 0, $maxLength, 'UTF-8');
+                echo $shortenData . ' ...';
+                ?></td>
             <td><?php
                 $maxLength = 50;
                 $shortenData = mb_substr($news['n_content'], 0, $maxLength, 'UTF-8');
@@ -93,14 +97,14 @@ if (isset($_SESSION['success'])) {
 
         foreach ($pages as $p):
             if ($p === '...'): ?>
-            
+
                 <span class="btn btn-light mx-1 disabled">...</span>
-                <?php elseif ($p == $page): ?>
+            <?php elseif ($p == $page): ?>
                 <span class="btn btn-dark mx-1 active"><?= $p ?></span>
             <?php else: ?>
-                <a class="btn btn-outline-dark mx-1" 
-                   href="<?= BASE_URL_ADMIN . '&action=news-list&page=' . $p ?>"><?= $p ?></a>
-            <?php endif;
+                <a class="btn btn-outline-dark mx-1"
+                    href="<?= BASE_URL_ADMIN . '&action=news-list&page=' . $p ?>"><?= $p ?></a>
+        <?php endif;
         endforeach;
         ?>
 
