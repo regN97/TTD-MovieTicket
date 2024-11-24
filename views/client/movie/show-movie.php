@@ -1,3 +1,14 @@
+    <?php
+    if (isset($_SESSION['success'])) {
+        $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
+
+        echo "<div class='alert $class'>{$_SESSION['msg']}</div>";
+
+        unset($_SESSION['success']);
+        unset($_SESSION['msg']);
+    }
+    ?>
+
     <div class="bg-detail text-white mt-2 mb-3">
         <div class="container py-3">
             <div class="row row-sm">
@@ -189,7 +200,8 @@
                                     <option value="<?= $key['id'] ?>"><?= date_format(date_create($key['start_at']), "H:i") ?></option>
                                 <?php endforeach; ?>
                             </select>
-                        <?php } ?>
+                        <?php unset($_SESSION['schedule']);
+                        } ?>
                     </div>
                 </div>
                 <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
