@@ -30,7 +30,7 @@ class ArtistController
        
                if ($page > $totalPages) {
                    // Chuyển hướng đến trang cuối cùng
-                   header('Location:'. BASE_URL_ADMIN .'&action=artist-list'.'&page=' . $totalPages);
+                   header('Location:'. BASE_URL_ADMIN .'&action=artists-list'.'&page=' . $totalPages);
                    exit();
                }
 
