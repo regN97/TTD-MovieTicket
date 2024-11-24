@@ -25,6 +25,7 @@
                         <li><a class="nav-a dropdown-item" href="?action=movies-upcoming">Sắp chiếu</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a class="nav-link nav-a" aria-current="page" href="?action=page-news">Tin tức nổi bật</a></li>
             </ul>
 
             <form action="?action=movies-search" method="POST" class="input-group w-25">

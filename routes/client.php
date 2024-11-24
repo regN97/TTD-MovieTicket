@@ -26,4 +26,8 @@ match ($action) {
     'picking-seat' => (new TicketController)->pickingSeat(),
     // Xử lý đặt vé
     'ticket-detail' => (new TicketController)->ticketDetail(),
+
+    // Xem tin tức
+    'page-news' => (new NewPageController)->list(),
+    'new-content'=> (new NewPageController)->show(),
 };
