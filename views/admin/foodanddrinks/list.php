@@ -18,6 +18,7 @@ if (isset($_SESSION['success'])) {
             <th>STT</th>
             <th>Tên sản phẩm</th>
             <th>Phân loại</th>
+            <th>Mô tả</th>
             <th>Giá tiền</th>
             <th>Số lượng tồn kho</th>
             <th>Ảnh minh họa</th>
@@ -28,12 +29,13 @@ if (isset($_SESSION['success'])) {
         <?php $stt = 1;
         foreach ($data as $foodAndDrink) : ?>
             <td><?= $stt++ ?></td>
+            <td><?= $foodAndDrink['name'] ?></td>
+            <td><?= $foodAndDrink['type'] ?></td>
             <td><?php
                 $maxLength = 50;
-                $shortenData = mb_substr($foodAndDrink['name'], 0, $maxLength, 'UTF-8');
+                $shortenData = mb_substr($foodAndDrink['description'], 0, $maxLength, 'UTF-8');
                 echo $shortenData . ' ...';
                 ?></td>
-            <td><?= $foodAndDrink['type'] ?></td>
             <td><?= $foodAndDrink['price'] ?></td>
             <td><?= $foodAndDrink['quantity'] ?></td>
             <td>

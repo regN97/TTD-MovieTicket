@@ -204,13 +204,13 @@
                 <?php endif; ?>
             </div>
             <div class="col-4">
-                <form action="?action=ticket-detail" method="POST">
+                <form action="?action=fndOptions" method="POST">
                     <div class="row bg-light text-dark rounded-3 mb-3 p-3">
                         <input type="text" name="schedule_id" value="<?= $schedules['id'] ?>" hidden>
                         <input type="text" name="room_id" value="<?= $rooms['id'] ?>" hidden>
                         <input id="seats" type="text" name="seats" hidden>
                         <input id="total_price" type="number" name="total_price" hidden>
-                        <input type="text" name="user_id" value="<?= $_SESSION['user']['id'] ?>" hidden>
+                        <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
 
                         <p>Suất: <span class="fw-semibold"><?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?></span></p>
                         <p>Phòng chiếu: <span class="fw-semibold"><?= $rooms['name'] ?></span></p>

@@ -7,6 +7,7 @@ class TicketController
     private $schedule;
     private $seat;
     private $seatType;
+    private $foodndrink;
 
     public function __construct()
     {
@@ -15,6 +16,7 @@ class TicketController
         $this->schedule = new Schedule();
         $this->seat = new Seat();
         $this->seatType = new SeatType();
+        $this->foodndrink = new FoodAndDrink();
     }
     public function pickingSeat()
     {
@@ -61,8 +63,45 @@ class TicketController
         }
     }
 
-    public function ticketDetail()
+    public function foodAndDrinkOptions()
     {
-        debug($_POST);
+        try {
+
+
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
+            }
+
+            if (
+                empty($_POST['schedule_id'])
+                || empty($_POST['room_id'])
+                || empty($_POST['seats'])
+                || empty($_POST['total_price'])
+                || empty($_POST['movie_id'])
+            ) {
+                throw new Exception("Vui lòng chọn ghế trước khi chọn bắp & nước!");
+            }
+
+            $data = $_POST;
+
+            $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
+            $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
+            $rooms = $this->room->find('*', 'id = :id', ['id' => $data['room_id']]);
+            $foodndrinks = $this->foodndrink->select();
+
+
+
+            $view = 'ticket/foodndrink';
+            $title = "Bắp & Nước";
+            $description = "Chọn combo bắp nước cho mình và người thân";
+
+            require_once PATH_VIEW_CLIENT_MAIN;
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
+            exit();
+        }
     }
 }
