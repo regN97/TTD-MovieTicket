@@ -1,3 +1,28 @@
+<?php
+if (isset($_SESSION['success'])) {
+    $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
+
+    echo "<div class='alert $class'>{$_SESSION['msg']}</div>";
+
+    unset($_SESSION['success']);
+    unset($_SESSION['msg']);
+}
+?>
+
+<?php if (!empty($_SESSION['errors'])): ?>
+
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach ($_SESSION['errors'] as $value): ?>
+                <li><?= $value ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+<?php
+    unset($_SESSION['errors']);
+endif;
+?>
 <div class="bg-detail mt-2 mb-3">
     <div class="container py-3 text-white">
         <div class="row">
@@ -56,8 +81,23 @@
                 </div>
             </div>
             <div class="col-4">
-                <form action="?action=" method="POST">
+                <form action="?action=order-detail" method="POST">
                     <div class="row bg-light text-dark rounded-3 mb-3 p-3">
+                        <input type="text" name="schedule_id" value="<?= $schedules['id'] ?>" hidden>
+                        <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
+                        <input type="text" name="room_id" value="<?= $rooms['id'] ?>" hidden>
+                        <input type="text" name="seats" value="<?= $data['seats'] ?>" hidden>
+                        <input id="priceData" type="number" name="total_price" hidden>
+
+                        <input id="sweet_id" type="text" name="sweet_id" hidden>
+                        <input id="sweet_quantity" type="text" name="sweet_quantity" hidden>
+
+                        <input id="beta_id" type="text" name="beta_id" hidden>
+                        <input id="beta_quantity" type="text" name="beta_quantity" hidden>
+
+                        <input id="family_id" type="text" name="family_id" hidden>
+                        <input id="family_quantity" type="text" name="family_quantity" hidden>
+
                         <p class="h5"><?= mb_strtoupper($movies['name']) ?></p>
                         <p>Suất: <span class="fw-semibold"><?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?></span></p>
                         <p>Phòng chiếu: <span class="fw-semibold"><?= $rooms['name'] ?></span></p>
@@ -80,10 +120,19 @@
 </div>
 
 <script>
-    function updateQuantity(elementId, priceId, totalPriceId, operation) {
+    const sweetId = document.getElementById('sweet_id');
+    const sweetQuantity = document.getElementById('sweet_quantity');
+    const betaId = document.getElementById('beta_id');
+    const betaQuantity = document.getElementById('beta_quantity');
+    const familyId = document.getElementById('family_id');
+    const familyQuantity = document.getElementById('family_quantity');
+
+    function updateQuantity(elementId, priceId, totalPriceId, operation, type) {
         const quantityElement = document.getElementById(elementId);
         const priceElement = document.getElementById(priceId);
         const totalPriceElement = document.getElementById(totalPriceId);
+
+        const priceData = document.getElementById('priceData');
 
         if (!quantityElement || !priceElement || !totalPriceElement) {
             console.error("ID truyền vào không đúng, kiểm tra lại!");
@@ -106,31 +155,50 @@
             }
         }
 
+        switch (type) {
+            case 'sweet':
+                sweetId.value = 0;
+                sweetQuantity.value = quantity;
+                break;
+
+            case 'beta':
+                betaId.value = 1;
+                betaQuantity.value = quantity;
+                break;
+
+            case 'family':
+                familyId.value = 2;
+                familyQuantity.value = quantity;
+                break;
+
+        }
+
         quantityElement.textContent = quantity;
         totalPriceElement.textContent = totalPrice;
+        priceData.value = totalPrice;
     }
 
     function addSweet() {
-        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'add');
+        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'add', 'sweet');
     }
 
     function removeSweet() {
-        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'remove');
+        updateQuantity('sweetQuantity', 'sweetPrice', 'totalPrice', 'remove', 'sweet');
     }
 
     function addBeta() {
-        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'add');
+        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'add', 'beta');
     }
 
     function removeBeta() {
-        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'remove');
+        updateQuantity('betaQuantity', 'betaPrice', 'totalPrice', 'remove', 'beta');
     }
 
     function addFamily() {
-        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'add');
+        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'add', 'family');
     }
 
     function removeFamily() {
-        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'remove');
+        updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'remove', 'family');
     }
 </script>

@@ -27,6 +27,7 @@ match ($action) {
 
     // Xử lý đặt vé
     'fndOptions' => (new TicketController)->foodAndDrinkOptions(),
+    'order-detail'  => (new TicketController)->orderDetail(),
 
     // Xem tin tức
     'page-news' => (new NewPageController)->list(),
