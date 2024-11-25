@@ -9,6 +9,21 @@
     }
     ?>
 
+    <?php if (!empty($_SESSION['errors'])): ?>
+
+        <div class="alert alert-danger">
+            <ul>
+                <?php foreach ($_SESSION['errors'] as $value): ?>
+                    <li><?= $value ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+    <?php
+        unset($_SESSION['errors']);
+    endif;
+    ?>
+
     <div class="bg-detail text-white mt-2 mb-3">
         <div class="container py-3">
             <div class="row row-sm">

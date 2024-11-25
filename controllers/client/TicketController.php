@@ -104,4 +104,21 @@ class TicketController
             exit();
         }
     }
+
+    public function orderDetail()
+    {
+        try {
+            $view = 'ticket/order-detail';
+            $title = "Chi tiết vé";
+            $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
+
+            require_once PATH_VIEW_CLIENT_MAIN;
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
+            exit();
+        }
+    }
 }
