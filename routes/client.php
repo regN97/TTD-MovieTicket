@@ -14,6 +14,9 @@ match ($action) {
     'register-form' => (new RegisterController)->index(),
     'register-store' => (new RegisterController)->store(),
 
+    // Information User
+    "info-user" => (new UserLoginController)->info(),
+
     // Movie
     'movies-isShowing' => (new ClientMovieController)->list(),
     'movies-upcoming' => (new ClientMovieController)->list(),

@@ -69,4 +69,17 @@ class UserLoginController
         header('Location: ' . BASE_URL);
         exit();
     }
+
+    public function info()
+    {
+        $view ='authen/info-user';
+        $title='Thông tin người dùng';
+        $description='Hiển thị thông tin người dùng';
+
+        $id = $_SESSION['user']['id'];
+
+        $user=$this->user->getID($id);
+
+        require_once PATH_VIEW_CLIENT_MAIN;
+    }
 }
