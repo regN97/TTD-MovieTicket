@@ -13,7 +13,7 @@ class NewPageController {
         $title =" Tin Tức Nổi Bật";
         $description="Danh sách tin tức nổi bật về các chương trình ưu đãi" ;
 
-        $data =$this->news->select('*');
+        $data =$this->news->getAll();
 
         require_once PATH_VIEW_CLIENT_MAIN;
     }

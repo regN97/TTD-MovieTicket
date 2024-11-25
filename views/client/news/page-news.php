@@ -27,19 +27,21 @@ endif;
 <div class="bg-div row mt-2 mb-4 py-4">
     <div class="col-md-12">
         <div class="row grid">
-            <?php if (isset($data)) { ?>
+            <?php if (isset($data)) { 
+                ?>
                 <?php foreach ($data as $news) { ?>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                         <div class="card card-xs mb-4">
-                            <a href="?action=new-content&id=<?= $news['id'] ?>" title="<?= mb_convert_case($news['title'], MB_CASE_TITLE, "UTF-8"); ?>">
-                                <?php if (!empty($news['imageURL'])): ?>
-                                    <img alt="<?= mb_convert_case($news['title'], MB_CASE_TITLE, "UTF-8"); ?>" src="<?= BASE_ASSETS_UPLOADS . $news['imageURL'] ?>" class="card-img-top lazyloaded">   
+                            <a href="?action=new-content&id=<?= $news['n_id'] ?>" title="<?= mb_convert_case($news['n_title'], MB_CASE_TITLE, "UTF-8"); ?>">
+                                <?php if (!empty($news['n_imageURL'])): ?>
+                                    <img alt="<?= mb_convert_case($news['n_title'], MB_CASE_TITLE, "UTF-8"); ?>" src="<?= BASE_ASSETS_UPLOADS . $news['n_imageURL'] ?>" class="card-img-top lazyloaded">   
                                 <?php endif; ?>
                             </a>
                             <div class="card-body border-top">
                                 <div class="row no-gutters small">
                                     <div class="col text-muted">
-                                       <h5 mb-0 text-truncate> <?= date_format(date_create($news['created_at']), "d-m") ?></h5>
+                                    <h6 class="mb-0 text-truncate">Người đăng: <?= $news['u_name'] ?></h6>
+                                    <h7 class="mb-0 text-truncate">Ngày đăng: <?= date_format(date_create( $news['n_created_at']), "d-m-Y") ?> </h7>
                                     </div>
                                     <div class="col text-right">
                                     </div>
