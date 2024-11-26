@@ -9,6 +9,7 @@ class TicketController
     private $seatType;
     private $foodndrink;
     private $user;
+    private $ranks;
 
     public function __construct()
     {
@@ -19,6 +20,7 @@ class TicketController
         $this->seatType = new SeatType();
         $this->foodndrink = new FoodAndDrink();
         $this->user = new User();
+        $this->ranks = new Rank();
     }
     public function pickingSeat()
     {
@@ -117,6 +119,7 @@ class TicketController
             $data = $_POST;
             $id = $_SESSION['user']['id'];
             $user = $this->user->getID($id);
+            $ranks = $this->ranks->select();
 
             $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
             $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
@@ -125,9 +128,32 @@ class TicketController
             $seatTypes = $this->seatType->select('*');
 
             $quantitySeats = str_word_count($data['seats']);
-            
+
             $view = 'ticket/order-detail';
             $title = "Chi tiết vé";
+            $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
+
+            require_once PATH_VIEW_CLIENT_MAIN;
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL . '?action=isShowing');
+            exit();
+        }
+    }
+
+    public function orderFinal()
+    {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
+            }
+
+            $data = $_POST;
+
+            $view = 'ticket/order-final';
+            $title = "Thanh toán";
             $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
 
             require_once PATH_VIEW_CLIENT_MAIN;

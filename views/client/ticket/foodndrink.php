@@ -23,11 +23,12 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['errors']);
 endif;
 ?>
+
 <div class="bg-detail mt-2 mb-3">
     <div class="container py-3 text-white">
         <div class="row">
             <div class="col-6 mx-5">
-                <div>
+                <div class="mb-3">
                     <table class="bg-light text-dark rounded">
                         <thead class="border-bottom fs-5 text-secondary">
                             <tr>
@@ -79,6 +80,14 @@ endif;
                         </tbody>
                     </table>
                 </div>
+                <div class="row">
+                    <form action="?action=picking-seat" method="post">
+                        <input type="text" name="room_id" value="<?= $data['room_id'] ?>" hidden>
+                        <input type="text" name="schedule_id" value="<?= $data['schedule_id'] ?>" hidden>
+                        <input type="text" name="movie_id" value="<?= $data['movie_id'] ?>" hidden>
+                        <button type="submit" class="btn btn-danger text-center">Quay lại</button>
+                    </form>
+                </div>
             </div>
             <div class="col-4">
                 <form action="?action=order-detail" method="POST">
@@ -109,9 +118,8 @@ endif;
                             <span id="totalPrice" class="fw-bold me-1 fs-5"><?= $data['total_price'] ?></span> <span>&#8363;</span>
                         </div>
                     </div>
-                    <div class="row bg-light text-dark rounded-3 mb-3 p-3 d-flex justify-content-between">
-                        <a href=<?= "?action=movies-detail&id=" . $movies['id'] ?> class="w-25 btn btn-danger">Quay lại</a>
-                        <button type="submit" class="w-50 h-25 btn btn-success text-center">Tiếp tục</button>
+                    <div class="row bg-light text-dark rounded-3 mb-3 p-3">
+                        <button type="submit" class="btn btn-success text-center">Tiếp tục</button>
                     </div>
                 </form>
             </div>
@@ -141,7 +149,7 @@ endif;
 
         let quantity = parseInt(quantityElement.textContent);
         const price = parseInt(priceElement.textContent);
-        let totalPrice = parseInt(totalPriceElement.textContent);
+        let totalPrice = parseInt(totalPriceElement.innerHTML);
 
         if (operation === 'add') {
             if (quantity < 10) {
@@ -201,4 +209,7 @@ endif;
     function removeFamily() {
         updateQuantity('familyQuantity', 'familyPrice', 'totalPrice', 'remove', 'family');
     }
+
+    const priceData = document.getElementById('priceData');
+    priceData.value = parseInt(<?= $data['total_price'] ?>);
 </script>

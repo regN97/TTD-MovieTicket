@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_SESSION['success'])){
+if (isset($_SESSION['success'])) {
     $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
 
     echo "<div class='alert $class'>{$_SESSION['msg']}</div>";
@@ -19,12 +19,12 @@ if(isset($_SESSION['success'])){
             <?php endforeach; ?>
         </ul>
     </div>
-<?php 
+<?php
     unset($_SESSION['errors']);
-    endif; 
+endif;
 ?>
 
-<form action="<?= BASE_URL_ADMIN . '&action=ranks-update&id='.$rank['id'] ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= BASE_URL_ADMIN . '&action=ranks-update&id=' . $rank['id'] ?>" method="POST" enctype="multipart/form-data">
     <div class="mb-3 mt-3">
         <label for="name" class="form-label">Tên thứ hạng:</label>
         <input type="text" class="form-control" id="name" name="name"
@@ -44,9 +44,18 @@ if(isset($_SESSION['success'])){
                     } ?>">
     </div>
     <div class="mb-3 mt-3">
+        <label for="discount_percent" class="form-label">Phần trăm được giảm:</label>
+        <input type="number" class="form-control" id="discount_percent" name="discount_percent"
+            value="<?php if (isset($_SESSION['data'])) {
+                        echo $_SESSION['data']['discount_percent'];
+                    } else {
+                        echo $rank['discount_percent'];
+                    } ?>">
+    </div>
+    <div class="mb-3 mt-3">
         <label for="level" class="form-label">Mốc điểm của thứ hạng:</label>
         <input type="number" class="form-control" id="level" name="level"
-        value="<?php if (isset($_SESSION['data'])) {
+            value="<?php if (isset($_SESSION['data'])) {
                         echo $_SESSION['data']['level'];
                     } else {
                         echo $rank['level'];
