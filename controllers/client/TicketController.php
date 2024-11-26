@@ -8,6 +8,7 @@ class TicketController
     private $seat;
     private $seatType;
     private $foodndrink;
+    private $user;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class TicketController
         $this->seat = new Seat();
         $this->seatType = new SeatType();
         $this->foodndrink = new FoodAndDrink();
+        $this->user = new User();
     }
     public function pickingSeat()
     {
@@ -108,6 +110,22 @@ class TicketController
     public function orderDetail()
     {
         try {
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
+            }
+
+            $data = $_POST;
+            $id = $_SESSION['user']['id'];
+            $user = $this->user->getID($id);
+
+            $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
+            $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
+            $rooms = $this->room->find('*', 'id = :id', ['id' => $data['room_id']]);
+            $foodndrinks = $this->foodndrink->select();
+            $seatTypes = $this->seatType->select('*');
+
+            $quantitySeats = str_word_count($data['seats']);
+            
             $view = 'ticket/order-detail';
             $title = "Chi tiết vé";
             $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
