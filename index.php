@@ -19,6 +19,11 @@ spl_autoload_register(function ($class) {
     }
 });
 
+// Require thư viện PHPMailer
+require_once './configs/phpmailer/Exception.php';
+require_once './configs/phpmailer/PHPMailer.php';
+require_once './configs/phpmailer/SMTP.php';
+
 // Require 2 file từ config để sử dụng chung
 require_once './configs/env.php';
 require_once './configs/helper.php';
