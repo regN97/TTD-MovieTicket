@@ -48,6 +48,7 @@ class User extends BaseModel
          u.id                   u_id,
          u.name                 u_name,
          u.tel                  u_tel,
+         u.password             u_password,
          u.email                u_email,
          u.address              u_address,
          u.points               u_points,
@@ -57,13 +58,13 @@ class User extends BaseModel
          ro.id                  ro_id,
          ro.name                ro_name,
          ra.id                  ra_id,
-         ra.name                ra_name
+         ra.name                ra_name,
+         ra.benefits            ra_benefits
          
-         FROM 
-    users u
-JOIN roles ro ON ro.id = u.role_id
-JOIN ranks ra ON ra.id = u.rank_id
-WHERE u.id = :id;
+        FROM users u
+        JOIN roles ro ON ro.id = u.role_id
+        JOIN ranks ra ON ra.id = u.rank_id
+        WHERE u.id = :id;
     ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -115,6 +116,19 @@ WHERE u.id = :id;
             $stmt->bindParam(":$key", $value);
         }
         $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+    public function updatePassword($data,$id) 
+    {
+        $sql = "
+        UPDATE users 
+        SET users.password = $data 
+        WHERE users.id = :id;
+        ";
+
+        $stmt = $this->pdo->prepare(($sql));
+        $stmt->execute(['id' => $id]);
 
         return $stmt->rowCount();
     }

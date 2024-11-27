@@ -132,10 +132,6 @@ class UserController
                 $_SESSION['errors']['name'] = "Tên không được bỏ trống và khônng được quá 50 ký tự!";
             }
 
-            if (empty($data['password']) || strlen($data['password']) < 5 || strlen($data['password']) > 30) {
-                $_SESSION['errors']['password'] = "Mật khẩu không được bỏ trống và dài từ 5 đến 30 kí tự!";
-            }
-
             if (empty($data['tel']) || !preg_match('/^[0-9]{10}$/', $data['tel'])) {
                 $_SESSION['errors']['tel'] = "Số điện thoại không được bỏ trống, phải là số và có độ dài bằng 10!";
             }
@@ -156,8 +152,8 @@ class UserController
                 $_SESSION['errors']['role_id'] = "Vui lòng chọn vai trò!";
             }
 
-            if (!empty($data['points']) && $data['points'] > 3000) {
-                $_SESSION['errors']['points'] = "Không được nhập điểm quá 3000!";
+            if (!empty($data['points']) && $data['points'] > 99999) {
+                $_SESSION['errors']['points'] = "Không được nhập điểm quá 99999!";
             }
 
             if (!empty($data['imageURL']) && $data['imageURL']['size'] > 0) {
@@ -183,6 +179,7 @@ class UserController
             }
 
             $rowCount = $this->user->updateUser($data, 'id = :id', ['id' => $id]);
+            
 
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
