@@ -76,6 +76,10 @@ class TicketController
                 throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
             }
 
+            $data = $_POST;
+
+            $_SESSION['errors'] = [];
+
             if (
                 empty($_POST['schedule_id'])
                 || empty($_POST['room_id'])
@@ -84,9 +88,12 @@ class TicketController
                 || empty($_POST['movie_id'])
             ) {
                 throw new Exception("Vui lòng chọn ghế trước khi chọn bắp & nước!");
+            } else {
+                $_SESSION['success'] = true;
+                $_SESSION['msg'] = "Chọn bắp & nước hoặc tiếp tục";
             }
 
-            $data = $_POST;
+
 
             $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
             $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
@@ -104,7 +111,7 @@ class TicketController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
             exit();
         }
     }
@@ -138,7 +145,7 @@ class TicketController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=isShowing');
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
             exit();
         }
     }
@@ -152,16 +159,47 @@ class TicketController
 
             $data = $_POST;
 
-            $view = 'ticket/order-final';
-            $title = "Thanh toán";
-            $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
+            // debug($data);
 
-            require_once PATH_VIEW_CLIENT_MAIN;
+            $_SESSION['errors'] = [];
+
+            if (empty($data['paymentMethod'])) {
+                $_SESSION['errors']['paymentMethod'] = "Vui lòng chọn phương thức thanh toán";
+
+                $id = $_SESSION['user']['id'];
+                $user = $this->user->getID($id);
+                $ranks = $this->ranks->select();
+
+                $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
+                $schedules = $this->schedule->find('*', 'id = :id', ['id' => $data['schedule_id']]);
+                $rooms = $this->room->find('*', 'id = :id', ['id' => $data['room_id']]);
+                $foodndrinks = $this->foodndrink->select();
+                $seatTypes = $this->seatType->select('*');
+
+                $quantitySeats = str_word_count($data['seats']);
+
+                // $data['beta_quantity'] = 0;
+
+                $view = 'ticket/order-detail';
+                $title = "Chi tiết vé";
+                $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
+
+                require_once PATH_VIEW_CLIENT_MAIN;
+            } else {
+                $_SESSION['success'] = true;
+                $_SESSION['msg'] = "Tạo vé thành công!";
+
+                $view = 'ticket/order-final';
+                $title = "Thanh toán";
+                $description = "Kiểm tra lại thông tin trên vé của mình trước khi thanh toán";
+
+                require_once PATH_VIEW_CLIENT_MAIN;
+            }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
             exit();
         }
     }

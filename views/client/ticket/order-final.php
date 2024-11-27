@@ -23,7 +23,7 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['errors']);
 endif;
 ?>
-<?= debug($data) ?>
+
 <div class="bg-detail mt-2 mb-3">
     <div class="container py-3 text-white">
         <form action="" method="post" class="w-50">
