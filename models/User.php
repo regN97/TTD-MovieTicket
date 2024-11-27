@@ -48,6 +48,7 @@ class User extends BaseModel
         u.id                   u_id,
         u.name                 u_name,
         u.tel                  u_tel,
+        u.password             u_password,
         u.email                u_email,
         u.address              u_address,
         u.points               u_points,
@@ -116,6 +117,19 @@ class User extends BaseModel
             $stmt->bindParam(":$key", $value);
         }
         $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+    public function updatePassword($data, $id)
+    {
+        $sql = "
+        UPDATE users 
+        SET users.password = $data 
+        WHERE users.id = :id;
+        ";
+
+        $stmt = $this->pdo->prepare(($sql));
+        $stmt->execute(['id' => $id]);
 
         return $stmt->rowCount();
     }

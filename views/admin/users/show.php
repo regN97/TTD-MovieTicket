@@ -5,8 +5,12 @@
     </tr>
 
     <?php foreach ($user as $key => $value): ?>
+        <?php if($key == 'u_password'): continue; ?>    
+        <?php endif;?>
         <tr>
             <td><?= strtoupper($key) ?></td>
+        
+
             <td>
                 <?php
 
