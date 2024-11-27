@@ -159,7 +159,7 @@ class TicketController
 
             $data = $_POST;
 
-            // debug($data);
+            debug($data);
 
             $_SESSION['errors'] = [];
 

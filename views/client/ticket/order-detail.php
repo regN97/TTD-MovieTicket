@@ -253,6 +253,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -370,9 +371,9 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
-
                                                 <div class="mb-3 row">
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
                                                     <div class="col-sm-9">
@@ -459,6 +460,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
 
@@ -577,6 +579,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
