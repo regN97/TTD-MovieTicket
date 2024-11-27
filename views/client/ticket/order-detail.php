@@ -23,7 +23,6 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['errors']);
 endif;
 ?>
-
 <div class="bg-detail mt-2 mb-3">
     <div class="container py-3 text-white">
         <div class="row">
@@ -47,32 +46,40 @@ endif;
                             <td><span id="seatsPrice"></span> đ</td>
                             <td></td>
                         </tr>
-                        <?php if (!empty($data['sweet_id']) || $data['sweet_quantity'] > 0): ?>
-                            <tr>
-                                <td>Bắp & nước</td>
-                                <td><?= $foodndrinks[0]['name'] ?></td>
-                                <td><?= $data['sweet_quantity'] ?></td>
-                                <td><span class="price"><?= $foodndrinks[0]['price'] * $data['sweet_quantity'] ?></span> đ</td>
-                                <td></td>
-                            </tr>
+                        <?php if (isset($data['sweet_id']) && isset($data['sweet_quantity'])): ?>
+                            <?php if ($data['sweet_quantity'] > 0): ?>
+                                <tr>
+                                    <td>Bắp & nước</td>
+                                    <td><?= $foodndrinks[0]['name'] ?></td>
+                                    <td><?= $data['sweet_quantity'] ?></td>
+                                    <td><span class="price"><?= $foodndrinks[0]['price'] * $data['sweet_quantity'] ?></span> đ</td>
+                                    <td></td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endif; ?>
-                        <?php if (!empty($data['beta_id']) || $data['beta_quantity'] > 0): ?>
-                            <tr>
-                                <td>Bắp & nước</td>
-                                <td><?= $foodndrinks[1]['name'] ?></td>
-                                <td><?= $data['beta_quantity'] ?></td>
-                                <td><span class="price"><?= $foodndrinks[1]['price'] * $data['beta_quantity'] ?></span> đ</td>
-                                <td></td>
-                            </tr>
+
+                        <?php if (isset($data['beta_id']) && isset($data['beta_quantity'])): ?>
+                            <?php if ($data['beta_quantity'] > 0): ?>
+                                <tr>
+                                    <td>Bắp & nước</td>
+                                    <td><?= $foodndrinks[1]['name'] ?></td>
+                                    <td><?= $data['beta_quantity'] ?></td>
+                                    <td><span class="price"><?= $foodndrinks[1]['price'] * $data['beta_quantity'] ?></span> đ</td>
+                                    <td></td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endif; ?>
-                        <?php if (!empty($data['family_id']) || $data['family_quantity'] > 0): ?>
-                            <tr>
-                                <td>Bắp & nước</td>
-                                <td><?= $foodndrinks[2]['name'] ?></td>
-                                <td><?= $data['family_quantity'] ?></td>
-                                <td><span class="price"><?= $foodndrinks[2]['price'] * $data['family_quantity'] ?></span> đ</td>
-                                <td></td>
-                            </tr>
+
+                        <?php if (isset($data['family_id']) && isset($data['family_quantity'])): ?>
+                            <?php if ($data['family_quantity'] > 0): ?>
+                                <tr>
+                                    <td>Bắp & nước</td>
+                                    <td><?= $foodndrinks[2]['name'] ?></td>
+                                    <td><?= $data['family_quantity'] ?></td>
+                                    <td><span class="price"><?= $foodndrinks[2]['price'] * $data['family_quantity'] ?></span> đ</td>
+                                    <td></td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <!-- Áp dụng discount vào tổng giá trị đơn hàng -->
                         <?php foreach ($ranks as $rank): ?>
@@ -118,13 +125,46 @@ endif;
                     </div>
                 </form>
                 <hr>
+
                 <div class="row">
                     <form action="?action=fndOptions" method="POST">
                         <input type="text" name="room_id" value="<?= $data['room_id'] ?>" hidden>
                         <input type="text" name="schedule_id" value="<?= $data['schedule_id'] ?>" hidden>
                         <input type="text" name="movie_id" value="<?= $data['movie_id'] ?>" hidden>
                         <input type="text" name="seats" value="<?= $data['seats'] ?>" hidden>
-                        <input type="text" name="total_price" value="<?= $data['total_price'] ?>" hidden>
+
+                        <input type="text" name="total_price" value="<?php
+                                                                        $previousTotalPrice = $data['total_price'];
+
+                                                                        if (
+                                                                            $data['sweet_quantity'] > 0
+                                                                            || $data['beta_quantity'] > 0
+                                                                            || $data['family_quantity'] > 0
+                                                                        ) {
+                                                                            if ($data['sweet_quantity'] > 0) {
+                                                                                $previousTotalPrice -= $foodndrinks[0]['price'];
+                                                                            }
+                                                                            if ($data['beta_quantity'] > 0) {
+                                                                                $previousTotalPrice -= $foodndrinks[1]['price'];
+                                                                            }
+                                                                            if ($data['family_quantity'] > 0) {
+                                                                                $previousTotalPrice -= $foodndrinks[2]['price'];
+                                                                            }
+                                                                            echo $previousTotalPrice;
+                                                                        } else {
+                                                                            echo $data['total_price'];
+                                                                        }
+                                                                        ?>" hidden>
+
+                        <?php if ($data['sweet_quantity'] > 0) { ?>
+                            <input type="text" name="sweet_quantity" value="<?= $data['sweet_quantity'] ?>" hidden>
+                        <?php } ?>
+                        <?php if ($data['beta_quantity'] > 0) { ?>
+                            <input type="text" name="beta_quantity" value="<?= $data['beta_quantity'] ?>" hidden>
+                        <?php } ?>
+                        <?php if ($data['family_quantity'] > 0) { ?>
+                            <input type="text" name="family_quantity" value="<?= $data['family_quantity'] ?>" hidden>
+                        <?php } ?>
                         <button type="submit" class="btn btn-danger text-center">Quay lại</button>
                     </form>
                 </div>
@@ -146,54 +186,53 @@ endif;
                 </div>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <?php if (
+                    <?php
+                    if (
                         $data['beta_quantity'] > 0
                         || $data['sweet_quantity'] > 0
                         || $data['family_quantity'] > 0
                     ) { ?>
                         <div class="modal-dialog modal-xl">
-                        <?php } else { ?>
-                            <div class="modal-dialog">
-                            <?php } ?>
-                            <div class="modal-content">
+                            <div class="modal-content px-3">
                                 <form action="?action=order-final" method="POST">
                                     <div class="row">
                                         <div class="modal-header">
                                             <h2 class="modal-title fs-5 text-dark" id="exampleModalLabel">Vé của <?= $user['u_name'] ?></h2>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <?php if (
+                                        <?php
+                                        if (
                                             $data['beta_quantity'] > 0
                                             || $data['sweet_quantity'] > 0
                                             || $data['family_quantity'] > 0
                                         ) { ?>
                                             <div class="modal-body col-sm-6">
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phim</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phim</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="movie_name" class="form-control-plaintext" value="<?= mb_strtoupper($movies['name']) ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Suất chiếu</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Suất chiếu</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="start_at" class="form-control-plaintext" value="<?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phòng chiếu</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phòng chiếu</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="room_name" class="form-control-plaintext" value="<?= $rooms['name'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Ghế</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="user_name" class="form-control-plaintext" value="<?= $user['u_name'] ?>">
                                                         <input type="text" readonly name="user_email" class="form-control-plaintext" value="<?= $user['u_email'] ?>">
@@ -202,13 +241,22 @@ endif;
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Tổng tiền</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Tổng tiền</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?= $total = $data['total_price'] - $discount; ?>">
+                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?php
+
+                                                                                                                                                if (!empty($_SESSION['errors'])) {
+                                                                                                                                                    echo $data['total_price'];
+                                                                                                                                                } elseif ($discount > 0) {
+                                                                                                                                                    echo (int)$data['total_price'] - $discount;
+                                                                                                                                                } else {
+                                                                                                                                                    echo "Lỗi";
+                                                                                                                                                }
+                                                                                                                                                ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
                                                     <div class="col-sm-9">
                                                         <select class="form-select" name="paymentMethod">
                                                             <option value="">Lựa chọn phương thức thanh toán</option>
@@ -220,77 +268,88 @@ endif;
                                                 </div>
                                             </div>
                                             <div class="modal-body col-sm-6">
-                                                <?php if (!empty($data['sweet_id']) || $data['sweet_quantity'] > 0): ?>
-                                                    <div class="mb-3 row">
-                                                        <label for="sweet" class="col-sm-3 col-form-label text-dark">Bắp & nước</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="sweet_name" class="form-control-plaintext" value="<?= $foodndrinks[0]['name'] ?>">
+                                                <?php if (isset($data['sweet_id']) && isset($data['sweet_quantity'])): ?>
+                                                    <?php if ($data['sweet_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="sweet_name" class="form-control-plaintext" value="<?= $foodndrinks[0]['name'] ?>">
+                                                                <input type="text" readonly name="sweet_id" value="<?= $data['sweet_id'] ?>" hidden>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="mb-3 row">
-                                                        <label for="sweet" class="col-sm-3 col-form-label text-dark">Số lượng</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="sweet_quantity" class="form-control-plaintext" value="<?= $data['sweet_quantity'] ?>">
+                                                        <div class="mb-3 row">
+                                                            <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="sweet_quantity" class="form-control-plaintext" value="<?= $data['sweet_quantity'] ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
-                                                <?php if (!empty($data['beta_id']) || $data['beta_quantity'] > 0): ?>
-                                                    <div class="mb-3 row">
-                                                        <label for="beta" class="col-sm-3 col-form-label text-dark">Bắp & nước</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="beta_name" class="form-control-plaintext" value="<?= $foodndrinks[1]['name'] ?>">
+                                                <?php if (isset($data['beta_id']) && isset($data['beta_quantity'])): ?>
+                                                    <?php if ($data['beta_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="beta_name" class="form-control-plaintext" value="<?= $foodndrinks[1]['name'] ?>">
+                                                                <input type="text" readonly name="beta_id" value="<?= $data['beta_id'] ?>" hidden>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="mb-3 row">
-                                                        <label for="beta" class="col-sm-3 col-form-label text-dark">Số lượng</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="beta_quantity" class="form-control-plaintext" value="<?= $data['beta_quantity'] ?>">
+                                                        <div class="mb-3 row">
+                                                            <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="beta_quantity" class="form-control-plaintext" value="<?= $data['beta_quantity'] ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
-                                                <?php if (!empty($data['family_id']) || $data['family_quantity'] > 0): ?>
-                                                    <div class="mb-3 row">
-                                                        <label for="family" class="col-sm-3 col-form-label text-dark">Bắp & nước</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="family_name" class="form-control-plaintext" value="<?= $foodndrinks[2]['name'] ?>">
+
+                                                <?php if (isset($data['family_id']) && isset($data['family_quantity'])): ?>
+                                                    <?php if ($data['family_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="family_name" class="form-control-plaintext" value="<?= $foodndrinks[2]['name'] ?>">
+                                                                <input type="text" readonly name="family_id" value="<?= $data['family_id'] ?>" hidden>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="mb-3 row">
-                                                        <label for="family" class="col-sm-3 col-form-label text-dark">Số lượng</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" readonly name="family_quantity" class="form-control-plaintext" value="<?= $data['family_quantity'] ?>">
+                                                        <div class="mb-3 row">
+                                                            <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="family_quantity" class="form-control-plaintext" value="<?= $data['family_quantity'] ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
-                                        <?php } else { ?>
+                                        <?php
+                                        } else { ?>
                                             <div class="modal-body">
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phim</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phim</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="movie_name" class="form-control-plaintext" value="<?= mb_strtoupper($movies['name']) ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Suất chiếu</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Suất chiếu</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="start_at" class="form-control-plaintext" value="<?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phòng chiếu</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phòng chiếu</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="room_name" class="form-control-plaintext" value="<?= $rooms['name'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Ghế</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="user_name" class="form-control-plaintext" value="<?= $user['u_name'] ?>">
                                                         <input type="text" readonly name="user_email" class="form-control-plaintext" value="<?= $user['u_email'] ?>">
@@ -299,13 +358,23 @@ endif;
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Tổng tiền</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Tổng tiền</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?= $total = $data['total_price'] - $discount; ?>">
+                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?php
+                                                                                                                                                $discount = (int)$data['total_price'] * $rank['discount_percent'] / 100;
+                                                                                                                                                if (!empty($_SESSION['errors'])) {
+                                                                                                                                                    echo $data['total_price'];
+                                                                                                                                                } elseif ($discount > 0) {
+                                                                                                                                                    echo (int)$data['total_price'] - $discount;
+                                                                                                                                                } else {
+                                                                                                                                                    echo "Lỗi";
+                                                                                                                                                }
+                                                                                                                                                ?>">
                                                     </div>
                                                 </div>
+
                                                 <div class="mb-3 row">
-                                                    <label for="r_name" class="col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
                                                     <div class="col-sm-9">
                                                         <select class="form-select" name="paymentMethod">
                                                             <option value="">Lựa chọn phương thức thanh toán</option>
@@ -318,38 +387,248 @@ endif;
                                             </div>
                                         <?php } ?>
                                         <div class="modal-footer">
+                                            <input type="text" name="room_id" value="<?= $data['room_id'] ?>" hidden>
+                                            <input type="text" name="schedule_id" value="<?= $data['schedule_id'] ?>" hidden>
+                                            <input type="text" name="movie_id" value="<?= $data['movie_id'] ?>" hidden>
                                             <button type="submit" class="btn btn-success">Tiến hành tạo vé và gửi mail chi tiết</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
+                        </div>
+                    <?php
+                    } else { ?>
+                        <div class="modal-dialog">
+                            <div class="modal-content px-3">
+                                <form action="?action=order-final" method="POST">
+                                    <div class="row">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title fs-5 text-dark" id="exampleModalLabel">Vé của <?= $user['u_name'] ?></h2>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <?php
+                                        if (
+                                            $data['beta_quantity'] > 0
+                                            || $data['sweet_quantity'] > 0
+                                            || $data['family_quantity'] > 0
+                                        ) { ?>
+                                            <div class="modal-body col-sm-6">
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phim</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="movie_name" class="form-control-plaintext" value="<?= mb_strtoupper($movies['name']) ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Suất chiếu</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="start_at" class="form-control-plaintext" value="<?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phòng chiếu</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="room_name" class="form-control-plaintext" value="<?= $rooms['name'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="user_name" class="form-control-plaintext" value="<?= $user['u_name'] ?>">
+                                                        <input type="text" readonly name="user_email" class="form-control-plaintext" value="<?= $user['u_email'] ?>">
+                                                        <input type="text" readonly name="user_tel" class="form-control-plaintext" value="<?= $user['u_tel'] ?>">
+                                                        <input type="text" hidden name="user_id" value="<?= $user['u_id'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Tổng tiền</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?php
+
+                                                                                                                                                if (!empty($_SESSION['errors'])) {
+                                                                                                                                                    echo $data['total_price'];
+                                                                                                                                                } elseif ($discount > 0) {
+                                                                                                                                                    echo (int)$data['total_price'] - $discount;
+                                                                                                                                                } else {
+                                                                                                                                                    echo "Lỗi";
+                                                                                                                                                }
+                                                                                                                                                ?>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" name="paymentMethod">
+                                                            <option value="">Lựa chọn phương thức thanh toán</option>
+                                                            <option value="cash">Tiền mặt</option>
+                                                            <option value="momo">Momo</option>
+                                                            <option value="vnpay">Vnpay</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body col-sm-6">
+                                                <?php if (isset($data['sweet_id']) && isset($data['sweet_quantity'])): ?>
+                                                    <?php if ($data['sweet_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="sweet_name" class="form-control-plaintext" value="<?= $foodndrinks[0]['name'] ?>">
+                                                                <input type="text" readonly name="sweet_id" value="<?= $data['sweet_id'] ?>" hidden>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 row">
+                                                            <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="sweet_quantity" class="form-control-plaintext" value="<?= $data['sweet_quantity'] ?>">
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                                <?php if (isset($data['beta_id']) && isset($data['beta_quantity'])): ?>
+                                                    <?php if ($data['beta_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="beta_name" class="form-control-plaintext" value="<?= $foodndrinks[1]['name'] ?>">
+                                                                <input type="text" readonly name="beta_id" value="<?= $data['beta_id'] ?>" hidden>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 row">
+                                                            <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="beta_quantity" class="form-control-plaintext" value="<?= $data['beta_quantity'] ?>">
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+
+                                                <?php if (isset($data['family_id']) && isset($data['family_quantity'])): ?>
+                                                    <?php if ($data['family_quantity'] > 0): ?>
+                                                        <div class="mb-3 row">
+                                                            <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="family_name" class="form-control-plaintext" value="<?= $foodndrinks[2]['name'] ?>">
+                                                                <input type="text" readonly name="family_id" value="<?= $data['family_id'] ?>" hidden>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 row">
+                                                            <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Số lượng</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" readonly name="family_quantity" class="form-control-plaintext" value="<?= $data['family_quantity'] ?>">
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php
+                                        } else { ?>
+                                            <div class="modal-body">
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phim</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="movie_name" class="form-control-plaintext" value="<?= mb_strtoupper($movies['name']) ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Suất chiếu</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="start_at" class="form-control-plaintext" value="<?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phòng chiếu</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="room_name" class="form-control-plaintext" value="<?= $rooms['name'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Thông tin cá nhân</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="user_name" class="form-control-plaintext" value="<?= $user['u_name'] ?>">
+                                                        <input type="text" readonly name="user_email" class="form-control-plaintext" value="<?= $user['u_email'] ?>">
+                                                        <input type="text" readonly name="user_tel" class="form-control-plaintext" value="<?= $user['u_tel'] ?>">
+                                                        <input type="text" hidden name="user_id" value="<?= $user['u_id'] ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Tổng tiền</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" readonly name="total_price" class="form-control-plaintext" value="<?php
+
+                                                                                                                                                if (!empty($_SESSION['errors'])) {
+                                                                                                                                                    echo $data['total_price'];
+                                                                                                                                                } elseif ($discount > 0) {
+                                                                                                                                                    echo (int)$data['total_price'] - $discount;
+                                                                                                                                                } else {
+                                                                                                                                                    echo "Lỗi";
+                                                                                                                                                }
+                                                                                                                                                ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" name="paymentMethod">
+                                                            <option value="">Lựa chọn phương thức thanh toán</option>
+                                                            <option value="cash">Tiền mặt</option>
+                                                            <option value="momo">Momo</option>
+                                                            <option value="vnpay">Vnpay</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="modal-footer">
+                                            <input type="text" name="room_id" value="<?= $data['room_id'] ?>" hidden>
+                                            <input type="text" name="schedule_id" value="<?= $data['schedule_id'] ?>" hidden>
+                                            <input type="text" name="movie_id" value="<?= $data['movie_id'] ?>" hidden>
+                                            <button type="submit" class="btn btn-success">Tiến hành tạo vé và gửi mail chi tiết</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        // Logic hiển thị thông tin lên table tóm tắt đơn hàng
-        const seatTypePrice = {
-            'A': <?= $seatTypes[1]['price'] ?>,
-            'B': <?= $seatTypes[1]['price'] ?>,
-            'C': <?= $seatTypes[1]['price'] ?>,
-            'D': <?= $seatTypes[0]['price'] ?>,
-            'E': <?= $seatTypes[0]['price'] ?>,
-            'F': <?= $seatTypes[0]['price'] ?>,
-            'G': <?= $seatTypes[0]['price'] ?>,
-            'H': <?= $seatTypes[2]['price'] ?>,
-        }
+</div>
+<script>
+    // Logic hiển thị thông tin lên table tóm tắt đơn hàng
+    const seatTypePrice = {
+        'A': <?= $seatTypes[1]['price'] ?>,
+        'B': <?= $seatTypes[1]['price'] ?>,
+        'C': <?= $seatTypes[1]['price'] ?>,
+        'D': <?= $seatTypes[0]['price'] ?>,
+        'E': <?= $seatTypes[0]['price'] ?>,
+        'F': <?= $seatTypes[0]['price'] ?>,
+        'G': <?= $seatTypes[0]['price'] ?>,
+        'H': <?= $seatTypes[2]['price'] ?>,
+    }
 
-        const seatsArray = '<?= $data['seats'] ?>'.split(' ');
+    const seatsArray = '<?= $data['seats'] ?>'.split(' ');
 
-        let seatsPrice = 0;
-        let fndPrice = 0;
-        seatsArray.forEach(seat => {
-            const firstLetter = seat[0]
-            seatsPrice += seatTypePrice[firstLetter];
-        })
+    let seatsPrice = 0;
+    let fndPrice = 0;
+    seatsArray.forEach(seat => {
+        const firstLetter = seat[0]
+        seatsPrice += seatTypePrice[firstLetter];
+    })
 
-        document.getElementById('seatsPrice').textContent = seatsPrice;
-    </script>
+    document.getElementById('seatsPrice').textContent = seatsPrice;
+</script>
