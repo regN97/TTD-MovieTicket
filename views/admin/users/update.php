@@ -48,7 +48,7 @@ endif;
                                                                                 } else {
                                                                                     echo $user['u_email'];
                                                                                 } ?>">
-    </div>
+    </div> 
     <div class="my-3">
         <label for="address" class="form-label">Địa chỉ: </label>
         <input type="text" class="form-control" name="address" id="address" value="<?php if (isset($_SESSION['data'])) {

@@ -14,6 +14,17 @@ match ($action) {
     'register-form' => (new RegisterController)->index(),
     'register-store' => (new RegisterController)->store(),
 
+    // Information User
+    "info-user" => (new UserLoginController)->info(),
+    'form-update' => (new UserLoginController)->updatePageUser(),
+    'update-user' =>(new UserLoginController) -> update(),
+    'changePassword'=> (new UserLoginController)->updatePasswordPage(),
+    'update-password' => (new UserLoginController) ->updatePassword(),
+    'updateImage'=> (new UserLoginController)-> updateImage(),
+
+    // Rank 
+    'info-rank'=> (new UserLoginController) ->showRank(),
+
     // Movie
     'movies-isShowing' => (new ClientMovieController)->list(),
     'movies-upcoming' => (new ClientMovieController)->list(),
