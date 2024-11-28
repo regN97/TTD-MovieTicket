@@ -50,7 +50,7 @@
                 if ($_SESSION['user']['role_id'] == 1 || $_SESSION['user']['role_id'] == 2) { ?>
                     <div class="flex-shrink-0 dropdown">
                         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle nav-a" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                            <img src="  <?php if (isset($_SESSION['user'])) {  echo  BASE_ASSETS_UPLOADS . $_SESSION['user']['imageURL'];} else { echo' https://github.com/mdo.png' ;}?>  " alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small shadow">
                             <li class="nav-item"><a class="dropdown-item nav-a" href="?action=info-user">Quản lý tài khoản</a></li>
