@@ -111,63 +111,63 @@
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col btn btn-dark mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
@@ -175,9 +175,9 @@
                 <div class="row my-3 d-flex justify-content-center">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
                         <?php if ($rowColumn['seat_row'] == 'H' && $rowColumn['status'] == 'Active') { ?>
-                            <a onclick="getSeat(this)" class="col-2 btn mx-1 fw-semibold text-light" style="background-color: #ff00ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col-2 btn mx-1 fw-semibold text-light seat-id" style="background-color: #ff00ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } elseif ($rowColumn['seat_row'] == 'H' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a class="col-2 btn btn-dark  mx-1 fw-semibold text-dark" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col-2 btn btn-dark  mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
@@ -209,6 +209,7 @@
                         <input type="text" name="schedule_id" value="<?= $schedules['id'] ?>" hidden>
                         <input type="text" name="room_id" value="<?= $rooms['id'] ?>" hidden>
                         <input id="seats" type="text" name="seats" hidden>
+                        <input id="picked_seat_id" type="text" name="seat_id" hidden>
                         <input id="total_price" type="number" name="total_price" hidden>
                         <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
 
@@ -233,12 +234,22 @@
     </div>
 </div>
 <script>
+    const seats = document.querySelectorAll('.seat-id')
+
+    // seats.forEach(seat => {
+    //     // Làm gì đó với từng phần tử seat
+    //     console.log(seat.getAttribute('seat-id')); // Lấy giá trị thuộc tính seat-id
+    // });
+
+
     const pickedSeat = document.querySelector('.pickedSeat');
     const totalPrice = document.querySelector('.totalPrice');
     const seatsInput = document.getElementById('seats');
     const totalPriceInput = document.getElementById('total_price');
+    const pickedSeatInput = document.getElementById('picked_seat_id');
 
     const selectedSeats = [];
+    const selectedSeatId = [];
 
     const priceRegular = <?= $seatTypes[1]['price'] ?>;
     const priceVIP = <?= $seatTypes[0]['price'] ?>;
@@ -254,26 +265,39 @@
     const rowH = ['H1', 'H2', 'H3'];
 
     function getSeat(e) {
-        const seatId = e.innerHTML;
-        const index = selectedSeats.indexOf(seatId);
+        const seatName = e.innerHTML;
+        const seatId = e.getAttribute('seat-id');
+
+        const index = selectedSeats.indexOf(seatName);
+        const indexSeatId = selectedSeatId.indexOf(seatId);
 
         if (index !== -1) {
             // Nếu ghế đã được chọn, xóa khỏi mảng và nội dung hiển thị
             selectedSeats.splice(index, 1);
-            pickedSeat.innerHTML = pickedSeat.innerHTML.replace(seatId, '');
+            selectedSeatId.splice(indexSeatId, 1);
+            pickedSeat.innerHTML = pickedSeat.innerHTML.replace(seatName, '');
             calculateTotalPrice();
 
             const seatsString = selectedSeats.join(' ');
             seatsInput.value = seatsString;
+            const seatIdString = selectedSeatId.join(' ');
+            pickedSeatInput.value = seatIdString;
+
+            console.log(pickedSeatInput.value);
 
         } else {
             // Nếu ghế chưa được chọn, thêm vào mảng và hiển thị
-            selectedSeats.push(seatId);
-            pickedSeat.innerHTML += `${seatId} `;
+            selectedSeats.push(seatName);
+            selectedSeatId.push(seatId);
+            pickedSeat.innerHTML += `${seatName} `;
             calculateTotalPrice();
 
             const seatsString = selectedSeats.join(' ');
             seatsInput.value = seatsString;
+            const seatIdString = selectedSeatId.join(' ');
+            pickedSeatInput.value = seatIdString;
+
+            console.log(pickedSeatInput.value);
 
         }
 

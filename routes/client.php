@@ -17,13 +17,13 @@ match ($action) {
     // Information User
     "info-user" => (new UserLoginController)->info(),
     'form-update' => (new UserLoginController)->updatePageUser(),
-    'update-user' =>(new UserLoginController) -> update(),
-    'changePassword'=> (new UserLoginController)->updatePasswordPage(),
-    'update-password' => (new UserLoginController) ->updatePassword(),
-    'updateImage'=> (new UserLoginController)-> updateImage(),
+    'update-user' => (new UserLoginController)->update(),
+    'changePassword' => (new UserLoginController)->updatePasswordPage(),
+    'update-password' => (new UserLoginController)->updatePassword(),
+    'updateImage' => (new UserLoginController)->updateImage(),
 
     // Rank 
-    'info-rank'=> (new UserLoginController) ->showRank(),
+    'info-rank' => (new UserLoginController)->showRank(),
 
     // Movie
     'movies-isShowing' => (new ClientMovieController)->list(),
@@ -40,6 +40,7 @@ match ($action) {
     'fndOptions' => (new TicketController)->foodAndDrinkOptions(),
     'order-detail'  => (new TicketController)->orderDetail(),
     'order-final' => (new TicketController)->orderFinal(),
+    'sendMail'  => (new TicketController)->sendMail(),
 
     // Xem tin tức
     'page-news' => (new NewPageController)->list(),

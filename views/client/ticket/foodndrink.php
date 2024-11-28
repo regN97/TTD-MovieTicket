@@ -96,6 +96,7 @@ endif;
                         <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
                         <input type="text" name="room_id" value="<?= $rooms['id'] ?>" hidden>
                         <input type="text" name="seats" value="<?= $data['seats'] ?>" hidden>
+                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
                         <input id="priceData" type="number" name="total_price" hidden>
 
                         <input id="sweet_id" type="text" name="sweet_id" hidden>
@@ -165,17 +166,17 @@ endif;
 
         switch (type) {
             case 'sweet':
-                sweetId.value = 0;
+                sweetId.value = 1;
                 sweetQuantity.value = quantity;
                 break;
 
             case 'beta':
-                betaId.value = 1;
+                betaId.value = 2;
                 betaQuantity.value = quantity;
                 break;
 
             case 'family':
-                familyId.value = 2;
+                familyId.value = 3;
                 familyQuantity.value = quantity;
                 break;
 

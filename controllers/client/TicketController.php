@@ -10,6 +10,10 @@ class TicketController
     private $foodndrink;
     private $user;
     private $ranks;
+    private $ticket;
+    private $order;
+    private $orderFnd;
+    private $orderDetail;
 
     public function __construct()
     {
@@ -21,6 +25,10 @@ class TicketController
         $this->foodndrink = new FoodAndDrink();
         $this->user = new User();
         $this->ranks = new Rank();
+        $this->ticket = new Ticket();
+        $this->order = new Order();
+        $this->orderFnd = new OrderFnd();
+        $this->orderDetail = new OrderDetail();
     }
     public function pickingSeat()
     {
@@ -70,13 +78,12 @@ class TicketController
     public function foodAndDrinkOptions()
     {
         try {
-
-
             if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
             }
 
             $data = $_POST;
+            // debug($data);
 
             $_SESSION['errors'] = [];
 
@@ -124,6 +131,7 @@ class TicketController
             }
 
             $data = $_POST;
+            // debug($data);
             $id = $_SESSION['user']['id'];
             $user = $this->user->getID($id);
             $ranks = $this->ranks->select();
@@ -162,6 +170,7 @@ class TicketController
             // debug($data);
 
             $_SESSION['errors'] = [];
+            $_SESSION['message'] = [];
 
             if (empty($data['paymentMethod'])) {
                 $_SESSION['errors']['paymentMethod'] = "Vui lòng chọn phương thức thanh toán";
@@ -178,7 +187,20 @@ class TicketController
 
                 $quantitySeats = str_word_count($data['seats']);
 
-                // $data['beta_quantity'] = 0;
+                $data['total_price'] = $data['priceBeforeDiscount'];
+
+                $data['seat_id'] = $data['seat_id'];
+
+                // phòng ngừa xảy ra lỗi tại trang order-detail khi isset($_SESSION['errors']) = true
+                if (!isset($data['sweet_quantity'])) {
+                    $data['sweet_quantity'] = 0;
+                }
+                if (!isset($data['beta_quantity'])) {
+                    $data['beta_quantity'] = 0;
+                }
+                if (!isset($data['family_quantity'])) {
+                    $data['family_quantity'] = 0;
+                }
 
                 $view = 'ticket/order-detail';
                 $title = "Chi tiết vé";
@@ -186,6 +208,47 @@ class TicketController
 
                 require_once PATH_VIEW_CLIENT_MAIN;
             } else {
+                //* Tạo bản ghi cho table tickets
+                //! Tắt tạm để làm tiếp, nhớ mở lại khi xong
+                $seatArr = explode(' ', $data['seat_id']);
+                $seatNameArr = explode(' ', $data['seats']);
+
+                foreach ($seatArr as $id) {
+                    $ticketInput = [
+                        'schedule_id' => $data['schedule_id'],
+                        'movie_id' => $data['movie_id'],
+                        'seat_id' => $id
+                    ];
+
+                    $ticketCount = $this->ticket->insert($ticketInput);
+                }
+
+                if ($ticketCount > 0) {
+                    $_SESSION['message']['ticket'] = "Thêm ticket thành công!";
+                    $data['ticket_id'] = $ticketCount;
+                } else {
+                    throw new Exception("Thêm ticket không thành công!");
+                }
+
+
+                //* Tạo bản ghi cho table orders
+                //! Tắt tạm để làm tiếp, nhớ mở lại khi xong
+                $orderInput = [
+                    'user_id' => $data['user_id'],
+                    'status'  => 'not checked in yet',
+                    'total_price' => $data['total_price'],
+                    'paymentMethod' => $data['paymentMethod']
+                ];
+
+                $orderCount = $this->order->insert($orderInput);
+
+                if ($orderCount > 0) {
+                    $_SESSION['message']['order'] = "Thêm order thành công!";
+                    $data['order_id'] = $orderCount;
+                } else {
+                    throw new Exception("Thêm order không thành công!");
+                }
+
                 $_SESSION['success'] = true;
                 $_SESSION['msg'] = "Tạo vé thành công!";
 
@@ -200,6 +263,92 @@ class TicketController
             $_SESSION['msg'] = $th->getMessage();
 
             header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
+            exit();
+        }
+    }
+
+    public function sendMail()
+    {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                throw new Exception("Yêu cầu phương thức phải là POST !");
+            }
+
+            $data = $_POST;
+
+            //* Tạo bản ghi cho table order_fnds nếu khách có đặt bắp & nước
+            if (!empty($data['sweet_id'])) {
+                $sweetInput = [
+                    'order_id' => $data['order_id'],
+                    'fnd_id' => $data['sweet_id']
+                ];
+                $rowCount = $this->orderFnd->insert($sweetInput);
+            }
+            if (!empty($data['beta_id'])) {
+                $betaInput = [
+                    'order_id' => $data['order_id'],
+                    'fnd_id' => $data['beta_id']
+                ];
+                $rowCount = $this->orderFnd->insert($betaInput);
+            }
+            if (!empty($data['family_id'])) {
+                $familyInput = [
+                    'order_id' => $data['order_id'],
+                    'fnd_id' => $data['family_id']
+                ];
+                $rowCount = $this->orderFnd->insert($familyInput);
+            }
+
+
+
+            //* Lưu dữ liệu vào table order_details
+            //? Lấy ticket_id xuống từ bảng tickets
+            $ticketCount = $this->ticket->select('*', 'schedule_id = :schedule_id', ['schedule_id' => $data['schedule_id']]);
+
+            foreach ($ticketCount as $ticket) {
+                $orderDetailInput = [
+                    'order_id' => $data['order_id'],
+                    'ticket_id' => $ticket['id']
+                ];
+                $rowCount = $this->orderDetail->insert($orderDetailInput);
+            }
+
+            //* Thêm nội dung để gửi mail vé và đồ đi kèm cho khách
+            $user = $this->user->find('*', 'id = :id', ['id' => $data['user_id']]);
+            $movieName = $this->movie->find('name', 'id = :id', ['id' => $data['movie_id']]);
+            $schedule = $this->schedule->find('start_at', 'id = :id', ['id' => $data['schedule_id']]);
+            $roomName = $this->room->find('name', 'id = :id', ['id' => $data['room_id']]);
+            $roomType = $this->room->find('type', 'id = :id', ['id' => $data['room_id']]);
+
+            $to = $user['email'];
+            $subject = "Your Movie Ticket";
+            $content = "
+                <h1>Xin chào " . $user['name'] . "!</h1>
+                <h2>TTDMovieTicket gửi bạn thông tin vé bạn đã đặt</h2>
+                <div>
+                    <p><b>Phim:</b> " . mb_strtoupper($movieName['name'], 'UTF-8') . "</p>
+                    <p><b>Suất chiếu:</b> " . date_format(date_create($schedule['start_at']), "H:i d/m/Y") . "</p>
+                    <p><b>Phòng:</b> " . $roomName['name'] . "</p>
+                    <p><b>Định dạng:</b> " . $roomType['type'] . "</p>
+                    <p><b>Ghế:</b> " . $data['seats'] . "</p>
+                    <p><b>Tổng tiền:</b> " . $data['total_price'] . "đ</p>
+                    <p><b>Order ID:</b> " . $data['order_id'] . "</p>
+                    <p>Khi đến rạp hãy xuất trình email này cho nhân viên thay cho vé vật lý! Chúc bạn xem phim vui vẻ.</p>
+                </div>
+            ";
+
+            // sendMail($to, $subject, $content);
+
+            $_SESSION['success'] = true;
+            $_SESSION['msg'] = "Đặt vé thành công, hãy kiểm tra email của bạn.";
+
+            header('Location: ' . BASE_URL);
+            exit();
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location: ' . BASE_URL);
             exit();
         }
     }

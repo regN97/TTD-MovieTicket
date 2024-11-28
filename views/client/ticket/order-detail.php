@@ -132,6 +132,7 @@ endif;
                         <input type="text" name="schedule_id" value="<?= $data['schedule_id'] ?>" hidden>
                         <input type="text" name="movie_id" value="<?= $data['movie_id'] ?>" hidden>
                         <input type="text" name="seats" value="<?= $data['seats'] ?>" hidden>
+                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
 
                         <input type="text" name="total_price" value="<?php
                                                                         $previousTotalPrice = $data['total_price'];
@@ -229,6 +230,7 @@ endif;
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -253,6 +255,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -274,7 +277,7 @@ endif;
                                                             <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="sweet_name" class="form-control-plaintext" value="<?= $foodndrinks[0]['name'] ?>">
-                                                                <input type="text" readonly name="sweet_id" value="<?= $data['sweet_id'] ?>" hidden>
+                                                                <input type="text" readonly name="sweet_id" value="<?= $foodndrinks[0]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -291,7 +294,7 @@ endif;
                                                             <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="beta_name" class="form-control-plaintext" value="<?= $foodndrinks[1]['name'] ?>">
-                                                                <input type="text" readonly name="beta_id" value="<?= $data['beta_id'] ?>" hidden>
+                                                                <input type="text" readonly name="beta_id" value="<?= $foodndrinks[1]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -309,7 +312,7 @@ endif;
                                                             <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="family_name" class="form-control-plaintext" value="<?= $foodndrinks[2]['name'] ?>">
-                                                                <input type="text" readonly name="family_id" value="<?= $data['family_id'] ?>" hidden>
+                                                                <input type="text" readonly name="family_id" value="<?= $foodndrinks[2]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -346,6 +349,7 @@ endif;
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -370,9 +374,9 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
-
                                                 <div class="mb-3 row">
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Phương thức thanh toán</label>
                                                     <div class="col-sm-9">
@@ -435,6 +439,7 @@ endif;
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -459,6 +464,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
 
@@ -481,7 +487,7 @@ endif;
                                                             <label for="sweet" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="sweet_name" class="form-control-plaintext" value="<?= $foodndrinks[0]['name'] ?>">
-                                                                <input type="text" readonly name="sweet_id" value="<?= $data['sweet_id'] ?>" hidden>
+                                                                <input type="text" readonly name="sweet_id" value="<?= $foodndrinks[0]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -498,7 +504,7 @@ endif;
                                                             <label for="beta" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="beta_name" class="form-control-plaintext" value="<?= $foodndrinks[1]['name'] ?>">
-                                                                <input type="text" readonly name="beta_id" value="<?= $data['beta_id'] ?>" hidden>
+                                                                <input type="text" readonly name="beta_id" value="<?= $foodndrinks[1]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -516,7 +522,7 @@ endif;
                                                             <label for="family" class="fw-semibold col-sm-3 col-form-label text-dark">Bắp & nước</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" readonly name="family_name" class="form-control-plaintext" value="<?= $foodndrinks[2]['name'] ?>">
-                                                                <input type="text" readonly name="family_id" value="<?= $data['family_id'] ?>" hidden>
+                                                                <input type="text" readonly name="family_id" value="<?= $foodndrinks[2]['id'] ?>" hidden>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -553,6 +559,7 @@ endif;
                                                     <label for="r_name" class="fw-semibold col-sm-3 col-form-label text-dark">Ghế</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" readonly name="seats" class="form-control-plaintext" value="<?= $data['seats'] ?>">
+                                                        <input type="text" name="seat_id" value="<?= $data['seat_id'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -577,6 +584,7 @@ endif;
                                                                                                                                                     echo "Lỗi";
                                                                                                                                                 }
                                                                                                                                                 ?>">
+                                                        <input type="number" name="priceBeforeDiscount" value="<?= $data['total_price'] ?>" hidden>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
