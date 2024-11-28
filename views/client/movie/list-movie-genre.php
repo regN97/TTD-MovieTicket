@@ -30,15 +30,15 @@ endif;
             <div class="col-6 col-sm-12">
                 <div class="dropdown genre-dropdown mb-4">
                     <a href="#" id="genresDropdown" class="btn btn-outline-dark dropdown-toggle w-100" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                        Tất cả
+                    <?= $genre['name'] ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="genresDropdown">
                         <li>
-                            <a class="dropdown-item" href="?action=movies-<?= $type ?>" onclick="setDropdownText(this)">Tất cả</a>
+                            <a class="dropdown-item" href="?action=movies-<?= $_GET['type'] ?>">Tất cả</a>
                         </li>
                         <?php foreach ($genres as $genre): ?>
                         <li>
-                            <a class="dropdown-item" href="?action=list-movies&genre=<?= $genre['name'] ?>&type=<?= $type ?>" onclick="setDropdownText(this)"><?= $genre['name'] ?></a>
+                            <a class="dropdown-item" href="?action=list-movies&genre=<?= $genre['name'] ?>&type=<?= $_GET['type'] ?>"><?= $genre['name'] ?></a>
                         </li>
                         <?php endforeach; ?>
                     </ul>
@@ -52,20 +52,20 @@ endif;
                 <?php foreach ($data as $movie) { ?>
                     <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                         <div class="card card-xs mb-4">
-                            <a href="?action=movies-detail&id=<?= $movie['id'] ?>" title="<?= mb_convert_case($movie['name'], MB_CASE_TITLE, "UTF-8"); ?>">
-                                <?php if (!empty($movie['imageURL'])): ?>
-                                    <img alt="<?= mb_convert_case($movie['name'], MB_CASE_TITLE, "UTF-8"); ?>" src="<?= BASE_ASSETS_UPLOADS . $movie['imageURL'] ?>" class="card-img-top lazyloaded">
+                            <a href="?action=movies-detail&id=<?= $movie['m_id'] ?>" title="<?= mb_convert_case($movie['m_name'], MB_CASE_TITLE, "UTF-8"); ?>">
+                                <?php if (!empty($movie['m_imageURL'])): ?>
+                                    <img alt="<?= mb_convert_case($movie['m_name'], MB_CASE_TITLE, "UTF-8"); ?>" src="<?= BASE_ASSETS_UPLOADS . $movie['m_imageURL'] ?>" class="card-img-top lazyloaded">
                                 <?php endif; ?>
                             </a>
                             <div class="card-body border-top">
                                 <h3 class="text-truncate h5 mb-1">
-                                    <a class="mv-title" href="?action=movies-detail&id=<?= $movie['id'] ?>" title="<?= mb_convert_case($movie['name'], MB_CASE_TITLE, "UTF-8"); ?>">
-                                        <?= mb_convert_case($movie['name'], MB_CASE_TITLE, "UTF-8"); ?>
+                                    <a class="mv-title" href="?action=movies-detail&id=<?= $movie['m_id'] ?>" title="<?= mb_convert_case($movie['m_name'], MB_CASE_TITLE, "UTF-8"); ?>">
+                                        <?= mb_convert_case($movie['m_name'], MB_CASE_TITLE, "UTF-8"); ?>
                                     </a>
                                 </h3>
                                 <div class="row no-gutters small">
                                     <div class="col text-muted">
-                                        <?= date_format(date_create($movie['release_date']), "d/m") ?>
+                                        <?= date_format(date_create($movie['m_release_date']), "d/m") ?>
                                     </div>
                                     <div class="col text-right">
                                     </div>
@@ -79,7 +79,7 @@ endif;
         <div class="container mb-2 ">
     <div class="d-flex justify-content-end">
         <?php if ($page > 1): ?>
-            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL . '?action='.$action . '&page=' . ($page - 1) ?>">« Trước</a>
+            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'] . '&page=' . ($page - 1) ?>">« Trước</a>
         <?php endif; ?>
 
         <?php
@@ -106,7 +106,6 @@ endif;
         if ($totalPages > 1) {
             $pages[] = $totalPages;
         }
-
         foreach ($pages as $p):
             if ($p === '...'): ?>
             
@@ -115,21 +114,16 @@ endif;
                 <span class="btn btn-dark mx-1 active"><?= $p ?></span>
             <?php else: ?>
                 <a class="btn btn-outline-dark mx-1" 
-                   href="<?= BASE_URL . '?action='.$action.'&page=' . $p ?>"><?= $p ?></a>
+                   href="<?= BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'].'&page=' . $p ?>"><?= $p ?></a>
             <?php endif;
         endforeach;
         ?>
 
         <?php if ($page < $totalPages): ?>
-            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL . '?action='.$action . '&page=' . ($page + 1) ?>">Sau »</a>
+            <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'] . '&page=' . ($page + 1) ?>">Sau »</a>
         <?php endif; ?>
     </div>
-</div>
+        </div>
     </div>
 </div>
-<style>
-    .totalPages:hover {
-        text-decoration: underline;
-    }
-</style>
 
