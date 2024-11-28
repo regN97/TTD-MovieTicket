@@ -34,26 +34,13 @@ endif;
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="genresDropdown">
                         <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tất cả</a>
+                            <a class="dropdown-item" href="?action=movies-<?= $type ?>" onclick="setDropdownText(this)">Tất cả</a>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Hành động</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Kinh dị</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Gia đình</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Hài</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tình cảm</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" onclick="setDropdownText(this)">Tâm lý</a>
-                        </li>
+                        <?php foreach ($genres as $genre): ?>
+                            <li>
+                                <a class="dropdown-item" href="?action=list-movies&genre=<?= $genre['name'] ?>&type=<?= $type ?>" onclick="setDropdownText(this)"><?= $genre['name'] ?></a>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
@@ -128,11 +115,10 @@ endif;
                         <span class="btn btn-dark mx-1 active"><?= $p ?></span>
                     <?php else: ?>
                         <a class="btn btn-outline-dark mx-1"
-                            href="<?= BASE_URL_ADMIN . '&action=' . $action . '&page=' . $p ?>"><?= $p ?></a>
+                            href="<?= BASE_URL . '?action=' . $action . '&page=' . $p ?>"><?= $p ?></a>
                 <?php endif;
                 endforeach;
                 ?>
-
                 <?php if ($page < $totalPages): ?>
                     <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL . '?action=' . $action . '&page=' . ($page + 1) ?>">Sau »</a>
                 <?php endif; ?>

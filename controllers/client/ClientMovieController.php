@@ -9,11 +9,17 @@ class ClientMovieController
 
     private $schedule;
 
+    private $genre;
+
+    private $movieGenre;
+
     public function __construct()
     {
         $this->movie = new Movie();
         $this->room = new Room();
         $this->schedule = new Schedule();
+        $this->genre = new Genre();
+        $this->movieGenre = new MovieGenre();
     }
 
 
@@ -25,11 +31,10 @@ class ClientMovieController
         $perPage = 12;
 
         if ($action == 'movies-isShowing') {
+            $type = 'isShowing';
             $view = 'movie/list-movie';
             $title = 'Phim đang chiếu';
             $description = 'Danh sách các phim hiện đang chiếu rạp trên toàn quốc 21/11/2024. Xem lịch chiếu phim, giá vé tiện lợi, đặt vé nhanh chỉ với 1 bước!';
-
-
 
             // Xác định trang hiện tại (mặc định là 1)
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -37,6 +42,7 @@ class ClientMovieController
 
             $data = $this->movie->paginate($page, $perPage, '*', 'release_date <= :release_date', ['release_date' => date('Y-m-d')]);
 
+            $genres = $this->genre->select();
             $totalMovie = $this->movie->count('release_date <= :release_date', ['release_date' => date('Y-m-d')]);
             $totalPages = ceil($totalMovie / $perPage);
 
@@ -48,6 +54,7 @@ class ClientMovieController
             require_once PATH_VIEW_CLIENT_MAIN;
             exit();
         } else if ($action == 'movies-upcoming') {
+            $type = 'upcoming';
             $view = 'movie/list-movie';
             $title = 'Phim sắp chiếu';
             $description = 'Danh sách các phim dự kiến sẽ khởi chiếu tại các hệ thống rạp trên toàn quốc.';
@@ -58,6 +65,7 @@ class ClientMovieController
 
             $data = $this->movie->paginate($page, $perPage, '*', 'release_date > :release_date', ['release_date' => date('Y-m-d')]);
 
+            $genres = $this->genre->select();
             $totalMovie = $this->movie->count('release_date > :release_date', ['release_date' => date('Y-m-d')]);
             $totalPages = ceil($totalMovie / $perPage);
 
@@ -72,6 +80,61 @@ class ClientMovieController
         }
     }
 
+
+    public function listMovieGenre(){
+        try{
+        $selectedGenre = $_GET['genre'];
+        $perPage = 12;
+        $genres = $this->genre->select();
+
+        // Tìm kiếm thể loại dựa trên tên
+        $genre = $this->genre->find('*', 'name = :name', ['name' => $_GET['genre']]);
+        if(!$genre){
+            throw new Exception('Thể loại không tồn tại!');
+        }
+        $genreId = $genre['id'];
+        
+        if ($_GET['type'] === 'isShowing') {
+            $whereCondition = 'genre_id = :genre_id AND release_date <= :release_date ';
+            $params = ['genre_id' => $genreId,'release_date' => date('Y-m-d')];
+        } else{
+            $whereCondition = 'genre_id = :genre_id AND release_date > :release_date';
+            $params  = ['genre_id' => $genreId,'release_date' => date('Y-m-d')];
+        }
+
+        // Xác định trang hiện tại (mặc định là 1)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+
+        // Phân trang và lấy dũ liệu phim
+        $data = $this->movie->getAll($page, $perPage, '*', $whereCondition, $params);
+        if(empty($data)){
+            throw new Exception("Không có phim thuộc thể loại này!");
+        }
+
+        $totalMovie = $this->movie->countMovies($whereCondition, $params);
+        $totalPages = ceil($totalMovie / $perPage);
+
+        $view = 'movie/list-movie-genre';
+        $title = 'Phim ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu') . '/' . $_GET['genre'];
+        $description = 'Danh sách các phim ' . $_GET['genre'] . ' ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu');
+
+        if ($page > $totalPages) {
+            // Chuyển hướng đến trang cuối cùng
+            header('Location:' . BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'] .'&page=' . $totalPages);
+            exit();
+        }
+    } catch (\Throwable $th) {
+        $_SESSION['success'] = false;
+        $_SESSION['msg'] = $th->getMessage();
+
+        header('Location:' . BASE_URL . '?action=movies-' . $_GET['type']);
+        exit();
+    }
+
+        require_once PATH_VIEW_CLIENT_MAIN;
+        exit();
+    }
 
     public function search()
     {

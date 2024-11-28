@@ -32,6 +32,7 @@ match ($action) {
     'movies-detail' => (new ClientMovieController)->detail(),
     'search-page' => (new ClientMovieController)->searchPage(),
     'movies-schedule'   => (new ClientMovieController)->schedule(),
+    'list-movies' => (new ClientMovieController)->listMovieGenre(),
 
     // Đặt vé
     'picking-seat' => (new TicketController)->pickingSeat(),

@@ -8,7 +8,9 @@ class MovieGenre extends BaseModel
     {
         $sql = "
             SELECT
-                mg.id mg_id,
+                mg.id   mg_id,
+                m.id    m_id,
+                g.id    g_id,
                 m.name  m_name,
                 g.name  g_name
             FROM movie_genres mg
@@ -27,12 +29,6 @@ class MovieGenre extends BaseModel
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
-
-        $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute();
-
         return $stmt->fetchAll();
     }
 
