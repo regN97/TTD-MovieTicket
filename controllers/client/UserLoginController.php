@@ -132,7 +132,6 @@ class UserLoginController
             }
 
             $data = $_POST;
-            // debug($data);
             
             $_SESSION['errors'] = [];
 
