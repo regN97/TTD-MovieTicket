@@ -204,25 +204,6 @@
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li>
 
-                <!-- Start Quản lí lịch sử đặt vé -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarBooked" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarBooked">
-                        <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí lịch sử đặt vé</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarBooked">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?= BASE_URL_ADMIN . '&action=history-list' ?>" class="nav-link" data-key="t-sweet-alerts">
-                                    Lịch sử đặt vé 
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- End Quản lí lịch sử đặt vé -->
-
-
                 <!-- Start Quản lí trạng thái đơn hàng -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarOrder" data-bs-toggle="collapse" role="button"

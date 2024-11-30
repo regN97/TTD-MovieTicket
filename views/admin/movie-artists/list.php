@@ -75,14 +75,14 @@ if (isset($_SESSION['success'])) {
 
         foreach ($pages as $p):
             if ($p === '...'): ?>
-            
+
                 <span class="btn btn-light mx-1 disabled">...</span>
-                <?php elseif ($p == $page): ?>
+            <?php elseif ($p == $page): ?>
                 <span class="btn btn-dark mx-1 active"><?= $p ?></span>
             <?php else: ?>
-                <a class="btn btn-outline-dark mx-1" 
-                   href="<?= BASE_URL_ADMIN . '&action=artists-list&page=' . $p ?>"><?= $p ?></a>
-            <?php endif;
+                <a class="btn btn-outline-dark mx-1"
+                    href="<?= BASE_URL_ADMIN . '&action=movie-artists-list&page=' . $p ?>"><?= $p ?></a>
+        <?php endif;
         endforeach;
         ?>
 
