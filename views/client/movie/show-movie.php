@@ -137,24 +137,10 @@
                         <div class="row">
                             <div class="col">
                                 <select class="btn btn-outline-dark w-50" name="room_id">
-                                    <option value="" selected>Lựa chọn định dạng</option>
-                                    <?php
-                                    // Mảng để lưu trữ các loại phòng chiếu đã được in ra
-                                    $printedRooms = [];
-
-                                    foreach ($schedules as $schedule) {
-                                        foreach ($rooms as $room) {
-                                            if ($room['id'] == $schedule['room_id'] && $schedule['movie_id'] == $movies['id']) {
-                                                // Kiểm tra xem loại phòng chiếu đã được in ra chưa
-                                                if (!in_array($room['type'], $printedRooms)) {
-                                                    echo "<option value='" . $room['id'] . "'>" . $room['type'] . "</option>";
-                                                    // Thêm loại phòng chiếu vào mảng
-                                                    $printedRooms[] = $room['type'];
-                                                }
-                                            }
-                                        }
-                                    }
-                                    ?>
+                                    <option value="">Chọn định dạng</option>
+                                    <?php foreach ($rooms as $room): ?>
+                                        <option value="<?= $room['id'] ?>"><?= $room['type'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>

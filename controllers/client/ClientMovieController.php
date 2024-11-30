@@ -81,56 +81,57 @@ class ClientMovieController
     }
 
 
-    public function listMovieGenre(){
-        try{
-        $selectedGenre = $_GET['genre'];
-        $perPage = 12;
-        $genres = $this->genre->select();
+    public function listMovieGenre()
+    {
+        try {
+            $selectedGenre = $_GET['genre'];
+            $perPage = 12;
+            $genres = $this->genre->select();
 
-        // Tìm kiếm thể loại dựa trên tên
-        $genre = $this->genre->find('*', 'name = :name', ['name' => $_GET['genre']]);
-        if(!$genre){
-            throw new Exception('Thể loại không tồn tại!');
-        }
-        $genreId = $genre['id'];
-        
-        if ($_GET['type'] === 'isShowing') {
-            $whereCondition = 'genre_id = :genre_id AND release_date <= :release_date ';
-            $params = ['genre_id' => $genreId,'release_date' => date('Y-m-d')];
-        } else{
-            $whereCondition = 'genre_id = :genre_id AND release_date > :release_date';
-            $params  = ['genre_id' => $genreId,'release_date' => date('Y-m-d')];
-        }
+            // Tìm kiếm thể loại dựa trên tên
+            $genre = $this->genre->find('*', 'name = :name', ['name' => $_GET['genre']]);
+            if (!$genre) {
+                throw new Exception('Thể loại không tồn tại!');
+            }
+            $genreId = $genre['id'];
 
-        // Xác định trang hiện tại (mặc định là 1)
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
+            if ($_GET['type'] === 'isShowing') {
+                $whereCondition = 'genre_id = :genre_id AND release_date <= :release_date ';
+                $params = ['genre_id' => $genreId, 'release_date' => date('Y-m-d')];
+            } else {
+                $whereCondition = 'genre_id = :genre_id AND release_date > :release_date';
+                $params  = ['genre_id' => $genreId, 'release_date' => date('Y-m-d')];
+            }
 
-        // Phân trang và lấy dũ liệu phim
-        $data = $this->movie->getAll($page, $perPage, '*', $whereCondition, $params);
-        if(empty($data)){
-            throw new Exception("Không có phim thuộc thể loại này!");
-        }
+            // Xác định trang hiện tại (mặc định là 1)
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $page = max($page, 1); // Không cho phép giá trị nhỏ hơn 1
 
-        $totalMovie = $this->movie->countMovies($whereCondition, $params);
-        $totalPages = ceil($totalMovie / $perPage);
+            // Phân trang và lấy dũ liệu phim
+            $data = $this->movie->getAll($page, $perPage, '*', $whereCondition, $params);
+            if (empty($data)) {
+                throw new Exception("Không có phim thuộc thể loại này!");
+            }
 
-        $view = 'movie/list-movie-genre';
-        $title = 'Phim ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu') . '/' . $_GET['genre'];
-        $description = 'Danh sách các phim ' . $_GET['genre'] . ' ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu');
+            $totalMovie = $this->movie->countMovies($whereCondition, $params);
+            $totalPages = ceil($totalMovie / $perPage);
 
-        if ($page > $totalPages) {
-            // Chuyển hướng đến trang cuối cùng
-            header('Location:' . BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'] .'&page=' . $totalPages);
+            $view = 'movie/list-movie-genre';
+            $title = 'Phim ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu') . '/' . $_GET['genre'];
+            $description = 'Danh sách các phim ' . $_GET['genre'] . ' ' . ($_GET['type'] === 'isShowing' ? 'đang chiếu' : 'sắp chiếu');
+
+            if ($page > $totalPages) {
+                // Chuyển hướng đến trang cuối cùng
+                header('Location:' . BASE_URL . '?action=list-movies&genre=' . $_GET['genre'] . '&type=' . $_GET['type'] . '&page=' . $totalPages);
+                exit();
+            }
+        } catch (\Throwable $th) {
+            $_SESSION['success'] = false;
+            $_SESSION['msg'] = $th->getMessage();
+
+            header('Location:' . BASE_URL . '?action=movies-' . $_GET['type']);
             exit();
         }
-    } catch (\Throwable $th) {
-        $_SESSION['success'] = false;
-        $_SESSION['msg'] = $th->getMessage();
-
-        header('Location:' . BASE_URL . '?action=movies-' . $_GET['type']);
-        exit();
-    }
 
         require_once PATH_VIEW_CLIENT_MAIN;
         exit();

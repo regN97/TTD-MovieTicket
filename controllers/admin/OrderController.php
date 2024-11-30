@@ -66,26 +66,52 @@ class OrderController
     public function changeStatus()
     {
         try {
-            $id = $_GET['id'];
+            $order_id = $_GET['id'];
             $status = $_GET['status'];
 
 
-            if (empty($id) || empty($status)) {
+            if (empty($order_id) || empty($status)) {
                 throw new Exception("Thiếu tham số cần thiết");
             }
+
+            $user_id = $this->order->find('user_id', 'id = :id', ['id' => $order_id]);
+            $total_price = $this->order->find('total_price', 'id = :id', ['id' => $order_id]);
+
+            $price = implode("", $total_price);
+            $userId = implode("", $user_id);
+
+            $points = $price / 1000;
+
+            $pointBeforeUpdate = $this->user->find('points', 'id = :id', ['id' => $userId]);
+            $pointBefore = implode("", $pointBeforeUpdate);
+
+            $finalPlusPoint = $pointBefore + $points;
+            $pointBeforePlus = $pointBefore - $points;
+
 
             if ($status == 'Chưa thanh toán') {
                 $data = [
                     'status' => 'Đã thanh toán'
                 ];
-                $updateStatus = $this->order->update($data, 'id = :id', ['id' => $id]);
+
+                $p = [
+                    'points' => $finalPlusPoint
+                ];
+
+                $updateStatus = $this->order->update($data, 'id = :id', ['id' => $order_id]);
+                $updatePoint = $this->user->update($p, 'id = :id', ['id' => $userId]);
             }
 
             if ($status == 'Đã thanh toán') {
                 $data = [
                     'status' => 'Chưa thanh toán'
                 ];
-                $updateStatus = $this->order->update($data, 'id = :id', ['id' => $id]);
+
+                $p = [
+                    'points' => $pointBeforePlus
+                ];
+                $updateStatus = $this->order->update($data, 'id = :id', ['id' => $order_id]);
+                $updatePoint = $this->user->update($p, 'id = :id', ['id' => $userId]);
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
