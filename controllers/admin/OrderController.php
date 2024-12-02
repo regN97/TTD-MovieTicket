@@ -15,7 +15,7 @@ class OrderController
         $view = 'orders/list';
         $title = 'Danh sách đơn hàng';
         $data = $this->order->getAll();
-
+        debug($data);
         require_once PATH_VIEW_ADMIN_MAIN;
     }
 }

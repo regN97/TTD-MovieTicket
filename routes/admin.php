@@ -146,6 +146,7 @@ match ($action) {
     // CRUD ticket
     
     'history-list'  => (new TicketHistoryController)->list(),
+    'history-show'=> (new TicketHistoryController)->show(),
 
 
     // CRUD order 

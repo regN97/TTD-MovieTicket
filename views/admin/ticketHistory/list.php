@@ -18,7 +18,7 @@ if (isset($_SESSION['success'])) {
 
 <table class="table table-bordered">
     <thead>
-        <tr>
+        <tr>A
             <th class="text-center">STT</th>
             <th class="text-center">Tên Phim</th>
             <th class="text-center">Ngày tạo </th>            
@@ -39,13 +39,57 @@ if (isset($_SESSION['success'])) {
                 <td class="d-flex justify-content-center">
                     <a href="<?= BASE_URL_ADMIN . '&action=history-show&id=' . $ticket['t_id'] ?>"
                         class="btn btn-info">Xem</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=history-updatePage&id=' . $ticket['t_id'] ?>"
-                        class="btn btn-warning mx-2">Sửa</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=history-delete&id=' . $ticket['t_id'] ?>"
-                        onclick="return confirm('Bạn có chắc muốn xóa?')"
-                        class="btn btn-danger">Hủy</a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+<div class="container mb-3">
+    <div class="d-flex justify-content-start">
+        <?php if ($page > 1): ?>
+            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL_ADMIN . '&action=history-list' . '&page=' . ($page - 1) ?>">« Trước</a>
+        <?php endif; ?>
+
+        <?php
+        // Trang đầu tiên luôn hiển thị
+        $pages = [];
+        $pages[] = 1;
+
+        // Nếu trang hiện tại xa trang đầu, thêm dấu "..."
+        if ($page > 3) {
+            $pages[] = '...';
+        }
+
+        // Hiển thị các trang xung quanh trang hiện tại
+        for ($i = max(2, $page - 1); $i <= min($totalPages - 1, $page + 1); $i++) {
+            $pages[] = $i;
+        }
+
+        // Nếu trang hiện tại xa trang cuối, thêm dấu "..."
+        if ($page < $totalPages - 2) {
+            $pages[] = '...';
+        }
+
+        // Trang cuối cùng luôn hiển thị
+        if ($totalPages > 1) {
+            $pages[] = $totalPages;
+        }
+
+        foreach ($pages as $p):
+            if ($p === '...'): ?>
+            
+                <span class="btn btn-light mx-1 disabled">...</span>
+                <?php elseif ($p == $page): ?>
+                <span class="btn btn-dark mx-1 active"><?= $p ?></span>
+            <?php else: ?>
+                <a class="btn btn-outline-dark mx-1" 
+                   href="<?= BASE_URL_ADMIN . '&action=history-list&page=' . $p ?>"><?= $p ?></a>
+            <?php endif;
+        endforeach;
+        ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a class="btn btn-outline-dark  mx-1" href="<?= BASE_URL_ADMIN . '&action=history-list' . '&page=' . ($page + 1) ?>">Sau »</a>
+        <?php endif; ?>
+    </div>
+</div>
