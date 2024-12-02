@@ -36,7 +36,7 @@ endif;
             <option value="">Lựa chọn loại phòng</option>
             <option value="IMAX" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'IMAX') echo 'selected' ?>>IMAX</option>
             <option value="3D" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === '3D') echo 'selected' ?>>3D</option>
-            <option value="Regular" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === 'Regular') echo 'selected' ?>>Regular</option>
+            <option value="2D" <?php if (isset($_SESSION['data']['type']) && $_SESSION['data']['type'] === '2D') echo 'selected' ?>>2D</option>
         </select>
     </div>
     <div class="my-3">

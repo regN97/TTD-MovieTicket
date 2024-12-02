@@ -129,7 +129,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Chọn rạp, lịch chiếu -->
         <div class="col-12 w-50">
             <form action="<?= BASE_URL . '?action=picking-seat' ?>" method="post">

@@ -130,7 +130,7 @@ class ScheduleController
             }
 
             // Giải quyết không cho nhập lịch chiếu trùng lặp
-            $schedule = $this->schedule->find('*', 'start_at = :start_at AND room_id = :room_id', ['start_at' => $data['start_at'],'room_id' => $data['room_id']]);
+            $schedule = $this->schedule->find('*', 'start_at = :start_at AND room_id = :room_id', ['start_at' => $data['start_at'], 'room_id' => $data['room_id']]);
 
             if (!empty($schedule)) {
                 $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại ở phòng này, vui lòng chọn thời gian khác";
@@ -243,7 +243,7 @@ class ScheduleController
             // Giải quyết không cho nhập lịch chiếu trùng lặp
             $schedule = $this->schedule->find('*', 'start_at = :start_at', ['start_at' => $data['start_at']]);
 
-            if (!empty($schedule)) {
+            if (!empty($schedule) && $schedule['movie_id'] == $data['movie_id'] && $schedule['room_id'] == $data['room_id']) {
                 $_SESSION['errors']['start_at'] = "Lịch chiếu phim này đã tồn tại, vui lòng chọn thời gian khác";
             }
             // End validate
@@ -257,10 +257,10 @@ class ScheduleController
 
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
-                $_SESSION['msg'] = 'Thêm lịch chiếu phim thành công!';
+                $_SESSION['msg'] = 'Update lịch chiếu phim thành công!';
                 unset($_SESSION['data']);
             } else {
-                throw new Exception("Thêm lịch chiếu phim không thành công!");
+                throw new Exception("Update lịch chiếu phim không thành công!");
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;

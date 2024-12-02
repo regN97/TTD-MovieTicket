@@ -143,14 +143,10 @@ match ($action) {
     'schedules-update'     => (new ScheduleController)->update(),
     'schedules-delete'     => (new ScheduleController)->delete(),
 
-    // CRUD ticket
-    
-    'history-list'  => (new TicketHistoryController)->list(),
-    'history-show'=> (new TicketHistoryController)->show(),
-
 
     // CRUD order 
     'order-list'  => (new OrderController)->list(),
-
+    'order-show'  => (new OrderController)->show(),
+    'order-update' => (new OrderController)->changeStatus(),
+    'order-delete' => (new OrderController)->delete(),
 };
-

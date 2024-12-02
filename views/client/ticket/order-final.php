@@ -30,7 +30,7 @@ endif;
         <form action="?action=sendMail" method="post">
             <div class="row">
                 <?php foreach ($seatNameArr as $key => $value): ?>
-                    <div class="col-4 w-25 mx-3 bg-div text-dark">
+                    <div class="col-4 w-25 mx-3 mb-3 bg-div text-dark">
                         <div class="row mb-2 p-2">
                             <label for="movie_name" class="form-label h6">Phim:</label>
                             <input disabled class="form-control" type="text" name="movie_name" value="<?= $data['movie_name'] ?>">

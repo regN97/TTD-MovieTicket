@@ -14,13 +14,12 @@ if (isset($_SESSION['success'])) {
         text-decoration: underline;
     }
 </style>
-
 <table class="table table-bordered">
     <tr>
         <th>STT</th>
-        <th>Tên người dùng</th>
         <th>Email</th>
-        <th>Điểm</th>
+        <th>Thứ hạng</th>
+        <th>Vai trò</th>
         <th>Ảnh</th>
         <th>Thao Tác</th>
     </tr>
@@ -28,9 +27,9 @@ if (isset($_SESSION['success'])) {
     <?php foreach ($data as $key => $user): ?>
         <tr>
             <td><?= $key + 1 ?></td>
-            <td><?= $user['u_name'] ?></td>
             <td><?= $user['u_email'] ?></td>
-            <td><?= $user['u_points'] ?></td>
+            <td><?= $user['ra_name'] ?></td>
+            <td><?= $user['ro_name'] ?></td>
 
             <td class="text-center">
                 <?php if (!empty($user['u_imageURL'])) : ?>
@@ -43,7 +42,7 @@ if (isset($_SESSION['success'])) {
                     class="btn btn-info">Xem</a>
 
                 <a href="<?= BASE_URL_ADMIN . '&action=users-updatePage&id=' . $user['u_id'] ?>"
-                    class="btn btn-warning ms-3 me-3">Sửa</a>
+                    class="btn btn-warning ms-3 me-3">Phân quyền</a>
 
                 <a href="<?= BASE_URL_ADMIN . '&action=users-delete&id=' . $user['u_id'] ?>"
                     onclick="return confirm('Bạn có chắc muốn xoá?')"
@@ -87,16 +86,16 @@ if (isset($_SESSION['success'])) {
 
         foreach ($pages as $p):
             if ($p === '...'): ?>
-            
+
                 <span class="btn btn-light mx-1 disabled">...</span>
-                <?php elseif ($p == $page): ?>
+            <?php elseif ($p == $page): ?>
                 <span class="btn btn-dark mx-1 active"><?= $p ?></span>
             <?php else: ?>
-                <a class="btn btn-outline-dark mx-1" 
-                   href="<?= BASE_URL_ADMIN . '&action=users-list&page=' . $p ?>"><?= $p ?></a>
-            <?php endif;
+                <a class="btn btn-outline-dark mx-1"
+                    href="<?= BASE_URL_ADMIN . '&action=users-list&page=' . $p ?>"><?= $p ?></a>
+        <?php endif;
         endforeach;
-        ?>    
+        ?>
 
         <?php if ($page < $totalPages): ?>
             <a class="btn btn-outline-dark mx-1" href="<?= BASE_URL_ADMIN . '&action=users-list' . '&page=' . ($page + 1) ?>">Sau »</a>

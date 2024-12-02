@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_SESSION['success'])) {
     $class = $_SESSION['success'] ? 'alert-success' : 'alert-danger';
@@ -19,36 +18,40 @@ if (isset($_SESSION['success'])) {
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th class="text-center">STT</th>
-            <th class="text-center">Giá</th>
-            <th class="text-center">Ngày tạo</th>            
-            <th class="text-center">Người mua</th>
+            <th class="text-center">Mã đơn hàng</th>
+            <th class="text-center">Tài khoản</th>
+            <th class="text-center">Thành tiền</th>
             <th class="text-center">Phương thức thanh toán</th>
             <th class="text-center">Trạng thái</th>
+            <th class="text-center">Ngày tạo</th>
             <th class="text-center">Thao tác</th>
         </tr>
     </thead>
     <tbody>
-    <?php $stt = 1;
+        <?php
         foreach ($data as $order): ?>
             <tr>
-                <td class="text-center"><?= $stt++; ?></td>
-                <td class="text-center"><?= $order['o_total_price'] ?></td>
-                <td class="text-center"><?= $order['o_created_at'] ?></td>
-                <td class="text-center"><?= $order['u_name'] ?></td>
-                <td class="text-center"><?= $order['o_paymentMethod'] ?></td>
-                <td class="text-center"><?= $order['o_status'] ?></td>
-                <td class="text-center"><?= $order['t_description'] ?></td>
+                <td class="text-center"><?= $order['id'] ?></td>
+
+                <td class="text-center"><?php
+                                        foreach ($users as $user) {
+                                            if ($user['id'] == $order['user_id']) {
+                                                echo $user['name'];
+                                            }
+                                        }
+                                        ?></td>
+
+                <td class="text-center"><?= $order['total_price'] . "đ  " ?></td>
+                <td class="text-center"><?= $order['paymentMethod'] ?></td>
+                <td class="text-center"><?= $order['status'] ?> <a href="<?= BASE_URL_ADMIN . '&action=order-update&status=' . $order['status'] . '&id=' . $order['id'] ?>"
+                        class="btn btn-success btn-sm mb-2 rounded-pill">Change</a></td>
+                <td class="text-center"><?= date_format(date_create($order['created_at']), "H:i / d-m-Y") ?></td>
                 <td class="d-flex justify-content-center">
-                    <a href="<?= BASE_URL_ADMIN . '&action=order-show&id=' . $order['o_id'] ?>"
-                        class="btn btn-info">Xem</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=order-updatePage&id=' . $order['o_id'] ?>"
-                        class="btn btn-warning mx-2">Sửa</a>
-                    <a href="<?= BASE_URL_ADMIN . '&action=order-delete&id=' . $order['o_id'] ?>"
-                        onclick="return confirm('Bạn có chắc muốn xóa?')"
-                        class="btn btn-danger">Hủy</a>
+                    <a href="<?= BASE_URL_ADMIN . '&action=order-show&order-id=' . $order['id'] ?>"
+                        class="btn btn-info me-2">Chi tiết</a>
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php
+        endforeach; ?>
     </tbody>
 </table>

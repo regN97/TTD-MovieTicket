@@ -95,11 +95,7 @@ class TicketController
                 || empty($_POST['movie_id'])
             ) {
                 throw new Exception("Vui lòng chọn ghế trước khi chọn bắp & nước!");
-            } else {
-                $_SESSION['success'] = true;
-                $_SESSION['msg'] = "Chọn bắp & nước hoặc tiếp tục";
             }
-
 
 
             $movies = $this->movie->find('*', 'id = :id', ['id' => $data['movie_id']]);
@@ -118,7 +114,7 @@ class TicketController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
             exit();
         }
     }
@@ -130,8 +126,12 @@ class TicketController
                 throw new Exception("Yêu cầu phương thức truy cập phải là POST!");
             }
 
+            if (!isset($_SESSION['user'])) {
+                throw new Exception("Vui lòng đăng ký / đăng nhập để tới bước tiếp theo!");
+            }
+
             $data = $_POST;
-            // debug($data);
+
             $id = $_SESSION['user']['id'];
             $user = $this->user->getID($id);
             $ranks = $this->ranks->select();
@@ -153,7 +153,7 @@ class TicketController
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
 
-            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $data['movie_id']);
+            header('Location: ' . BASE_URL . '?action=movies-detail&id=' . $_POST['movie_id']);
             exit();
         }
     }
@@ -172,8 +172,8 @@ class TicketController
             $_SESSION['errors'] = [];
             $_SESSION['message'] = [];
 
-            if (empty($data['paymentMethod'])) {
-                $_SESSION['errors']['paymentMethod'] = "Vui lòng chọn phương thức thanh toán";
+            if ($data['paymentMethod'] !== 'cash') {
+                $_SESSION['errors']['paymentMethod'] = "Hiện tại chúng tôi chỉ chấp nhận phương thức thanh toán tiền mặt!";
 
                 $id = $_SESSION['user']['id'];
                 $user = $this->user->getID($id);
@@ -235,7 +235,7 @@ class TicketController
                 //! Tắt tạm để làm tiếp, nhớ mở lại khi xong
                 $orderInput = [
                     'user_id' => $data['user_id'],
-                    'status'  => 'not checked in yet',
+                    'status'  => 'Chưa thanh toán',
                     'total_price' => $data['total_price'],
                     'paymentMethod' => $data['paymentMethod']
                 ];

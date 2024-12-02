@@ -49,7 +49,7 @@ class RoomController
             if (empty($data['type'])) {
                 $_SESSION['errors']['type'] = 'Vui lòng chọn loại phòng chiếu!';
             } else {
-                $validateRoomType = ['IMAX', '3D', 'Regular'];
+                $validateRoomType = ['IMAX', '3D', '2D'];
                 if (!in_array($data['type'], $validateRoomType)) {
                     $_SESSION['errors']['validateRoomType'] = 'Hãy chọn 1 loại phòng!';
                 }
@@ -179,7 +179,7 @@ class RoomController
             if (empty($data['type'])) {
                 $_SESSION['errors']['type'] = 'Vui lòng chọn loại phòng chiếu!';
             } else {
-                $validateRoomType = ['IMAX', '3D', 'Regular'];
+                $validateRoomType = ['IMAX', '3D', '2D'];
                 if (!in_array($data['type'], $validateRoomType)) {
                     $_SESSION['errors']['validateRoomType'] = 'Hãy chọn 1 loại phòng!';
                 }
