@@ -62,6 +62,32 @@ class Order extends BaseModel
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getAllByUser($conditions = null,$params = [])
+    {
+        $sql = "
+        SELECT 
+        o.id                    o_id,
+        o.total_price           o_total_price,
+        o.status                o_status,
+        o.created_at            o_created_at,
+        o.paymentMethod         o_paymentMethod,
+        u.id                    u_id,
+        u.name                  u_name
+        FROM 
+            orders o
+        JOIN users u ON u.id = o.user_id
+        ";
+        
+        if ($conditions) {
+            $sql .= " WHERE $conditions";
+        }
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
         return $stmt->fetchAll();
     }
 }

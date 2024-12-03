@@ -4,11 +4,13 @@ class UserLoginController
 {
     private $user;
     private $rank;
+    private $order;
 
     public function __construct()
     {
         $this->user = new User();
         $this->rank = new Rank();
+        $this->order = new Order();
     }
 
     public function showFormLogin()

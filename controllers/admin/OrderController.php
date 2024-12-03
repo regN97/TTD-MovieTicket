@@ -205,6 +205,7 @@ class OrderController
             }
             $orderCount = $this->order->delete('id = :id', ['id' => $id]);
             $ticketCount = $this->ticket->delete('schedule_id = :schedule_id', ['schedule_id' => $schedule_id]);
+            // debug($ticketCount);
 
             if ($orderCount > 0 && $detailCount > 0 && $ticketCount > 0) {
                 $_SESSION['success'] = true;
