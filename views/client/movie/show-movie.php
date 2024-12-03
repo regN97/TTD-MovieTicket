@@ -219,7 +219,7 @@
                     </div>
                 </div>
                 <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
-                <button class="btn btn-danger my-3">Tới chọn ghế</button>
+                <button class="btn btn-danger my-3" type="submit">Tới chọn ghế</button>
             </form>
         </div>
     </div>

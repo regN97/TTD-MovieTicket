@@ -24,10 +24,11 @@ if (isset($_SESSION['success'])) {
 endif;
 ?>
 <style>
-    .nav-link{
+    .nav-link {
         color: #000;
     }
-    .nav-link:hover{
+
+    .nav-link:hover {
         color: red;
     }
 </style>
@@ -42,10 +43,10 @@ endif;
                     <a href="?action=info-user" class="nav-link active">THÔNG TIN CHUNG</a>
                 </li>
                 <li class="nav-item">
-                    <a href="?action=form-update&id=<?= $user['u_id'] ?>" class="nav-link text-danger">CHI TIẾT TÀI KHOẢN</a>
+                    <a href="?action=form-update&id=<?= $data['u_id'] ?>" class="nav-link text-danger">CHI TIẾT TÀI KHOẢN</a>
                 </li>
                 <li class="nav-item">
-                    <a href="?action=info-rank&id=<?= $user['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
+                    <a href="?action=info-rank&id=<?= $data['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
@@ -59,54 +60,54 @@ endif;
                 <div class="bg-white p-4 rounded shadow-sm mx-auto" style="max-width: 700px;">
                     <form class="row" action="<?= BASE_URL . '?action=update-user&id='  . $data['u_id'] ?>" method="post"">
                         <!-- Tên -->
-                        <div class="col-lg-5">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Tên <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name" value="<?= $data['u_name'] ?>" required>
-                            </div>
-
-                            <!-- Điện thoại -->
-                            <div class="mb-3">
-                                <label for="tel" class="form-label">Điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="tel" name="tel" value="<?= $data['u_tel'] ?>" required>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Địa chỉ email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?= $data['u_email'] ?>" required>
-                            </div>
-                            </div>
-                        <div class="col-lg-5">
-
-                            <!-- Địa chỉ -->
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="address" name="address" value="<?= $data['u_address'] ?>" required>
-                            </div>
-                        
-
-                            <!-- Mật khẩu -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Mật khẩu<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="password" id="password">
-                            </div>
-
-                            <!-- Checkbox đổi mật khẩu -->
-                            <a href="<?= BASE_URL . '?action=changePassword&id=' . $data['u_id']  ?>" class="btn btn-outline-danger">Đổi mật khẩu</a>
+                        <div class=" col-lg-5">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Tên <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" value="<?= $data['u_name'] ?>" required>
                         </div>
-                        
-                        <!-- Nút -->
-                        <div class="d-flex justify-content-between">
-                            <a href="<?= BASE_URL . '?action=info-user' ?>" class="btn btn-outline-danger">Quay lại</a>
-                            <button type="submit" class="btn btn-danger">LƯU LẠI</button>
+
+                        <!-- Điện thoại -->
+                        <div class="mb-3">
+                            <label for="tel" class="form-label">Điện thoại <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="tel" name="tel" value="<?= $data['u_tel'] ?>" required>
                         </div>
-                    </form>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Địa chỉ email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= $data['u_email'] ?>" required>
+                        </div>
+                </div>
+                <div class="col-lg-5">
+
+                    <!-- Địa chỉ -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="address" name="address" value="<?= $data['u_address'] ?>" required>
+                    </div>
+
+
+                    <!-- Mật khẩu -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mật khẩu<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="password" id="password">
+                    </div>
+
+                    <!-- Checkbox đổi mật khẩu -->
+                    <a href="<?= BASE_URL . '?action=changePassword&id=' . $data['u_id']  ?>" class="btn btn-outline-danger">Đổi mật khẩu</a>
                 </div>
 
+                <!-- Nút -->
+                <div class="d-flex justify-content-between">
+                    <a href="<?= BASE_URL . '?action=info-user' ?>" class="btn btn-outline-danger">Quay lại</a>
+                    <button type="submit" class="btn btn-danger">LƯU LẠI</button>
+                </div>
+                </form>
             </div>
-        </div>
 
+        </div>
     </div>
+
+</div>
 </div>
 </div>

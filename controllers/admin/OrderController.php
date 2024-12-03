@@ -23,6 +23,7 @@ class OrderController
         $view = 'orders/list';
         $title = 'Danh sách đơn hàng';
         $data = $this->order->select();
+
         $schedule_id = $this->order->getScheduleId();
 
 
@@ -84,7 +85,7 @@ class OrderController
             $userId = implode("", $user_id);
 
 
-            $points = $price / 1000;
+            $points = floor($price / 1000);
 
             // Điểm gốc của user trước khi có sự thay đổi nào
             $pointBeforeUpdate = $this->user->find('points', 'id = :id', ['id' => $userId]);
@@ -92,9 +93,18 @@ class OrderController
             $pointBefore = implode("", $pointBeforeUpdate);
 
             // Điểm + nếu tt thành công
-            $finalPlusPoint = $pointBefore + $points;
+            $finalPlusPoint = floor($pointBefore + $points);
             // Điểm trừ nếu hoàn tác trạng thái thanh toán
-            $pointBeforePlus = $pointBefore - $points;
+            $pointBeforePlus = floor($pointBefore - $points);
+
+            $userRankName = $this->user->find('rank_id', 'id = :id', ['id' => $userId]);
+            $ranks = [
+                'Member' => 1,
+                'Silver' => 500,
+                'Gold' => 1200,
+                'Platinum' => 2000,
+                'Diamond' => 3000
+            ];
 
             // Thay đổi trạng thái của order và update points cho user
             if ($status == 'Chưa thanh toán') {
@@ -108,6 +118,25 @@ class OrderController
 
                 $updateStatus = $this->order->update($data, 'id = :id', ['id' => $order_id]);
                 $updatePoint = $this->user->update($p, 'id = :id', ['id' => $userId]);
+
+                $currentPoint = $this->user->find('points', 'id = :id', ['id' => $userId]);
+
+                if ($currentPoint['points'] > $ranks['Member'] && $currentPoint['points'] < $ranks['Silver']) {
+                    $newRank = ['rank_id' => 5];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Silver'] && $currentPoint['points'] < $ranks['Gold']) {
+                    $newRank = ['rank_id' => 1];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Gold'] && $currentPoint['points'] < $ranks['Platinum']) {
+                    $newRank = ['rank_id' => 2];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Platinum'] && $currentPoint['points'] < $ranks['Diamond']) {
+                    $newRank = ['rank_id' => 3];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] >= $ranks['Diamond']) {
+                    $newRank = ['rank_id' => 4];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                }
             }
 
             // Thay đổi trạng thái của order và update points cho user
@@ -121,6 +150,25 @@ class OrderController
                 ];
                 $updateStatus = $this->order->update($data, 'id = :id', ['id' => $order_id]);
                 $updatePoint = $this->user->update($p, 'id = :id', ['id' => $userId]);
+
+                $currentPoint = $this->user->find('points', 'id = :id', ['id' => $userId]);
+
+                if ($currentPoint['points'] > $ranks['Member'] && $currentPoint['points'] < $ranks['Silver']) {
+                    $newRank = ['rank_id' => 5];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Silver'] && $currentPoint['points'] < $ranks['Gold']) {
+                    $newRank = ['rank_id' => 1];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Gold'] && $currentPoint['points'] < $ranks['Platinum']) {
+                    $newRank = ['rank_id' => 2];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] > $ranks['Platinum'] && $currentPoint['points'] < $ranks['Diamond']) {
+                    $newRank = ['rank_id' => 3];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                } else if ($currentPoint['points'] >= $ranks['Diamond']) {
+                    $newRank = ['rank_id' => 4];
+                    $this->user->update($newRank, 'id = :id', ['id' => $userId]);
+                }
             }
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;

@@ -25,10 +25,11 @@ endif;
 ?>
 
 <style>
-    .nav-link{
+    .nav-link {
         color: #000;
     }
-    .nav-link:hover{
+
+    .nav-link:hover {
         color: red;
     }
 </style>
@@ -61,37 +62,72 @@ endif;
                     <img src="<?= BASE_ASSETS_UPLOADS . $user['u_imageURL'] ?>" alt="Avatar" class="rounded-circle mb-3" style="width: 150px;height: 150px;">
                 </div>
                 <!-- User Details -->
-                <div class="col-md-7" >
-                <h5>Xin chào <?= $user['u_name']?>,</h5>
+                <div class="col-md-7">
+                    <h5>Xin chào <?= $user['u_name'] ?>,</h5>
                     <p>Với trang này, bạn sẽ quản lý được tất cả các thông tin tài khoản của mình.</p>
                     <div class="row border border-dark rounded ">
                         <div class="row text-cente d-flex align-items-start justify-content-sm-around">
                             <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Cấp Độ Thẻ</p>
-                                <p class="mb-1 mx-1 badge bg-dark"><?= $user['ra_name']?></p>
+                                <p class="mb-1 fw-semibold">Thứ hạng</p>
+                                <p class="mb-1 p-2 mx-1 badge bg-danger"><?= $user['ra_name'] ?></p>
                             </div>
                             <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Tổng Chi Tiêu</p>
-                                <p class="mb-1 mx-1"><?= $user['u_points']?> đ</p>
-                            </div>
-                            <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Điểm CGV</p>
-                                <p class="mb-1 mx-1"><?= $user['u_points']?> P</p>
+                                <p class="mb-1 fw-semibold">Điểm CGV</p>
+                                <p class="mb-1 mx-1"><?= $user['u_points'] ?> P</p>
                             </div>
                         </div>
                         <div class="mx-1 my-3">
-                        <p class="mb-0 text-wrap"><strong>Mô Tả:</strong> <?= $user['ra_benefits']?></p>
+                            <p class="mb-0 text-wrap text-success">👉 <?= $user['ra_benefits'] ?></p>
                         </div>
                     </div>
-
-                    </div>
-
                 </div>
-
+            </div>
+            <div class="container mt-3">
+                <div class="row rounded border border-dark">
+                    <div class="col-7 me-5">
+                        <h5 class="my-2">Các Thứ Hạng Hiện Có</h5>
+                        <?php foreach ($rank as $ra): ?>
+                            <div class="row mb-3">
+                                <span class="mb-1">✅<?= $ra['level'] ?> điểm</span>
+                                <span class="w-25 mb-1 mx-2 badge bg-danger col-2 py-2"><?= $ra['name'] ?></span> 👉
+                                <span class="col text-success fw-semibold"><?= $ra['benefits'] ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="col-4">
+                        <h5 class="my-2">Cấp độ tiếp theo</h5>
+                        <?php
+                        $rankName = array_column($rank, 'name');
+                        foreach ($rank as $ra) {
+                            if ($ra['level'] < $user['u_points'] && $user['ra_name'] == "Diamond") {
+                                echo "<span class='text-success fw-bold'>Bạn đã đạt thứ hạng cao nhất 🎉</span>";
+                                break;
+                            }
+                            if ($user['ra_name'] == "Member") {
+                                echo "<span class='text-success fw-bold'>Bạn cần " . 500 - (int)$user['u_points']  . " điểm nữa để tới rank tiếp theo 🎉</span>";
+                                break;
+                            }
+                            if ($user['ra_name'] == "Silver") {
+                                echo "<span class='text-success fw-bold'>Bạn cần " . 1200 - (int)$user['u_points']  . " điểm nữa để tới rank tiếp theo 🎉</span>";
+                                break;
+                            }
+                            if ($user['ra_name'] == "Gold") {
+                                echo "<span class='text-success fw-bold'>Bạn cần " . 2000 - (int)$user['u_points'] . " điểm nữa để tới rank tiếp theo 🎉</span>";
+                                break;
+                            }
+                            if ($user['ra_name'] == "Platinum") {
+                                echo "<span class='text-success fw-bold'>Bạn cần " . 3000 - (int)$user['u_points'] . " điểm nữa để tới rank tiếp theo 🎉</span>";
+                                break;
+                            }
+                        ?>
+                        <?php } ?>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
+
+</div>
 </div>
 
 

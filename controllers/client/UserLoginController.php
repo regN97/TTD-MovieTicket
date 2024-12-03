@@ -3,10 +3,12 @@
 class UserLoginController
 {
     private $user;
+    private $rank;
 
     public function __construct()
     {
         $this->user = new User();
+        $this->rank = new Rank();
     }
 
     public function showFormLogin()
@@ -132,11 +134,11 @@ class UserLoginController
             }
 
             $data = $_POST;
-            
+
             $_SESSION['errors'] = [];
 
             // Validate dữ liệu
-            if (empty($data['name']) ) {
+            if (empty($data['name'])) {
                 $_SESSION['errors']['name'] = "Tên không được bỏ trống!";
             }
             if (!empty($data['name']) && strlen($data['name']) > 50) {
@@ -149,7 +151,7 @@ class UserLoginController
             if (!empty($data['password']) && strlen($data['password']) < 5 || strlen($data['password']) > 30) {
                 $_SESSION['errors']['password'] = "Mật khẩu phải dài từ 5 đến 30 kí tự!";
             }
-            if(isset($data['password'])&& $data['password']!= $user['u_password']){
+            if (isset($data['password']) && $data['password'] != $user['u_password']) {
                 $_SESSION['errors']['password'] = "Mật khẩu không chính xác!";
             }
             if (empty($data['tel'])) {
@@ -216,13 +218,12 @@ class UserLoginController
             if (empty($user)) {
                 throw new Exception("Người dùng có ID = $id không tồn tại!");
             }
- 
+
             $view = 'authen/update-password';
             $title = 'Cập nhật mật khẩu';
             $description = 'Cập nhật mật khẩu';
-    
-            require_once PATH_VIEW_CLIENT_MAIN;
 
+            require_once PATH_VIEW_CLIENT_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
             $_SESSION['msg'] = $th->getMessage();
@@ -251,12 +252,12 @@ class UserLoginController
                 throw new Exception("User có ID = $id không tồn tại!", 98);
             }
 
-            $data=$_POST;
+            $data = $_POST;
 
             $_SESSION['errors'] = [];
 
             // Validate dữ liệu
-            if(isset($data['oldPassword'])&& $data['oldPassword']!= $user['u_password']){
+            if (isset($data['oldPassword']) && $data['oldPassword'] != $user['u_password']) {
                 $_SESSION['errors']['oldPassword'] = "Mật khẩu cũ không chính xác!";
             }
             if (empty($data['oldPassword'])) {
@@ -269,10 +270,8 @@ class UserLoginController
             if (empty($data['password'])) {
                 $_SESSION['errors']['password'] = "Trường mật khẩu mới không được bỏ trống";
             }
-            if(!empty($data['confirmPassword']) && strlen($data['password']) < 5 || strlen($data['password']) > 30)
-            {
+            if (!empty($data['confirmPassword']) && strlen($data['password']) < 5 || strlen($data['password']) > 30) {
                 $_SESSION['errors']['password'] = "Trường mật khẩu mới phải dài từ 5 đến 30 kí tự!";
-
             }
             if (empty($data['confirmPassword'])) {
                 $_SESSION['errors']['confirmPassword'] = "Nhập lại mật khẩu không được bỏ trống!";
@@ -280,17 +279,17 @@ class UserLoginController
             if (!empty($data['confirmPassword']) && strlen($data['confirmPassword']) < 5 || strlen($data['confirmPassword']) > 30) {
                 $_SESSION['errors']['confirmPassword'] = "Trường nhập lại mật khẩu phải dài từ 5 đến 30 kí tự!";
             }
-            if(isset($data['password'])&& isset($data['confirmPassword']) && $data['password']!= $data['confirmPassword']){
+            if (isset($data['password']) && isset($data['confirmPassword']) && $data['password'] != $data['confirmPassword']) {
                 $_SESSION['errors']['password'] = "Nhập lại mật khẩu không trùng lặp với mật khẩu mới!";
             }
-            if(isset($data['password'])&&  $data['password']== $user['u_password']){
+            if (isset($data['password']) &&  $data['password'] == $user['u_password']) {
                 $_SESSION['errors']['password'] = "Mật Khẩu mới không được trùng với mật khẩu cũ!";
             }
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Vui lòng kiểm tra lại!");
             }
-            $rowCount = $this->user->updatePassword($data['password'],$id);
+            $rowCount = $this->user->updatePassword($data['password'], $id);
 
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
@@ -310,27 +309,28 @@ class UserLoginController
         }
         header('Location: ' . BASE_URL . '?action=changePassword&id=' . $id);
         exit();
-
     }
     public function showRank()
     {
 
         try {
             $id = $_GET['id'];
-            
+
             if (!isset($id)) {
                 throw new Exception('Thiếu tham số "id', 99);
             }
 
             $user = $this->user->getID($id);
+            $rank = $this->rank->select();
 
             if (empty($user)) {
                 throw new Exception("Người dùng có ID = $id không tồn tại!");
             }
+
             $view = 'authen/showrank';
             $title = 'Thứ hạng';
             $description = 'Chi tiết thứ hạng người dùng';
-    
+
             require_once PATH_VIEW_CLIENT_MAIN;
         } catch (\Throwable $th) {
             $_SESSION['success'] = false;
@@ -339,7 +339,8 @@ class UserLoginController
             exit();
         }
     }
-    public function updateImage(){
+    public function updateImage()
+    {
         try {
             if ($_SERVER['REQUEST_METHOD'] != 'POST') {
                 throw new Exception("Yêu cầu phương thức phải là POST!");
@@ -357,7 +358,7 @@ class UserLoginController
                 throw new Exception("User có ID = $id không tồn tại!", 98);
             }
 
-            $data=$_POST+$_FILES;
+            $data = $_POST + $_FILES;
 
             $_SESSION['errors'] = [];
 
@@ -371,7 +372,7 @@ class UserLoginController
                     $_SESSION['errors']['imageURL_type'] = 'Chỉ chấp nhận các file JPG, JPEG, PNG, GIF!';
                 }
             }
-            
+
             if (!empty($_SESSION['errors'])) {
                 $_SESSION['data'] = $data;
                 throw new Exception("Vui lòng kiểm tra lại!");
@@ -383,9 +384,9 @@ class UserLoginController
                 $data['imageURL'] = $user['imageURL'];
             }
 
-            $rowCount = $this->user->update($data,'id = :id',['id' => $id]);
+            $rowCount = $this->user->update($data, 'id = :id', ['id' => $id]);
 
-            
+
 
             if ($rowCount > 0) {
                 $_SESSION['success'] = true;
@@ -405,7 +406,5 @@ class UserLoginController
         }
         header('Location: ' . BASE_URL . '?action=info-user&id=' . $id);
         exit();
-
     }
-    }
-
+}
