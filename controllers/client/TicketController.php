@@ -169,7 +169,6 @@ class TicketController
 
             $data = $_POST;
 
-            // debug($data);
 
             $_SESSION['errors'] = [];
             $_SESSION['message'] = [];
@@ -192,6 +191,7 @@ class TicketController
                 $data['total_price'] = $data['priceBeforeDiscount'];
 
                 $data['seat_id'] = $data['seat_id'];
+
 
                 // phòng ngừa xảy ra lỗi tại trang order-detail khi isset($_SESSION['errors']) = true
                 if (!isset($data['sweet_quantity'])) {
@@ -224,7 +224,7 @@ class TicketController
 
                     $ticketCount = $this->ticket->insert($ticketInput);
                 }
-
+                
                 if ($ticketCount > 0) {
                     $_SESSION['message']['ticket'] = "Thêm ticket thành công!";
                     $data['ticket_id'] = $ticketCount;
@@ -243,6 +243,7 @@ class TicketController
                 ];
 
                 $orderCount = $this->order->insert($orderInput);
+                // debug($orderCount);
 
                 if ($orderCount > 0) {
                     $_SESSION['message']['order'] = "Thêm order thành công!";
@@ -277,6 +278,7 @@ class TicketController
             }
 
             $data = $_POST;
+            // debug($data);
 
             //* Tạo bản ghi cho table order_fnds nếu khách có đặt bắp & nước
             if (!empty($data['sweet_id'])) {

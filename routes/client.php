@@ -46,4 +46,10 @@ match ($action) {
     // Xem tin tức
     'page-news' => (new NewPageController)->list(),
     'new-content' => (new NewPageController)->show(),
+
+    // Xem lịch sử đặt hàng
+    'history-order' => (new OrderClientController)->list(),
+    'show-order' => (new OrderClientController) ->show(),
+    'delete-order' => (new OrderClientController) ->delete()
+
 };
