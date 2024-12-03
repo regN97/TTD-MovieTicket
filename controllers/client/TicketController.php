@@ -54,6 +54,8 @@ class TicketController
 
             $seatInRoom = [];
 
+            $seatIdFromTicket = $this->ticket->select('seat_id', 'schedule_id = :schedule_id', ['schedule_id' => $data['schedule_id']]);
+
             // Chỉ lấy ra các ghế có room_id trùng với id phòng chiếu
             foreach ($seats as $seat) {
                 if ($seat['room_id'] == $data['room_id']) {

@@ -32,22 +32,25 @@ endif;
     .nav-link:hover {
         color: red;
     }
-    #btn-check{
+
+    #btn-check {
         animation: abc 0.3s ease-out forwards;
     }
+
     @keyframes abc {
-        0%{
+        0% {
             scale: 0.1;
         }
-        50%{
+
+        50% {
             scale: 1.3;
         }
-        100%{
+
+        100% {
             scale: 1;
         }
     }
 </style>
-
 
 <div class="container">
     <div class="row bg-light my-3">
@@ -77,7 +80,7 @@ endif;
                     <img src="<?= BASE_ASSETS_UPLOADS . $user['u_imageURL'] ?>" alt="Avatar" class="rounded-circle mb-3" style="width: 150px;height: 150px;">
                     <form action="?action=updateImage&id=<?= $user['u_id'] ?>" method="post" enctype="multipart/form-data">
                         <label id="label-change-avt" class="text-div fw-bold nav-link" for="fileInput">Đổi ảnh đại diện</label>
-                        <input type="file" id="fileInput" class="d-none"  name="imageURL" id="imageURL">
+                        <input type="file" id="fileInput" class="d-none" name="imageURL" id="imageURL">
                         <span id="fileName" hidden>No file chosen</span>
                         <button id="btn-check" class="btn btn-danger my-2 d-none" type="submit">Xác Nhận</button>
                     </form>
@@ -89,16 +92,13 @@ endif;
                     <div class="row border border-dark rounded ">
                         <div class="row text-cente d-flex align-items-start justify-content-sm-around">
                             <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Cấp Độ Thẻ</p>
-                                <p class="mb-1 mx-1 badge bg-dark"><?= $user['ra_name'] ?></p>
+                                <p class="mb-1 fw-semibold">Thứ Hạng</p>
+                                <p class="mb-1 mx-1 badge bg-danger"><?= $user['ra_name'] ?></p>
                             </div>
+
                             <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Tổng Chi Tiêu</p>
-                                <p class="mb-1 mx-1"><?= $user['u_points'] ?> đ</p>
-                            </div>
-                            <div class="col-4 d-flex align-items-center flex-column">
-                                <p class="mb-1">Điểm CGV</p>
-                                <p class="mb-1 mx-1"><?= $user['u_points'] ?> P</p>
+                                <p class="mb-1 fw-semibold">Điểm CGV</p>
+                                <p class="mb-1 mx-1"><?= $user['u_points'] ?> Points</p>
                             </div>
                         </div>
                     </div>
@@ -120,14 +120,13 @@ endif;
     </div>
 </div>
 <script>
-     let btn_check = document.getElementById("btn-check");
-    document.getElementById('fileInput').addEventListener('change', function () 
-    {
-    const fileName = this.files.length > 0 ? this.files[0].name : 'No file chosen';
-    document.getElementById('fileName').textContent = fileName;
-    btn_check.classList.remove('d-none');
+    let btn_check = document.getElementById("btn-check");
+    document.getElementById('fileInput').addEventListener('change', function() {
+        const fileName = this.files.length > 0 ? this.files[0].name : 'No file chosen';
+        document.getElementById('fileName').textContent = fileName;
+        btn_check.classList.remove('d-none');
     });
-    
-    
-;
+
+
+    ;
 </script>

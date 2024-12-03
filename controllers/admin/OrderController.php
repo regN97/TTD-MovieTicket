@@ -74,21 +74,29 @@ class OrderController
                 throw new Exception("Thiếu tham số cần thiết");
             }
 
+            // Lấy user_id từ bảng order dựa vào order id
             $user_id = $this->order->find('user_id', 'id = :id', ['id' => $order_id]);
+            // Lấy total_price từ bảng order dựa vào order id
             $total_price = $this->order->find('total_price', 'id = :id', ['id' => $order_id]);
 
+            // Chuyển thành chuỗi để thực hiện tính toán
             $price = implode("", $total_price);
             $userId = implode("", $user_id);
 
+
             $points = $price / 1000;
 
+            // Điểm gốc của user trước khi có sự thay đổi nào
             $pointBeforeUpdate = $this->user->find('points', 'id = :id', ['id' => $userId]);
+            // Chuyển thành chuỗi để tính toán
             $pointBefore = implode("", $pointBeforeUpdate);
 
+            // Điểm + nếu tt thành công
             $finalPlusPoint = $pointBefore + $points;
+            // Điểm trừ nếu hoàn tác trạng thái thanh toán
             $pointBeforePlus = $pointBefore - $points;
 
-
+            // Thay đổi trạng thái của order và update points cho user
             if ($status == 'Chưa thanh toán') {
                 $data = [
                     'status' => 'Đã thanh toán'
@@ -102,6 +110,7 @@ class OrderController
                 $updatePoint = $this->user->update($p, 'id = :id', ['id' => $userId]);
             }
 
+            // Thay đổi trạng thái của order và update points cho user
             if ($status == 'Đã thanh toán') {
                 $data = [
                     'status' => 'Chưa thanh toán'

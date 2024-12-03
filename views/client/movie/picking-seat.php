@@ -103,6 +103,9 @@
     <hr>
     <h1><?= $title ?></h1>
     <div class="container">
+        <?php
+        $seatTaken = array_column($seatIdFromTicket, 'seat_id');
+        ?>
         <div class="row">
             <div class="col-6 me-5">
                 <div class="row mt-3 mb-4">
@@ -110,74 +113,74 @@
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'A' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'A' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'A' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'B' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'B' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'B' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'C' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold seat-id" style="background-color: #c9daf8;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'C' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'C' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'D' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'D' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'D' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'E' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'E' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'E' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'F' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'F' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'F' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
                 <div class="row my-3">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'G' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col btn mx-1 fw-semibold text-light seat-id" style="background-color: #9900ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'G' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn btn-dark mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'G' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col btn mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
 
                 <div class="row my-3 d-flex justify-content-center">
                     <?php foreach ($seatInRoom as $rowColumn): ?>
-                        <?php if ($rowColumn['seat_row'] == 'H' && $rowColumn['status'] == 'Active') { ?>
+                        <?php if ($rowColumn['seat_row'] == 'H' && !in_array($rowColumn['id'], $seatTaken)) { ?>
                             <a seat-id="<?= $rowColumn['id'] ?>" onclick="getSeat(this)" class="col-2 btn mx-1 fw-semibold text-light seat-id" style="background-color: #ff00ff;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
-                        <?php } elseif ($rowColumn['seat_row'] == 'H' && $rowColumn['status'] == 'Deactive') { ?>
-                            <a seat-id="<?= $rowColumn['id'] ?>" class="col-2 btn btn-dark  mx-1 fw-semibold text-dark seat-id" style="background-color: #ccc;"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
+                        <?php } elseif ($rowColumn['seat_row'] == 'H' && in_array($rowColumn['id'], $seatTaken)) { ?>
+                            <a seat-id="<?= $rowColumn['id'] ?>" class="col-2 btn  mx-1 fw-semibold text-light btn-danger seat-id"><?= $rowColumn['seat_row'] . $rowColumn['seat_column'] ?></a>
                         <?php } ?>
                     <?php endforeach; ?>
                 </div>
@@ -197,15 +200,15 @@
                             <button class="btn" style="background-color: #ff00ff;"></button>
                         </div>
                         <div>
-                            <label for="">Deactive:</label>
-                            <button class="btn" style="background-color: #ccc;"></button>
+                            <label for="">Đã có người đặt:</label>
+                            <button class="btn btn-danger"></button>
                         </div>
                     </div>
                 <?php endif; ?>
             </div>
             <div class="col-4">
                 <form action="?action=fndOptions" method="POST">
-                    <div class="row bg-light text-dark rounded-3 mb-3 p-3">
+                    <div class="row bg-light text-dark btn-danger rounded-3 mb-3 p-3">
                         <input type="text" name="schedule_id" value="<?= $schedules['id'] ?>" hidden>
                         <input type="text" name="room_id" value="<?= $rooms['id'] ?>" hidden>
                         <input id="seats" type="text" name="seats" hidden>
@@ -213,17 +216,17 @@
                         <input id="total_price" type="number" name="total_price" hidden>
                         <input type="text" name="movie_id" value="<?= $movies['id'] ?>" hidden>
 
-                        <p>Suất: <span class="fw-semibold"><?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?></span></p>
-                        <p>Phòng chiếu: <span class="fw-semibold"><?= $rooms['name'] ?></span></p>
-                        <p>Ghế: <span class="pickedSeat fw-semibold"></span></p>
+                        <p>Suất: <span class="fw-semibold text-dark"><?= date_format(date_create($schedules['start_at']), "H:i d/m/Y") ?></span></p>
+                        <p>Phòng chiếu: <span class="fw-semibold text-dark"><?= $rooms['name'] ?></span></p>
+                        <p>Ghế: <span class="pickedSeat fw-semibold text-dark"></span></p>
                     </div>
-                    <div class="row bg-light text-dark rounded-3 mb-3 p-3">
+                    <div class="row bg-light text-dark btn-danger rounded-3 mb-3 p-3">
                         <p class="fs-5 fw-semibold text-black-50">TỔNG ĐƠN HÀNG</p>
                         <div class="d-flex">
                             <span class="totalPrice fw-bold me-1"></span> <span class="fw-semibold">&#8363;</span>
                         </div>
                     </div>
-                    <div class="row bg-light text-dark rounded-3 mb-3 p-3 d-flex justify-content-between">
+                    <div class="row bg-light text-dark btn-danger rounded-3 mb-3 p-3 d-flex justify-content-between">
                         <a href=<?= "?action=movies-detail&id=" . $movies['id'] ?> class="w-25 btn btn-danger">Quay lại</a>
                         <button type="submit" class="w-50 h-25 btn btn-success text-center">Tiếp tục</button>
                     </div>
