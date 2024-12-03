@@ -42,13 +42,13 @@ endif;
                     <a href="?action=info-user" class="nav-link active">THÔNG TIN CHUNG</a>
                 </li>
                 <li class="nav-item">
-                    <a href="?action=form-update&id=<?= $user['u_id'] ?>" class="nav-link text-danger">CHI TIẾT TÀI KHOẢN</a>
+                    <a href="?action=form-update&id=<?= $data['u_id'] ?>" class="nav-link text-danger">CHI TIẾT TÀI KHOẢN</a>
                 </li>
                 <li class="nav-item">
-                    <a href="?action=info-rank&id=<?= $user['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
+                    <a href="?action=info-rank&id=<?= $data['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
+                    <a href="?action=history-order&id=<?= $data['u_id'] ?>" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
                 </li>
             </ul>
         </nav>

@@ -3,10 +3,12 @@
 class UserLoginController
 {
     private $user;
+    private $order;
 
     public function __construct()
     {
         $this->user = new User();
+        $this->order = new Order();
     }
 
     public function showFormLogin()

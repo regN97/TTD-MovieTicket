@@ -49,13 +49,7 @@ endif;
                     <a href="?action=info-rank&id=<?= $user['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">ĐIỂM THƯỞNG</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">VOUCHER</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
+                    <a href="?action=history-order&id=<?= $user['u_id'] ?>" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
                 </li>
             </ul>
         </nav>

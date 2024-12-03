@@ -65,7 +65,7 @@ endif;
                     <a href="?action=info-rank&id=<?= $user['u_id'] ?>" class="nav-link">THẺ THÀNH VIÊN</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
+                    <a href="?action=history-order&id=<?= $user['u_id'] ?>" class="nav-link">LỊCH SỬ GIAO DỊCH</a>
                 </li>
             </ul>
         </nav>
@@ -107,11 +107,13 @@ endif;
                     <div class="mt-5">
                         <h5>Thông tin tài khoản</h5>
                         <div class="d-flex justify-content-between align-items-center">
+                            <div>
                             <p class="mb-0"><strong>Tên:</strong> <?= $user['u_name'] ?></p>
+                            <p class="mb-0"><strong>Email:</strong> <?= $user['u_email'] ?></p>
+                            <p><strong>Điện thoại:</strong> <?= $user['u_tel'] ?></p>
+                            </div>
                             <a href="?action=form-update&id=<?= $user['u_id'] ?>" class="btn btn-outline-danger">Thay đổi</a>
                         </div>
-                        <p class="mb-0"><strong>Email:</strong> <?= $user['u_email'] ?></p>
-                        <p><strong>Điện thoại:</strong> <?= $user['u_tel'] ?></p>
                     </div>
                 </div>
             </div>

@@ -27,7 +27,7 @@
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small shadow">
-                            <li class="nav-item"><a class="dropdown-item nav-a" href="?action=/">Quản lý tài khoản</a></li>
+                            <li class="nav-item"><a class="dropdown-item nav-a" href="?action=info-user">Quản lý tài khoản</a></li>
                             <li class="nav-item">
                                 <hr class="dropdown-divider">
                             </li>
