@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 23, 2024 at 04:01 PM
+-- Generation Time: Dec 05, 2024 at 11:15 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -90,6 +90,7 @@ CREATE TABLE `food_and_drinks` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL,
+  `description` varchar(1000) NOT NULL,
   `price` int NOT NULL,
   `quantity` smallint UNSIGNED NOT NULL,
   `imageURL` varchar(255) DEFAULT NULL
@@ -99,10 +100,10 @@ CREATE TABLE `food_and_drinks` (
 -- Dumping data for table `food_and_drinks`
 --
 
-INSERT INTO `food_and_drinks` (`id`, `name`, `type`, `price`, `quantity`, `imageURL`) VALUES
-(1, 'asd', 'Single', 321321, 500, NULL),
-(2, 'test', 'Combo', 222, 11, NULL),
-(3, 'zzzzzzz', 'Combo', 123123, 500, 'foodanddrinks/1731923587-0002224_hawaii_300.png');
+INSERT INTO `food_and_drinks` (`id`, `name`, `type`, `description`, `price`, `quantity`, `imageURL`) VALUES
+(1, 'Sweet Combo', 'Combo', 'TIẾT KIỆM 46K!!! Gồm: 1 Bắp + 2 Nước có gaz', 88000, 500, NULL),
+(2, 'Beta Combo', 'Combo', 'TIẾT KIỆM 28K!!! Gồm: 1 Bắp + 1 Nước có gaz', 68000, 500, NULL),
+(3, 'Family Combo', 'Combo', 'TIẾT KIỆM 95K!!! Gồm: 2 Bắp + 4 Nước có gaz + 2 Snack Oishi (80g)', 213000, 500, 'foodanddrinks/1731923587-0002224_hawaii_300.png');
 
 -- --------------------------------------------------------
 
@@ -166,7 +167,6 @@ INSERT INTO `movies` (`id`, `name`, `description`, `duration`, `release_date`, `
 (16, 'ngày ta đã yêu', 'Câu chuyện tình yêu kéo dài 10 năm của một cặp đôi, từ lúc yêu nhau đến khi đối mặt với những biến cố cuộc sống.\r\n', 108, '2024-11-18', 'Tiếng Anh', 'movies/1732186220-ngay_ta_yeu_nhau.jpg', 'T18'),
 (17, 'cu li không bao giờ khóc', 'Một bà lão về hưu và cô cháu gái đối mặt với những vấn đề gia đình và quá khứ.\r\n', 91, '2024-11-15', 'Tiếng Việt', 'movies/1732186264-cu_li_khong_bao_gio_khoc.jpg', 'T16'),
 (18, 'kẻ đóng thế', 'Một diễn viên đóng thế cố gắng vực dậy sự nghiệp và hàn gắn mối quan hệ với con gái.\r\n', 114, '2024-11-14', 'Tiếng Quảng Đông', 'movies/1732186304-ke_dong_the.jpg', 'T13'),
-(19, 'ngày xưa có một chuyện tình', 'Câu chuyện tình bạn và tình yêu của ba người bạn từ thuở ấu thơ đến khi trưởng thành.\r\n', 135, '2024-11-15', 'Tiếng Việt', 'movies/1732186487-ngay_xua_co_mot_chuyen_tinh.jpg', 'T16'),
 (20, 'đừng buông tay', 'Một gia đình cố gắng sinh tồn trong một thế giới hậu tận thế đầy nguy hiểm.\r\n', 101, '2024-11-08', 'Tiếng Anh', 'movies/1732186551-dung_buong_tay.jpg', 'T18'),
 (21, 'thần dược', 'Một nữ diễn viên tìm kiếm sự trẻ trung vĩnh cửu bằng cách sử dụng một loại thuốc bí ẩn.\r\n', 139, '2024-11-16', 'Tiếng Anh', 'movies/1732186615-than_duoc.jpg', 'T18'),
 (22, 'ai oán trong vườn xuân', 'Một người phụ nữ đối mặt với những điều kỳ lạ và rùng rợn sau khi đến thăm một ngôi biệt thự cũ.\r\n', 91, '2024-11-15', 'Tiếng Hàn', 'movies/1732186654-ai_oan_trong_vuon_xuan.jpg', 'T18'),
@@ -249,16 +249,10 @@ INSERT INTO `movie_artists` (`id`, `artist_id`, `movie_id`) VALUES
 (43, 8, 18),
 (44, 16, 18),
 (45, 19, 18),
-(46, 10, 19),
-(47, 9, 19),
-(48, 9, 19),
 (49, 17, 20),
 (50, 19, 20),
 (51, 24, 21),
 (52, 26, 21),
-(53, 10, 19),
-(54, 16, 19),
-(55, 24, 19),
 (56, 19, 22),
 (57, 21, 22),
 (58, 6, 23),
@@ -346,7 +340,6 @@ INSERT INTO `movie_genres` (`id`, `genre_id`, `movie_id`) VALUES
 (23, 7, 17),
 (24, 3, 17),
 (25, 1, 18),
-(26, 3, 19),
 (27, 3, 20),
 (28, 8, 20),
 (29, 1, 21),
@@ -414,9 +407,18 @@ CREATE TABLE `orders` (
   `total_price` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `paymentMethod` varchar(50) NOT NULL,
-  `discount` decimal(3,2) DEFAULT NULL
+  `paymentMethod` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `status`, `total_price`, `created_at`, `updated_at`, `paymentMethod`) VALUES
+(87, 1, 'Đã thanh toán', 174000, '2024-12-03 07:14:47', '2024-12-03 07:14:47', 'cash'),
+(88, 1, 'Chưa thanh toán', 295800, '2024-12-03 07:33:32', '2024-12-03 07:33:32', 'cash'),
+(89, 7, 'Chưa thanh toán', 161500, '2024-12-03 10:21:41', '2024-12-03 10:21:41', 'cash'),
+(93, 7, 'Chưa thanh toán', 190000, '2024-12-05 11:14:34', '2024-12-05 11:14:34', 'cash');
 
 -- --------------------------------------------------------
 
@@ -427,7 +429,42 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_details` (
   `id` int NOT NULL,
   `order_id` int NOT NULL,
-  `ticket_id` int NOT NULL,
+  `ticket_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `ticket_id`) VALUES
+(143, 87, 206),
+(144, 87, 207),
+(145, 87, 208),
+(146, 87, 209),
+(147, 88, 210),
+(148, 88, 211),
+(149, 88, 212),
+(150, 88, 213),
+(151, 89, 206),
+(152, 89, 207),
+(153, 89, 208),
+(154, 89, 209),
+(155, 89, 214),
+(156, 89, 215),
+(171, 93, 230),
+(172, 93, 231),
+(173, 93, 232),
+(174, 93, 233);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_fnds`
+--
+
+CREATE TABLE `order_fnds` (
+  `id` int NOT NULL,
+  `order_id` int NOT NULL,
   `fnd_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -441,6 +478,7 @@ CREATE TABLE `ranks` (
   `id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `benefits` varchar(255) NOT NULL,
+  `discount_percent` tinyint NOT NULL,
   `level` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -448,12 +486,12 @@ CREATE TABLE `ranks` (
 -- Dumping data for table `ranks`
 --
 
-INSERT INTO `ranks` (`id`, `name`, `benefits`, `level`) VALUES
-(1, 'Silver Member', 'Giảm 5% tại quầy vé và 3% tại quầy bắp nước', 500),
-(2, 'Gold Member', 'Giảm 7% tại quầy vé và 4% tại quầy bắp nước', 1200),
-(3, 'Platinum Member', 'Giảm 10% tại quầy vé và 5% tại quầy bắp nước', 2000),
-(4, 'Diamond Member', 'Giảm 13% tại quầy vé và 7% tại quầy bắp nước', 3000),
-(5, 'Member', 'Được bắt đầu tích điểm theo giá trị hóa đơn', 1);
+INSERT INTO `ranks` (`id`, `name`, `benefits`, `discount_percent`, `level`) VALUES
+(1, 'Silver', 'Giảm 5% tổng giá trị đơn hàng', 5, 500),
+(2, 'Gold', 'Giảm 7% tổng giá trị đơn hàng', 7, 1200),
+(3, 'Platinum', 'Giảm 10% tổng giá trị đơn hàng', 10, 2000),
+(4, 'Diamond', 'Giảm 13% tổng giá trị đơn hàng', 13, 3000),
+(5, 'Member', 'Giảm 2% tổng giá trị đơn hàng', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -496,9 +534,9 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `name`, `type`, `description`, `total_seats`, `status`) VALUES
-(1, 'Phòng 01', 'Regular', 'Phòng chiếu phim regular là lựa chọn phổ biến cho các buổi chiếu phim thông thường, mang lại trải nghiệm xem phim tốt với chi phí hợp lý.', 59, 'Active'),
-(4, 'Phòng 02', 'IMAX', 'Phòng chiếu IMAX mang lại trải nghiệm điện ảnh vượt trội, giúp khán giả cảm nhận rõ ràng từng chi tiết và âm thanh của bộ phim.', 59, 'Active'),
-(5, 'Phòng 03', '3D', 'Phòng chiếu phim 3D là lựa chọn tuyệt vời cho những bộ phim hành động, phiêu lưu và khoa học viễn tưởng, nơi hiệu ứng hình ảnh và âm thanh đóng vai trò quan trọng trong việc tạo ra trải nghiệm điện ảnh tuyệt vời.', 59, 'Deactive');
+(1, 'P1', '2D', 'Phòng chiếu phim regular là lựa chọn phổ biến cho các buổi chiếu phim thông thường, mang lại trải nghiệm xem phim tốt với chi phí hợp lý.', 59, 'Active'),
+(4, 'P2', 'IMAX', 'Phòng chiếu IMAX mang lại trải nghiệm điện ảnh vượt trội, giúp khán giả cảm nhận rõ ràng từng chi tiết và âm thanh của bộ phim.', 59, 'Active'),
+(5, 'P3', '3D', 'Phòng chiếu phim 3D là lựa chọn tuyệt vời cho những bộ phim hành động, phiêu lưu và khoa học viễn tưởng, nơi hiệu ứng hình ảnh và âm thanh đóng vai trò quan trọng trong việc tạo ra trải nghiệm điện ảnh tuyệt vời.', 59, 'Active');
 
 -- --------------------------------------------------------
 
@@ -519,9 +557,11 @@ CREATE TABLE `schedules` (
 --
 
 INSERT INTO `schedules` (`id`, `room_id`, `movie_id`, `start_at`, `end_at`) VALUES
-(8, 1, 7, '2024-11-23 09:00:00', '2024-11-23 10:50:00'),
-(9, 1, 7, '2024-11-23 11:20:00', '2024-11-23 13:10:00'),
-(10, 1, 7, '2024-11-23 13:45:00', '2024-11-23 15:15:00');
+(11, 1, 7, '2024-12-06 09:00:00', '2024-12-06 11:00:00'),
+(12, 4, 8, '2024-12-06 13:00:00', '2024-12-06 15:00:00'),
+(13, 5, 10, '2024-12-06 14:00:00', '2024-12-06 16:00:00'),
+(14, 1, 7, '2024-12-06 11:30:00', '2024-12-06 13:20:00'),
+(15, 5, 10, '2024-12-06 07:00:00', '2024-12-06 09:00:00');
 
 -- --------------------------------------------------------
 
@@ -738,9 +778,9 @@ CREATE TABLE `seat_types` (
 --
 
 INSERT INTO `seat_types` (`id`, `price`, `type`) VALUES
-(1, 60000, 'VIP'),
+(1, 85000, 'VIP'),
 (2, 50000, 'Thường'),
-(3, 85000, 'SweetBox');
+(3, 120000, 'SweetBox');
 
 -- --------------------------------------------------------
 
@@ -750,13 +790,32 @@ INSERT INTO `seat_types` (`id`, `price`, `type`) VALUES
 
 CREATE TABLE `tickets` (
   `id` int NOT NULL,
-  `seat_id` int NOT NULL,
   `schedule_id` int NOT NULL,
-  `fnd_id` int NOT NULL,
+  `movie_id` int NOT NULL,
+  `seat_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `description` varchar(255) NOT NULL
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `schedule_id`, `movie_id`, `seat_id`, `created_at`, `updated_at`) VALUES
+(206, 12, 8, 23, '2024-12-03 07:14:47', '2024-12-03 07:14:47'),
+(207, 12, 8, 24, '2024-12-03 07:14:47', '2024-12-03 07:14:47'),
+(208, 12, 8, 25, '2024-12-03 07:14:47', '2024-12-03 07:14:47'),
+(209, 12, 8, 26, '2024-12-03 07:14:47', '2024-12-03 07:14:47'),
+(210, 15, 10, 95, '2024-12-03 07:33:32', '2024-12-03 07:33:32'),
+(211, 15, 10, 96, '2024-12-03 07:33:32', '2024-12-03 07:33:32'),
+(212, 15, 10, 97, '2024-12-03 07:33:32', '2024-12-03 07:33:32'),
+(213, 15, 10, 98, '2024-12-03 07:33:32', '2024-12-03 07:33:32'),
+(214, 12, 8, 32, '2024-12-03 10:21:41', '2024-12-03 10:21:41'),
+(215, 12, 8, 33, '2024-12-03 10:21:41', '2024-12-03 10:21:41'),
+(230, 14, 7, 71, '2024-12-05 11:14:34', '2024-12-05 11:14:34'),
+(231, 14, 7, 72, '2024-12-05 11:14:34', '2024-12-05 11:14:34'),
+(232, 14, 7, 73, '2024-12-05 11:14:34', '2024-12-05 11:14:34'),
+(233, 14, 7, 74, '2024-12-05 11:14:34', '2024-12-05 11:14:34');
 
 -- --------------------------------------------------------
 
@@ -783,9 +842,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `repassword`, `tel`, `email`, `address`, `role_id`, `rank_id`, `points`, `imageURL`) VALUES
-(1, 'Trần Đức Trung', '123456', '', '0395183309', 'trungtrandev97@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 1, 4, 99999, 'user/1731911690-ẢnhCV.png'),
-(5, 'demo', 'trungtran97', 'trungtran97', '0395183309', 'demo@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 3, 5, 1, NULL),
-(6, 'demo2', '123456', '123456', '0981614398', 'demo2@gmail.com', 'demo2', 3, 5, 1, NULL);
+(1, 'Trần Đức Trung', '123456', '', '0395183309', 'trungtrandev97@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 1, 4, 10321, 'user/1732830247-RachelShenton.jpg'),
+(5, 'demo', 'trungtran97', 'trungtran97', '0395183309', 'demo@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 3, 5, NULL, NULL),
+(6, 'demo2', '123456', '123456', '0981614398', 'demo2@gmail.com', 'demo2', 3, 5, NULL, NULL),
+(7, 'test1', '123456', '123456', '0395183309', 'test1@gmail.com', 'Tổ 3, phường tô hiệu, tp sơn la, tỉnh sơn la', 3, 1, 1100, NULL),
+(8, 'test2', '123456', '123456', '0395183309', 'test2@gmail.com', '123123', 3, 5, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -859,8 +920,15 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_order_details` (`order_id`),
-  ADD KEY `fk_details_ticket` (`ticket_id`),
-  ADD KEY `fk_details_fnd` (`fnd_id`);
+  ADD KEY `fk_details_ticket` (`ticket_id`);
+
+--
+-- Indexes for table `order_fnds`
+--
+ALTER TABLE `order_fnds`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_orderfnd` (`order_id`),
+  ADD KEY `fk_fndorder` (`fnd_id`);
 
 --
 -- Indexes for table `ranks`
@@ -907,9 +975,9 @@ ALTER TABLE `seat_types`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ticket_seat` (`seat_id`),
   ADD KEY `fk_ticket_schedule` (`schedule_id`),
-  ADD KEY `fk_ticket_fnd` (`fnd_id`);
+  ADD KEY `fk_ticket_movie` (`movie_id`),
+  ADD KEY `fk_ticket_seats` (`seat_id`);
 
 --
 -- Indexes for table `users`
@@ -976,13 +1044,19 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
+
+--
+-- AUTO_INCREMENT for table `order_fnds`
+--
+ALTER TABLE `order_fnds`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `ranks`
@@ -1006,7 +1080,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `seats`
@@ -1024,13 +1098,13 @@ ALTER TABLE `seat_types`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -1073,9 +1147,15 @@ ALTER TABLE `orders`
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD CONSTRAINT `fk_details_fnd` FOREIGN KEY (`fnd_id`) REFERENCES `food_and_drinks` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_details_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_order_details` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `order_fnds`
+--
+ALTER TABLE `order_fnds`
+  ADD CONSTRAINT `fk_fndorder` FOREIGN KEY (`fnd_id`) REFERENCES `food_and_drinks` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_orderfnd` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `schedules`
@@ -1095,9 +1175,9 @@ ALTER TABLE `seats`
 -- Constraints for table `tickets`
 --
 ALTER TABLE `tickets`
-  ADD CONSTRAINT `fk_ticket_fnd` FOREIGN KEY (`fnd_id`) REFERENCES `food_and_drinks` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_ticket_movie` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_ticket_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_ticket_seat` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_ticket_seats` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `users`

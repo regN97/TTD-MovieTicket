@@ -239,11 +239,6 @@
 <script>
     const seats = document.querySelectorAll('.seat-id')
 
-    // seats.forEach(seat => {
-    //     // Làm gì đó với từng phần tử seat
-    //     console.log(seat.getAttribute('seat-id')); // Lấy giá trị thuộc tính seat-id
-    // });
-
 
     const pickedSeat = document.querySelector('.pickedSeat');
     const totalPrice = document.querySelector('.totalPrice');
@@ -285,23 +280,22 @@
             seatsInput.value = seatsString;
             const seatIdString = selectedSeatId.join(' ');
             pickedSeatInput.value = seatIdString;
-
-            console.log(pickedSeatInput.value);
-
         } else {
             // Nếu ghế chưa được chọn, thêm vào mảng và hiển thị
-            selectedSeats.push(seatName);
-            selectedSeatId.push(seatId);
-            pickedSeat.innerHTML += `${seatName} `;
-            calculateTotalPrice();
 
-            const seatsString = selectedSeats.join(' ');
-            seatsInput.value = seatsString;
-            const seatIdString = selectedSeatId.join(' ');
-            pickedSeatInput.value = seatIdString;
+            if (selectedSeats.length < 6) {
+                selectedSeats.push(seatName);
+                selectedSeatId.push(seatId);
+                pickedSeat.innerHTML += `${seatName} `;
+                calculateTotalPrice();
 
-            console.log(pickedSeatInput.value);
-
+                const seatsString = selectedSeats.join(' ');
+                seatsInput.value = seatsString;
+                const seatIdString = selectedSeatId.join(' ');
+                pickedSeatInput.value = seatIdString;
+            } else {
+                alert("Vượt quá số ghế cho phép! (6 ghế)")
+            }
         }
 
 

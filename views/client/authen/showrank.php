@@ -79,12 +79,41 @@ endif;
                         <div class="mx-1 my-3">
                             <p class="mb-0 text-wrap text-success">👉 <?= $user['ra_benefits'] ?></p>
                         </div>
+                        <div class="col-12 mb-2 ms-2">
+                            <h5 class="my-2">Cấp độ tiếp theo</h5>
+                            <?php
+                            $rankName = array_column($rank, 'name');
+                            foreach ($rank as $ra) {
+                                if ($ra['level'] < $user['u_points'] && $user['ra_name'] == "Diamond") {
+                                    echo "<span class='text-success fw-bold'>Bạn đã đạt thứ hạng cao nhất 💯🏆</span>";
+                                    break;
+                                }
+                                if ($user['ra_name'] == "Member") {
+                                    echo "<span class='text-success fw-bold'>Bạn cần " . 500 - (int)$user['u_points']  . " điểm nữa để đạt thứ hạng Silver 🥈</span>";
+                                    break;
+                                }
+                                if ($user['ra_name'] == "Silver") {
+                                    echo "<span class='text-success fw-bold'>Bạn cần " . 1200 - (int)$user['u_points']  . " điểm nữa để đạt thứ hạng Gold 🥇</span>";
+                                    break;
+                                }
+                                if ($user['ra_name'] == "Gold") {
+                                    echo "<span class='text-success fw-bold'>Bạn cần " . 2000 - (int)$user['u_points'] . " điểm nữa để đạt thứ hạng Platinum 💵</span>";
+                                    break;
+                                }
+                                if ($user['ra_name'] == "Platinum") {
+                                    echo "<span class='text-success fw-bold'>Bạn cần " . 3000 - (int)$user['u_points'] . " điểm nữa để đạt thứ hạng Diamond 💎</span>";
+                                    break;
+                                }
+                            ?>
+                            <?php } ?>
+                        </div>
                     </div>
+
                 </div>
             </div>
-            <div class="container mt-3">
+            <div class="container mt-3 w-50">
                 <div class="row rounded border border-dark">
-                    <div class="col-7 me-5">
+                    <div class="col-12">
                         <h5 class="my-2">Các Thứ Hạng Hiện Có</h5>
                         <?php foreach ($rank as $ra): ?>
                             <div class="row mb-3">
@@ -93,34 +122,6 @@ endif;
                                 <span class="col text-success fw-semibold"><?= $ra['benefits'] ?></span>
                             </div>
                         <?php endforeach; ?>
-                    </div>
-                    <div class="col-4">
-                        <h5 class="my-2">Cấp độ tiếp theo</h5>
-                        <?php
-                        $rankName = array_column($rank, 'name');
-                        foreach ($rank as $ra) {
-                            if ($ra['level'] < $user['u_points'] && $user['ra_name'] == "Diamond") {
-                                echo "<span class='text-success fw-bold'>Bạn đã đạt thứ hạng cao nhất 🎉</span>";
-                                break;
-                            }
-                            if ($user['ra_name'] == "Member") {
-                                echo "<span class='text-success fw-bold'>Bạn cần " . 500 - (int)$user['u_points']  . " điểm nữa để tới rank tiếp theo 🎉</span>";
-                                break;
-                            }
-                            if ($user['ra_name'] == "Silver") {
-                                echo "<span class='text-success fw-bold'>Bạn cần " . 1200 - (int)$user['u_points']  . " điểm nữa để tới rank tiếp theo 🎉</span>";
-                                break;
-                            }
-                            if ($user['ra_name'] == "Gold") {
-                                echo "<span class='text-success fw-bold'>Bạn cần " . 2000 - (int)$user['u_points'] . " điểm nữa để tới rank tiếp theo 🎉</span>";
-                                break;
-                            }
-                            if ($user['ra_name'] == "Platinum") {
-                                echo "<span class='text-success fw-bold'>Bạn cần " . 3000 - (int)$user['u_points'] . " điểm nữa để tới rank tiếp theo 🎉</span>";
-                                break;
-                            }
-                        ?>
-                        <?php } ?>
                     </div>
                 </div>
             </div>

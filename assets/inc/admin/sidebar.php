@@ -149,39 +149,41 @@
                 <!-- End Quản lý đồ ăn & đồ uống -->
 
                 <!-- Start Quản lý tài khoản -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarUsers">
-                        <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí tài khoản</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarUsers">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?= BASE_URL_ADMIN . '&action=users-list' ?>" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách tài khoản
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="collapse menu-dropdown" id="sidebarUsers">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?= BASE_URL_ADMIN . '&action=ranks-list' ?>" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách thứ hạng
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="collapse menu-dropdown" id="sidebarUsers">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?= BASE_URL_ADMIN . '&action=roles-list' ?>" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách vai trò
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                <?php if ($_SESSION['user']['role_id'] == 1): ?>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarUsers">
+                            <i class="ri-stack-line"></i> <span data-key="t-advance-ui">Quản lí tài khoản</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarUsers">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="<?= BASE_URL_ADMIN . '&action=users-list' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                        Danh sách tài khoản
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse menu-dropdown" id="sidebarUsers">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="<?= BASE_URL_ADMIN . '&action=ranks-list' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                        Danh sách thứ hạng
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse menu-dropdown" id="sidebarUsers">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="<?= BASE_URL_ADMIN . '&action=roles-list' ?>" class="nav-link" data-key="t-sweet-alerts">
+                                        Danh sách vai trò
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php endif; ?>
                 <!-- End Quản lý tài khoản -->
 
                 <!-- Start Quản lý tin tức -->

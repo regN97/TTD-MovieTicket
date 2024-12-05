@@ -42,7 +42,7 @@
                                             echo  BASE_ASSETS_UPLOADS . $_SESSION['user']['imageURL'];
                                         } else {
                                             echo ' https://github.com/mdo.png';
-                                        } ?>  " alt="mdo" width="32" height="32" class="rounded-circle">
+                                        } ?>  " alt="<?= $_SESSION['user']['name'] ?>" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small shadow">
                             <li class="nav-item"><a class="dropdown-item nav-a" href="?action=info-user">Quản lý tài khoản</a></li>
